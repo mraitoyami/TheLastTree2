@@ -291,18 +291,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
     }
   };
 
-  // Load: GET all scores, sort by score desc, return top 100
+  // Load: fetch ALL entries, sort client-side (no index rules needed)
   window.fbLoadScores = async function() {
     try {
-      const res = await fetch(
-        FB_URL + FB_PATH + '.json?orderBy="score"&limitToLast=100'
-      );
+      const res = await fetch(FB_URL + FB_PATH + '.json');
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      if (!data) return [];
+      if (!data || typeof data !== 'object') return [];
       const arr = Object.entries(data).map(([id, val]) => ({ id, ...val }));
       arr.sort((a, b) => (b.score || 0) - (a.score || 0));
-      return arr;
+      console.log('✅ Loaded', arr.length, 'scores');
+      return arr.slice(0, 100);
     } catch(e) {
       console.error('❌ Load error:', e);
       return [];
