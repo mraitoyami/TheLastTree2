@@ -42,6 +42,11 @@ class Game {
         this.clock = new THREE.Clock();
         
         window.addEventListener('resize', () => this.onWindowResize());
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'KeyE') {
+                window.dispatchEvent(new CustomEvent('player-interact'));
+            }
+        });
         this.animate();
 
         // Start stats broadcast
