@@ -9,8 +9,6 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nunito',sans-serif;touch-action:none;}
 #canvas{display:block;width:100vw;height:100vh;touch-action:none;}
-
-/* HUD */
 #hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:6px 8px;pointer-events:none;z-index:10;gap:5px;}
 .stat-box{background:rgba(0,0,0,0.84);border-radius:10px;padding:6px 8px;min-width:0;flex:1;border:2px solid rgba(255,255,255,0.13);backdrop-filter:blur(8px);}
 .stat-label{font-size:8px;color:#bbb;text-transform:uppercase;letter-spacing:0.7px;}
@@ -21,7 +19,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 #bar-hp.low{animation:hppulse 0.45s ease infinite alternate;}
 @keyframes hppulse{from{background:#e84040;}to{background:#ffaaaa;}}
 @keyframes comboPulse{from{transform:translateX(-50%) scale(1);}to{transform:translateX(-50%) scale(1.08);}}
-@keyframes spin{from{display:inline-block;transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 #score-box{text-align:center;flex:0 0 auto;min-width:90px;}
 .big{font-family:'Bangers';font-size:28px;line-height:1;color:#FFD700;text-shadow:0 0 14px #FFD70099;}
 .lbl{font-size:8px;color:#aaa;letter-spacing:1.2px;text-transform:uppercase;}
@@ -32,27 +30,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 .weapon-count{font-weight:900;color:#fff;transition:color 0.3s;}
 #bow-pips{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap;}
 .bow-pip{font-size:11px;line-height:1;}
-
-/* TOAST */
 #toast{position:fixed;bottom:68px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.94);border-radius:12px;padding:8px 16px;font-size:12px;font-weight:700;color:#fff;z-index:25;transition:opacity 0.4s;opacity:0;pointer-events:none;border:2px solid #444;max-width:88vw;text-align:center;white-space:pre-line;line-height:1.5;}
-
-/* SCORE POP */
 #score-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bangers';font-size:46px;color:#FFD700;text-shadow:0 0 28px #FFD700,0 0 55px #ff8800;z-index:35;pointer-events:none;opacity:0;transition:opacity 0.3s,transform 0.5s;}
 #score-pop.show{opacity:1;transform:translate(-50%,-70%);}
-
-/* GARBAGE IDLE WARNING */
 #garbage-idle-bar-wrap{position:fixed;top:0;left:0;right:0;z-index:16;pointer-events:none;}
 #garbage-idle-label{text-align:center;font-size:9px;color:#ff6644;font-weight:700;background:rgba(0,0,0,0.6);padding:2px 0;display:none;}
 #garbage-idle-bg{height:4px;background:rgba(255,255,255,0.08);}
 #garbage-idle-bar{height:100%;background:linear-gradient(90deg,#ff4400,#ffaa00);width:0%;transition:width 1s linear;}
-
-/* STARVATION BAR */
 #starving-bar{position:fixed;bottom:80px;left:0;right:0;height:4px;background:linear-gradient(90deg,#ff2200,#ff8800);z-index:15;transform:scaleX(0);transform-origin:left;transition:transform 0.25s;pointer-events:none;}
-
-/* WEATHER BANNER */
 #weather-banner{position:fixed;top:6px;left:50%;transform:translateX(-50%);font-family:'Bangers';font-size:18px;color:#fff;text-shadow:0 2px 8px #000;z-index:11;pointer-events:none;transition:opacity 0.5s;white-space:nowrap;opacity:0;}
-
-/* ACTIONS */
 #actions{position:fixed;bottom:6px;left:0;right:0;display:flex;gap:4px;z-index:10;flex-wrap:wrap;justify-content:center;padding:0 4px;}
 .action-btn{background:rgba(0,0,0,0.88);border:2px solid rgba(255,255,255,0.22);color:#fff;border-radius:11px;padding:7px 8px;font-family:'Nunito';font-size:10px;font-weight:700;cursor:pointer;transition:all 0.12s;backdrop-filter:blur(8px);text-align:center;min-width:50px;min-height:48px;flex:1;max-width:80px;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .action-btn:active{border-color:#FFD700;color:#FFD700;transform:scale(1.07);}
@@ -60,23 +46,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 .action-btn .btn-icon{font-size:17px;display:block;}
 .action-btn.destructive:active{border-color:#ff5544;color:#ff5544;}
 .action-btn.season-btn{border-color:rgba(100,200,255,0.4);color:#aaddff;}
-
-/* FIRE VIGNETTE */
 #fire-vignette{position:fixed;inset:0;pointer-events:none;z-index:5;transition:background 0.6s;}
-
-/* WEATHER OVERLAY */
 #weather-overlay{position:fixed;inset:0;pointer-events:none;z-index:6;overflow:hidden;}
 .fog-layer{position:absolute;inset:0;background:radial-gradient(ellipse 120% 60% at 50% 40%,rgba(140,165,185,0.38) 0%,rgba(110,135,160,0.6) 60%,rgba(80,105,130,0.75) 100%);animation:fogDrift 12s ease-in-out infinite alternate;}
 .fog-layer:nth-child(2){animation-duration:19s;animation-direction:alternate-reverse;opacity:0.55;}
 .fog-layer:nth-child(3){animation-duration:26s;opacity:0.38;}
 @keyframes fogDrift{0%{transform:translateX(-6%)}100%{transform:translateX(6%)}}
-
-/* TREE BUTTONS */
 .tree-btn{position:fixed;z-index:8;pointer-events:all;background:rgba(0,0,0,0.85);border:2px solid #FFD700;color:#FFD700;border-radius:9px;padding:4px 9px;font-size:10px;font-weight:900;font-family:'Nunito';cursor:pointer;transform:translate(-50%,-50%);white-space:nowrap;backdrop-filter:blur(4px);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
 .tree-btn:active{background:#FFD700;color:#000;}
-@keyframes treePulse{from{box-shadow:0 0 5px #FFD700;}to{box-shadow:0 0 18px #FFD700,0 0 30px #ff8800;}}
-
-/* AXE MINIGAME */
 #axe-game{position:fixed;inset:0;background:rgba(0,0,0,0.96);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:50;padding:12px;}
 #axe-game.active{display:flex;}
 #axe-game h2{font-family:'Bangers';font-size:clamp(24px,7vw,36px);color:#FFD700;margin-bottom:5px;text-align:center;}
@@ -87,8 +64,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 #axe-progress-label{color:#aaa;font-size:11px;margin-bottom:3px;text-align:center;}
 #axe-progress-bg{background:rgba(255,255,255,0.1);border-radius:99px;height:13px;overflow:hidden;}
 #axe-progress-bar{height:100%;background:linear-gradient(90deg,#8B6914,#FFD700);border-radius:99px;width:0%;transition:width 0.1s;}
-
-/* GARBAGE */
 #garbage-game{position:fixed;inset:0;background:rgba(0,0,0,0.94);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:30;overflow-y:auto;padding:8px;}
 #garbage-game.active{display:flex;}
 #garbage-game h2{font-family:'Bangers';font-size:clamp(26px,7vw,34px);color:#FFD700;margin-bottom:4px;}
@@ -112,8 +87,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 #garbage-timer-bar-bg{background:rgba(255,255,255,0.08);border-radius:99px;height:5px;margin-top:5px;width:min(320px,82vw);overflow:hidden;}
 #garbage-timer-bar{height:100%;background:#FFD700;border-radius:99px;width:100%;}
 #garbage-close{margin-top:9px;background:#FFD700;color:#000;border:none;border-radius:9px;padding:8px 22px;font-size:13px;font-weight:900;cursor:pointer;font-family:'Nunito';}
-
-/* HUNT */
 #hunt-game{position:fixed;inset:0;background:rgba(0,0,0,0.94);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:30;padding:8px;}
 #hunt-game.active{display:flex;}
 #hunt-game h2{font-family:'Bangers';font-size:clamp(26px,7vw,36px);color:#ff8844;margin-bottom:3px;}
@@ -125,8 +98,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 #hunt-canvas-wrap canvas{display:block;width:100%;height:100%;}
 #hunt-info{color:#aaa;font-size:11px;}
 #hunt-close{margin-top:7px;background:#ff8844;color:#000;border:none;border-radius:9px;padding:8px 22px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Nunito';}
-
-/* WIN */
 #winscreen{position:fixed;inset:0;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:45;text-align:center;padding:20px;}
 #winscreen.active{display:flex;}
 #winscreen h1{font-family:'Bangers';font-size:clamp(40px,10vw,72px);color:#FFD700;text-shadow:0 0 40px #FFD700,0 0 80px #ff8800;margin-bottom:10px;animation:pulse 1s ease infinite alternate;}
@@ -137,8 +108,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 .confetti-piece{position:absolute;top:-20px;animation:confettiFall linear infinite;}
 @keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 #play-again-btn{margin-top:16px;background:#FFD700;color:#000;border:none;border-radius:12px;padding:12px 32px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';}
-
-/* GAME OVER */
 #gameover{position:fixed;inset:0;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:40;padding:20px;}
 #gameover.active{display:flex;}
 #gameover h1{font-family:'Bangers';font-size:clamp(42px,12vw,68px);color:#ff4444;text-shadow:0 0 40px #ff4444;margin-bottom:8px;animation:shk 0.35s ease;}
@@ -146,7 +115,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 #gameover p{color:#ccc;font-size:14px;margin-bottom:6px;text-align:center;max-width:340px;white-space:pre-line;line-height:1.6;}
 .final-score{font-family:'Bangers';font-size:38px;color:#FFD700;}
 #restart-btn{margin-top:14px;background:#FFD700;color:#000;border:none;border-radius:11px;padding:11px 32px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';}
-
 .world-label{position:fixed;font-size:18px;pointer-events:none;z-index:4;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 4px #000c);transition:opacity 0.2s;}
 </style>
 </head>
@@ -154,18 +122,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 <canvas id="canvas"></canvas>
 <div id="fire-vignette"></div>
 <div id="weather-overlay"></div>
-
-<!-- GARBAGE IDLE WARNING (top bar) -->
 <div id="garbage-idle-bar-wrap">
   <div id="garbage-idle-label">⚠️ Хог ангилаагүй байна — Амь буурч байна!</div>
   <div id="garbage-idle-bg"><div id="garbage-idle-bar"></div></div>
 </div>
-
 <div id="starving-bar"></div>
 <div id="score-pop"></div>
 <div id="win-confetti"></div>
-
-<!-- HUD -->
 <div id="hud">
   <div class="stat-box">
     <div class="stat-label">❤️ АМЬ</div>
@@ -194,12 +157,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
     <div class="weapon-item"><span class="weapon-icon">🍖</span><span class="weapon-count" id="w-food">0</span></div>
   </div>
 </div>
-
 <div id="weather-banner">❄️ 1-р сар — Өвөл</div>
-<div id="combo-display" style="display:none;position:fixed;top:auto;bottom:82px;left:50%;transform:translateX(-50%);font-family:'Bangers';font-size:18px;color:#FFD700;text-shadow:0 0 12px #FFD700;z-index:22;pointer-events:none;background:rgba(0,0,0,0.7);border-radius:20px;padding:3px 14px;border:1px solid rgba(255,215,0,0.3);white-space:nowrap;"></div>
+<div id="combo-display" style="display:none;position:fixed;bottom:82px;left:50%;transform:translateX(-50%);font-family:'Bangers';font-size:18px;color:#FFD700;text-shadow:0 0 12px #FFD700;z-index:22;pointer-events:none;background:rgba(0,0,0,0.7);border-radius:20px;padding:3px 14px;border:1px solid rgba(255,215,0,0.3);white-space:nowrap;"></div>
 <div id="toast"></div>
-
-<!-- ACTIONS -->
 <div id="actions">
   <button class="action-btn destructive disabled" id="btn-cut" onclick="cutTree()"><span class="btn-icon">🪓</span>Огтлох</button>
   <button class="action-btn" id="btn-plant" onclick="plantTree()"><span class="btn-icon">🌱</span>Тарих</button>
@@ -208,8 +168,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
   <button class="action-btn season-btn" onclick="nextMonth()"><span class="btn-icon">📅</span>Дараа сар</button>
   <button class="action-btn" style="border-color:rgba(255,215,0,0.5);color:#FFD700;" onclick="openLeaderboard()"><span class="btn-icon">🏆</span>Топ</button>
 </div>
-
-<!-- AXE MINIGAME -->
 <div id="axe-game">
   <h2>🪓 Анхны сүх авах!</h2>
   <p>Гялалзаж буй цэгийг дарж чулуу цохиж сүх хий!</p>
@@ -219,25 +177,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
     <div id="axe-progress-bg"><div id="axe-progress-bar"></div></div>
   </div>
 </div>
-
-<!-- GARBAGE -->
 <div id="garbage-game">
   <h2>♻️ Хог ангилах!</h2>
   <p>Зүйлийг дарж → зөв хогийн саванд хий! Алдаа = Амь буурна!</p>
   <div id="garbage-items"></div>
   <div id="bins">
-    <div class="bin bin-blue"   ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'paper')"   ontouchend="touchDropBin(event,'paper')">  <span class="bin-icon">📄</span>Цаас</div>
+    <div class="bin bin-blue"   ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'paper')"   ontouchend="touchDropBin(event,'paper')"><span class="bin-icon">📄</span>Цаас</div>
     <div class="bin bin-green"  ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'organic')" ontouchend="touchDropBin(event,'organic')"><span class="bin-icon">🌿</span>Органик</div>
     <div class="bin bin-yellow" ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'plastic')" ontouchend="touchDropBin(event,'plastic')"><span class="bin-icon">🧴</span>Хуванцар</div>
-    <div class="bin bin-red"    ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'hazard')"  ontouchend="touchDropBin(event,'hazard')">  <span class="bin-icon">☢️</span>Аюулт</div>
+    <div class="bin bin-red"    ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'hazard')"  ontouchend="touchDropBin(event,'hazard')"><span class="bin-icon">☢️</span>Аюулт</div>
   </div>
   <div id="garbage-result"></div>
   <div id="garbage-progress"></div>
   <div id="garbage-timer-bar-bg"><div id="garbage-timer-bar"></div></div>
   <button id="garbage-close" onclick="closeGarbage()">Хаах</button>
 </div>
-
-<!-- HUNT -->
 <div id="hunt-game">
   <h2>🎯 Ан хийх!</h2>
   <div id="hunt-bow-info">🏹 1 Нум = 5 сум!</div>
@@ -246,8 +200,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
   <div id="hunt-info"><span id="hunt-score">Барьсан: 0</span> | <span id="hunt-time">⏱️ 18с</span></div>
   <button id="hunt-close" onclick="closeHunt()">Дуусгах</button>
 </div>
-
-<!-- WIN -->
 <div id="winscreen">
   <h1>🏆 АМЖИЛТ!</h1>
   <p>Та 12 сар амьд үлдлээ — нэг жил!<br>Ой чиний ачаар амьд байна. 🌍</p>
@@ -258,8 +210,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
     <button onclick="openLeaderboard()" style="background:rgba(255,215,0,0.15);color:#FFD700;border:2px solid #FFD700;border-radius:12px;padding:12px 24px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">📊 Топ харах</button>
   </div>
 </div>
-
-<!-- GAME OVER -->
 <div id="gameover">
   <h1 id="gameover-title">ТОГЛООМ ДУУСЛАА</h1>
   <p id="gameover-reason"></p>
@@ -271,134 +221,98 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
   </div>
 </div>
 
-<!-- NAME ENTRY MODAL -->
-<div id="name-entry" style="
-  position:fixed;inset:0;background:rgba(0,0,0,0.95);
-  display:none;flex-direction:column;align-items:center;justify-content:center;z-index:55;padding:20px;
-">
+<!-- NAME ENTRY -->
+<div id="name-entry" style="position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:55;padding:20px;">
   <div style="background:rgba(20,20,30,0.98);border:2px solid rgba(255,215,0,0.4);border-radius:20px;padding:28px 32px;max-width:380px;width:100%;text-align:center;">
     <div style="font-family:'Bangers';font-size:32px;color:#FFD700;margin-bottom:8px;">🏅 Нэрээ оруулах</div>
     <div id="name-entry-score" style="color:#aaa;font-size:14px;margin-bottom:18px;line-height:1.5;"></div>
     <input id="player-name-input" type="text" maxlength="16" placeholder="Нэрээ бич..."
-      style="width:100%;background:rgba(255,255,255,0.08);border:2px solid rgba(255,215,0,0.4);
-      border-radius:10px;padding:12px 14px;font-size:16px;color:#fff;font-family:'Nunito';
-      outline:none;margin-bottom:14px;text-align:center;"
-      oninput="validateNameInput()"
-    />
+      style="width:100%;background:rgba(255,255,255,0.08);border:2px solid rgba(255,215,0,0.4);border-radius:10px;padding:12px 14px;font-size:16px;color:#fff;font-family:'Nunito';outline:none;margin-bottom:14px;text-align:center;"
+      oninput="validateNameInput()"/>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
       <button onclick="submitScore()" id="name-submit-btn"
-        style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border:none;
-        border-radius:10px;padding:11px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">
-        ✅ Хадгалах
-      </button>
+        style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border:none;border-radius:10px;padding:11px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">✅ Хадгалах</button>
       <button onclick="closeNameEntry()"
-        style="background:rgba(255,255,255,0.08);color:#aaa;border:1px solid #444;
-        border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Nunito';">
-        Болих
-      </button>
+        style="background:rgba(255,255,255,0.08);color:#aaa;border:1px solid #444;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Nunito';">Болих</button>
     </div>
     <div id="name-entry-msg" style="margin-top:10px;font-size:12px;color:#888;min-height:16px;"></div>
   </div>
 </div>
 
-<!-- LEADERBOARD MODAL -->
-<div id="leaderboard-modal" style="
-  position:fixed;inset:0;background:rgba(0,0,0,0.96);
-  display:none;flex-direction:column;align-items:center;justify-content:flex-start;
-  z-index:55;padding:12px 10px;overflow-y:auto;-webkit-overflow-scrolling:touch;
-">
+<!-- LEADERBOARD -->
+<div id="leaderboard-modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.96);display:none;flex-direction:column;align-items:center;justify-content:flex-start;z-index:55;padding:12px 10px;overflow-y:auto;-webkit-overflow-scrolling:touch;">
   <div style="width:100%;max-width:480px;padding-bottom:20px;">
-    <!-- Header -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-top:8px;">
-      <div style="font-family:'Bangers';font-size:clamp(22px,6vw,34px);color:#FFD700;text-shadow:0 0 20px #FFD70088;">
-        🏆 Топ Жагсаалт
-      </div>
-      <button onclick="closeLeaderboard()"
-        style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#aaa;
-        border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito';
-        min-height:44px;">
-        ✕ Хаах
-      </button>
+      <div style="font-family:'Bangers';font-size:clamp(22px,6vw,34px);color:#FFD700;text-shadow:0 0 20px #FFD70088;">🏆 Топ Жагсаалт</div>
+      <button onclick="closeLeaderboard()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#aaa;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:44px;">✕ Хаах</button>
     </div>
-
-    <!-- Tab bar -->
     <div style="display:flex;gap:6px;margin-bottom:14px;">
-      <button id="tab-all" onclick="setLBTab('all')"
-        style="flex:1;background:rgba(255,215,0,0.2);border:2px solid #FFD700;color:#FFD700;
-        border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">
-        🌍 Бүгд
-      </button>
-      <button id="tab-win" onclick="setLBTab('win')"
-        style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;
-        border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">
-        🏆 Ялагчид
-      </button>
-      <button id="tab-month" onclick="setLBTab('month')"
-        style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;
-        border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">
-        📅 Сараар
-      </button>
+      <button id="tab-all"   onclick="setLBTab('all')"   style="flex:1;background:rgba(255,215,0,0.2);border:2px solid #FFD700;color:#FFD700;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">🌍 Бүгд</button>
+      <button id="tab-win"   onclick="setLBTab('win')"   style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">🏆 Ялагчид</button>
+      <button id="tab-month" onclick="setLBTab('month')" style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">📅 Сараар</button>
     </div>
-
-    <!-- Sort options -->
     <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
       <span style="font-size:10px;color:#666;">Эрэмбэ:</span>
-      <button onclick="setLBSort('score')" id="sort-score"
-        style="background:rgba(255,215,0,0.18);border:1px solid #FFD700;color:#FFD700;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">⭐ Оноо</button>
-      <button onclick="setLBSort('month')" id="sort-month"
-        style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">📅 Сар</button>
-      <button onclick="setLBSort('trees')" id="sort-trees"
-        style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">🌲 Мод</button>
+      <button onclick="setLBSort('score')" id="sort-score" style="background:rgba(255,215,0,0.18);border:1px solid #FFD700;color:#FFD700;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">⭐ Оноо</button>
+      <button onclick="setLBSort('month')" id="sort-month" style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">📅 Сар</button>
+      <button onclick="setLBSort('trees')" id="sort-trees" style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">🌲 Мод</button>
     </div>
-
-    <!-- Loading state -->
     <div id="lb-loading" style="text-align:center;padding:30px 0;color:#666;font-size:13px;">
-      <div style="font-size:32px;margin-bottom:8px;animation:spin 1s linear infinite;">⏳</div>
-      Ачааллаж байна...
+      <div style="font-size:32px;margin-bottom:8px;display:inline-block;animation:spin 1s linear infinite;">⏳</div><br>Ачааллаж байна...
     </div>
-
-    <!-- Entries list -->
     <div id="lb-entries"></div>
-
-    <!-- Empty state -->
     <div id="lb-empty" style="display:none;text-align:center;padding:40px 0;color:#555;font-size:13px;">
-      <div style="font-size:46px;margin-bottom:10px;">🌱</div>
-      Одоохондоо оноо алга.<br>Тоглоод оноогоо хадгал!
+      <div style="font-size:46px;margin-bottom:10px;">🌱</div>Одоохондоо оноо алга.<br>Тоглоод оноогоо хадгал!
     </div>
   </div>
 </div>
 
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp }
-    from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+<!-- ═══ FIREBASE — Pure REST API, zero SDK, zero CDN, always works ═══ -->
+<script>
+  // Uses Firebase Realtime Database REST API directly — no SDK needed
+  const FB_URL = 'https://thelasttree2-default-rtdb.asia-southeast1.firebasedatabase.app';
+  const FB_PATH = '/ecosurvivor_scores';
 
-  // ── YOUR FIREBASE CONFIG ── Replace with your own project values
-  const firebaseConfig = {
-    apiKey: "AIzaSyB285RIQDDbhYVkVuuvbIo6Eotm8OL-oEs",
-  authDomain: "thelasttree2.firebaseapp.com",
-  projectId: "thelasttree2",
-  storageBucket: "thelasttree2.firebasestorage.app",
-  messagingSenderId: "298629481501",
-  appId: "1:298629481501:web:f3df30e2e391d5010172f4"
+  // Save: POST to REST endpoint (creates auto-key like push())
+  window.fbSaveScore = async function(entry) {
+    try {
+      const res = await fetch(FB_URL + FB_PATH + '.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...entry, ts: Date.now() })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      console.log('✅ Saved:', data.name);
+      return true;
+    } catch(e) {
+      console.error('❌ Save error:', e);
+      return false;
+    }
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  // Load: GET all scores, sort by score desc, return top 100
+  window.fbLoadScores = async function() {
+    try {
+      const res = await fetch(
+        FB_URL + FB_PATH + '.json?orderBy="score"&limitToLast=100'
+      );
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (!data) return [];
+      const arr = Object.entries(data).map(([id, val]) => ({ id, ...val }));
+      arr.sort((a, b) => (b.score || 0) - (a.score || 0));
+      return arr;
+    } catch(e) {
+      console.error('❌ Load error:', e);
+      return [];
+    }
+  };
 
-  // expose to global scope so non-module scripts can call
-  window._fbDb         = db;
-  window._fbCollection = collection;
-  window._fbAddDoc     = addDoc;
-  window._fbGetDocs    = getDocs;
-  window._fbQuery      = query;
-  window._fbOrderBy    = orderBy;
-  window._fbLimit      = limit;
-  window._fbTimestamp  = serverTimestamp;
-  window._fbReady      = true;
-  console.log('Firebase ready');
+  window._fbReady = true;
+  console.log('✅ Firebase REST API ready — no SDK needed');
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 // ═══════ AUDIO ═══════
@@ -412,192 +326,114 @@ function sfxMilestone(){[261,330,392,523,659,784].forEach((f,i)=>playTone(f,'sin
 function sfxWin(){[261,330,392,523,659,784,1046].forEach((f,i)=>playTone(f,'sine',0.42,0.26,i*0.11));setTimeout(()=>[523,659,784,1046,1318].forEach((f,i)=>playTone(f,'triangle',0.32,0.2,i*0.09)),1100);}
 function sfxClick(){playTone(440,'sine',0.04,0.09);}
 
-// ═══════ MONTHS (Mongolian) ═══════
+// ═══════ MONTHS ═══════
 const MONTHS=[
-  {name:'Нэгдүгээр сар', season:'❄️ Өвөл',  skyDay:0xc8dff5,ground:0xddeeff,sunCol:0xddddff,sunInt:0.7, emoji:'❄️',weather:'snow',  desc:'Хүйтэн & цастай. Тарих боломжгүй. О₂ буурна.'},
-  {name:'Хоёрдугаар сар',season:'❄️ Өвөл',  skyDay:0xd0e0f0,ground:0xe0eaf6,sunCol:0xeeeeff,sunInt:0.75,emoji:'🌨️',weather:'snow',  desc:'Өвлийн хатуу. Өлсгөлөн хурдан ажилна.'},
-  {name:'Гуравдугаар сар',season:'🌸 Хавар', skyDay:0x8fd8f0,ground:0x5ab870,sunCol:0xfff0cc,sunInt:1.0, emoji:'🌸',weather:'clear', desc:'Хавар! Мод тарь. О₂ аажим сэргэнэ.'},
-  {name:'Дөрөвдүгээр сар',season:'🌸 Хавар', skyDay:0x7ecce8,ground:0x4ab060,sunCol:0xfff5bb,sunInt:1.1, emoji:'🌧️',weather:'rain',  desc:'Бороо галын эрчмийг бууруулна.'},
-  {name:'Тавдугаар сар',  season:'🌸 Хавар', skyDay:0x6bbce0,ground:0x44aa58,sunCol:0xffee99,sunInt:1.2, emoji:'🌼',weather:'clear', desc:'Хамгийн сайн тарих сар. Мод тарь!'},
-  {name:'Зургаадугаар сар',season:'☀️ Зун',  skyDay:0x4aa8e0,ground:0x3a9844,sunCol:0xffdd66,sunInt:1.5, emoji:'☀️',weather:'clear', desc:'Халуун зун. Галын эрсдэл өснө!'},
-  {name:'Долдугаар сар',  season:'☀️ Зун',  skyDay:0x3898d8,ground:0x2a8838,sunCol:0xffcc44,sunInt:1.6, emoji:'🌞',weather:'hot',   desc:'Хамгийн халуун. Ой өөрөө шатна!'},
-  {name:'Наймдугаар сар', season:'☀️ Зун',  skyDay:0x44a0d8,ground:0x389040,sunCol:0xffcc55,sunInt:1.55,emoji:'🌤️',weather:'hot',   desc:'Халуун үргэлжилнэ. Хог ангил!'},
-  {name:'Есдүгээр сар',   season:'🍂 Намар', skyDay:0x88b8d8,ground:0x996622,sunCol:0xffa022,sunInt:1.1, emoji:'🍂',weather:'windy', desc:'О₂ аажим буурна. Өвлийн өмнө ан хий.'},
-  {name:'Аравдугаар сар', season:'🍂 Намар', skyDay:0x9090a8,ground:0x884411,sunCol:0xff8811,sunInt:0.9, emoji:'🎃',weather:'windy', desc:'Хүчтэй салхи. Амьтад хурдан хөдөлнө.'},
+  {name:'Нэгдүгээр сар',  season:'❄️ Өвөл', skyDay:0xc8dff5,ground:0xddeeff,sunCol:0xddddff,sunInt:0.7, emoji:'❄️',weather:'snow', desc:'Хүйтэн & цастай. Тарих боломжгүй. О₂ буурна.'},
+  {name:'Хоёрдугаар сар', season:'❄️ Өвөл', skyDay:0xd0e0f0,ground:0xe0eaf6,sunCol:0xeeeeff,sunInt:0.75,emoji:'🌨️',weather:'snow', desc:'Өвлийн хатуу. Өлсгөлөн хурдан ажилна.'},
+  {name:'Гуравдугаар сар',season:'🌸 Хавар',skyDay:0x8fd8f0,ground:0x5ab870,sunCol:0xfff0cc,sunInt:1.0, emoji:'🌸',weather:'clear',desc:'Хавар! Мод тарь. О₂ аажим сэргэнэ.'},
+  {name:'Дөрөвдүгээр сар',season:'🌸 Хавар',skyDay:0x7ecce8,ground:0x4ab060,sunCol:0xfff5bb,sunInt:1.1, emoji:'🌧️',weather:'rain', desc:'Бороо галын эрчмийг бууруулна.'},
+  {name:'Тавдугаар сар',  season:'🌸 Хавар',skyDay:0x6bbce0,ground:0x44aa58,sunCol:0xffee99,sunInt:1.2, emoji:'🌼',weather:'clear',desc:'Хамгийн сайн тарих сар. Мод тарь!'},
+  {name:'Зургаадугаар сар',season:'☀️ Зун', skyDay:0x4aa8e0,ground:0x3a9844,sunCol:0xffdd66,sunInt:1.5, emoji:'☀️',weather:'clear',desc:'Халуун зун. Галын эрсдэл өснө!'},
+  {name:'Долдугаар сар',  season:'☀️ Зун', skyDay:0x3898d8,ground:0x2a8838,sunCol:0xffcc44,sunInt:1.6, emoji:'🌞',weather:'hot',  desc:'Хамгийн халуун. Ой өөрөө шатна!'},
+  {name:'Наймдугаар сар', season:'☀️ Зун', skyDay:0x44a0d8,ground:0x389040,sunCol:0xffcc55,sunInt:1.55,emoji:'🌤️',weather:'hot',  desc:'Халуун үргэлжилнэ. Хог ангил!'},
+  {name:'Есдүгээр сар',   season:'🍂 Намар',skyDay:0x88b8d8,ground:0x996622,sunCol:0xffa022,sunInt:1.1, emoji:'🍂',weather:'windy',desc:'О₂ аажим буурна. Өвлийн өмнө ан хий.'},
+  {name:'Аравдугаар сар', season:'🍂 Намар',skyDay:0x9090a8,ground:0x884411,sunCol:0xff8811,sunInt:0.9, emoji:'🎃',weather:'windy',desc:'Хүчтэй салхи. Амьтад хурдан хөдөлнө.'},
   {name:'Арваннэгдүгээр сар',season:'🍂 Намар',skyDay:0x6a7a8a,ground:0x554433,sunCol:0xff9933,sunInt:0.8,emoji:'🌫️',weather:'fog',desc:'Манан. Ан хийхэд маш хэцүү.'},
-  {name:'Арвандолдугаар сар',season:'❄️ Өвөл',skyDay:0xb0ccee,ground:0xddeeff,sunCol:0xccddff,sunInt:0.6,emoji:'🎄',weather:'snow',desc:'Сүүлийн шат! Тэвч!'},
+  {name:'Арванхоёрдугаар сар',season:'❄️ Өвөл',skyDay:0xb0ccee,ground:0xddeeff,sunCol:0xccddff,sunInt:0.6,emoji:'🎄',weather:'snow',desc:'Сүүлийн шат! Тэвч!'},
 ];
 
 // ═══════ STATE ═══════
 let state={hp:100,maxHp:100,forest:100,oxygen:75,score:0,monthIdx:0,axes:0,bows:0,fireRate:0,food:0,alive:true,won:false,hasFirstAxe:false};
 const MILESTONES=[100,250,500,750,1000,1500,2000];
 let nextMilestoneIdx=0;
-
-// Timers
 let starvationIv=null,starvProg=0;
-let passiveDrainIv=null;
-// Garbage idle drain — if player doesn't open garbage for 60s, lose HP
-let garbageIdleTimer=0,garbageIdleIv=null,garbageIdleProg=0;
-const GARBAGE_IDLE_MAX=60; // seconds before HP drain
+let garbageIdleTimer=0,garbageIdleIv=null;
+const GARBAGE_IDLE_MAX=60;
 
-// ═══════ TOAST ═══════
 function toast(msg,color='#FFD700'){const t=document.getElementById('toast');t.textContent=msg;t.style.color=color;t.style.opacity='1';clearTimeout(toast._t);toast._t=setTimeout(()=>t.style.opacity='0',3200);}
 
-// ═══════ ADVANCED POINT SYSTEM ═══════
-// Combo: consecutive correct garbage sorts without a miss
-// Streak: consecutive months survived without dying
-// Rank: title based on score
-// Floating point popups that fly up from action spot
-
-let combo=0, comboTimer=null;
-let monthStreak=0;
-let totalGarbageSorted=0, totalAnimalsHunted=0, totalTreesPlanted=0;
+// ═══════ SCORE / COMBO / RANK ═══════
+let combo=0,comboTimer=null,monthStreak=0;
+let totalGarbageSorted=0,totalAnimalsHunted=0,totalTreesPlanted=0;
 
 const RANKS=[
-  {min:0,    name:'Анхан шатны',  emoji:'🌱', color:'#88cc88'},
-  {min:100,  name:'Эко дайчин',   emoji:'🌿', color:'#44cc66'},
-  {min:300,  name:'Ойн манаач',   emoji:'🌲', color:'#22aa44'},
-  {min:600,  name:'Байгалийн баатар',emoji:'🦅',color:'#44aaff'},
-  {min:1000, name:'Дэлхийн аврагч',emoji:'⭐', color:'#FFD700'},
-  {min:1500, name:'Эко Легенд',   emoji:'🏆', color:'#ff8800'},
-  {min:2500, name:'Байгалийн Бурхан',emoji:'🌍',color:'#ff44ff'},
+  {min:0,   name:'Анхан шатны',      emoji:'🌱',color:'#88cc88'},
+  {min:100, name:'Эко дайчин',        emoji:'🌿',color:'#44cc66'},
+  {min:300, name:'Ойн манаач',        emoji:'🌲',color:'#22aa44'},
+  {min:600, name:'Байгалийн баатар',  emoji:'🦅',color:'#44aaff'},
+  {min:1000,name:'Дэлхийн аврагч',   emoji:'⭐',color:'#FFD700'},
+  {min:1500,name:'Эко Легенд',        emoji:'🏆',color:'#ff8800'},
+  {min:2500,name:'Байгалийн Бурхан',  emoji:'🌍',color:'#ff44ff'},
 ];
+function getCurrentRank(){let r=RANKS[0];for(const rk of RANKS)if(state.score>=rk.min)r=rk;return r;}
+function getComboMult(){if(combo<=1)return 1;if(combo<=3)return 1.5;if(combo<=6)return 2;if(combo<=10)return 3;return 4;}
 
-function getCurrentRank(){
-  let r=RANKS[0];
-  for(const rk of RANKS){if(state.score>=rk.min)r=rk;}
-  return r;
-}
-function getComboMultiplier(){
-  if(combo<=1)return 1;
-  if(combo<=3)return 1.5;
-  if(combo<=6)return 2;
-  if(combo<=10)return 3;
-  return 4;
-}
+function scorePop(txt,color='#FFD700'){const el=document.getElementById('score-pop');el.textContent=txt;el.style.color=color;el.classList.add('show');clearTimeout(scorePop._t);scorePop._t=setTimeout(()=>el.classList.remove('show'),1600);}
 
-function scorePop(txt,color='#FFD700'){
-  const el=document.getElementById('score-pop');
-  el.textContent=txt;el.style.color=color;el.classList.add('show');
-  clearTimeout(scorePop._t);scorePop._t=setTimeout(()=>el.classList.remove('show'),1600);
-}
-
-// Floating +N popup that rises from center-screen
-function floatPoints(n, label='', color='#FFD700'){
+function floatPoints(n,label='',color='#FFD700'){
   const el=document.createElement('div');
-  el.style.cssText=`position:fixed;left:50%;top:48%;transform:translate(-50%,-50%);
-    font-family:'Bangers';font-size:${Math.min(38,18+n/8)}px;color:${color};
-    text-shadow:0 0 12px ${color}88;pointer-events:none;z-index:50;
-    animation:floatUp 1.2s ease forwards;white-space:nowrap;`;
-  el.textContent=`+${n}${label?(' '+label):''}`;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),1300);
+  el.style.cssText=`position:fixed;left:50%;top:48%;transform:translate(-50%,-50%);font-family:'Bangers';font-size:${Math.min(38,18+n/8)}px;color:${color};text-shadow:0 0 12px ${color}88;pointer-events:none;z-index:50;animation:floatUp 1.2s ease forwards;white-space:nowrap;`;
+  el.textContent=`+${n}${label?' '+label:''}`;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),1300);
 }
-
-// Inject floatUp keyframe once
 const fpKf=document.createElement('style');
 fpKf.textContent=`@keyframes floatUp{0%{opacity:1;transform:translate(-50%,-50%);}80%{opacity:1;}100%{opacity:0;transform:translate(-50%,-160%);}}`;
 document.head.appendChild(fpKf);
 
-function addScore(base, actionType=''){
-  const mult=getComboMultiplier();
-  const earned=Math.round(base*mult);
+function addScore(base,actionType=''){
+  const mult=getComboMult(),earned=Math.round(base*mult);
   state.score+=earned;
-
-  // Show floating points with color by action
-  const colors={garbage:'#44ff88',hunt:'#ff8844',plant:'#88ff44',cut:'#ffcc44',month:'#44ccff',axe:'#FFD700'};
-  const col=colors[actionType]||'#FFD700';
-  if(earned>0){
-    floatPoints(earned, mult>1?`×${mult}`:'', col);
-  }
-
-  // Update rank display
-  updateRankDisplay();
-  checkMilestone();
+  const cols={garbage:'#44ff88',hunt:'#ff8844',plant:'#88ff44',cut:'#ffcc44',month:'#44ccff',axe:'#FFD700'};
+  if(earned>0)floatPoints(earned,mult>1?`×${mult}`:'',cols[actionType]||'#FFD700');
+  updateRankDisplay();checkMilestone();
 }
-
 function updateRankDisplay(){
   const r=getCurrentRank();
-  const el=document.getElementById('rank-label');
-  if(el){el.textContent=`${r.emoji} ${r.name}`;el.style.color=r.color;}
-  // Update score color
-  const sv=document.getElementById('score-val');
-  if(sv)sv.style.color=r.color;
+  const el=document.getElementById('rank-label');if(el){el.textContent=`${r.emoji} ${r.name}`;el.style.color=r.color;}
+  const sv=document.getElementById('score-val');if(sv)sv.style.color=r.color;
 }
-
 function checkMilestone(){
   if(MILESTONES[nextMilestoneIdx]!==undefined&&state.score>=MILESTONES[nextMilestoneIdx]){
-    const m=MILESTONES[nextMilestoneIdx++];
-    const r=getCurrentRank();
-    sfxMilestone();
-    scorePop(`${r.emoji} ${m} оноо!`,r.color);
+    const m=MILESTONES[nextMilestoneIdx++];const r=getCurrentRank();
+    sfxMilestone();scorePop(`${r.emoji} ${m} оноо!`,r.color);
     toast(`${r.emoji} ${m} оноо хүрлээ!\nЦол: ${r.name}`,r.color);
   }
 }
-
-function breakCombo(){
-  if(combo>0){
-    const old=combo;combo=0;
-    clearTimeout(comboTimer);
-    if(old>=3)toast(`💥 Комбо тасарлаа! (×${Math.max(1,old)} байсан)`,'#ff6644');
-    updateComboDisplay();
-  }
-}
-
+function breakCombo(){if(combo>0){const old=combo;combo=0;clearTimeout(comboTimer);if(old>=3)toast(`💥 Комбо тасарлаа!`,'#ff6644');updateComboDisplay();}}
 function addCombo(){
-  clearTimeout(comboTimer);
-  combo++;
-  const mult=getComboMultiplier();
-  updateComboDisplay();
-  if(combo>1)scorePop(`🔥 ×${mult} КОМБО!`, combo>=6?'#ff4444':combo>=3?'#ff8800':'#FFD700');
-  // Auto-break combo after 12 seconds of no action
+  clearTimeout(comboTimer);combo++;
+  const mult=getComboMult();updateComboDisplay();
+  if(combo>1)scorePop(`🔥 ×${mult} КОМБО!`,combo>=6?'#ff4444':combo>=3?'#ff8800':'#FFD700');
   comboTimer=setTimeout(()=>{combo=0;updateComboDisplay();},12000);
 }
-
 function updateComboDisplay(){
-  const el=document.getElementById('combo-display');
-  if(!el)return;
+  const el=document.getElementById('combo-display');if(!el)return;
   if(combo<=1){el.style.display='none';return;}
   el.style.display='block';
-  const mult=getComboMultiplier();
+  const mult=getComboMult();
   el.textContent=`🔥 ×${mult} КОМБО (${combo})`;
   el.style.color=combo>=10?'#ff2222':combo>=6?'#ff6600':combo>=3?'#FFD700':'#ffcc44';
-  el.style.animation=combo>=6?'comboPulse 0.4s ease infinite alternate':'none';
 }
 
-// ═══════ GARBAGE IDLE HP DRAIN ═══════
+// ═══════ GARBAGE IDLE ═══════
 function startGarbageIdleTimer(){
-  clearInterval(garbageIdleIv);
-  garbageIdleTimer=0;garbageIdleProg=0;
-  const label=document.getElementById('garbage-idle-label');
-  const bar=document.getElementById('garbage-idle-bar');
+  clearInterval(garbageIdleIv);garbageIdleTimer=0;
+  const label=document.getElementById('garbage-idle-label'),bar=document.getElementById('garbage-idle-bar');
   label.style.display='none';bar.style.width='0%';
-
   garbageIdleIv=setInterval(()=>{
     if(!state.alive||state.won){clearInterval(garbageIdleIv);return;}
     garbageIdleTimer++;
-    garbageIdleProg=Math.min(1,garbageIdleTimer/GARBAGE_IDLE_MAX);
-    bar.style.width=(garbageIdleProg*100)+'%';
-    // Show warning after 20s
-    if(garbageIdleTimer>=20){
-      label.style.display='block';
-      bar.style.background=garbageIdleTimer>45?'linear-gradient(90deg,#ff0000,#ff4400)':'linear-gradient(90deg,#ff4400,#ffaa00)';
-    }
+    bar.style.width=(Math.min(1,garbageIdleTimer/GARBAGE_IDLE_MAX)*100)+'%';
+    if(garbageIdleTimer>=20){label.style.display='block';bar.style.background=garbageIdleTimer>45?'linear-gradient(90deg,#ff0000,#ff4400)':'linear-gradient(90deg,#ff4400,#ffaa00)';}
     if(garbageIdleTimer>=GARBAGE_IDLE_MAX){
-      // DRAIN HP
-      state.hp=Math.max(0,state.hp-10);
-      state.oxygen=Math.max(0,state.oxygen-4);
-      sfxHurt();
-      toast('🗑️ Хог ангилаагүй! -10 Амь -4% О₂\nХогоо ангилаарай!','#ff4444');
-      updateHUD();checkDeath();
-      // Reset timer — will fire again after another 60s if still not sorted
-      garbageIdleTimer=0;garbageIdleProg=0;bar.style.width='0%';
+      state.hp=Math.max(0,state.hp-10);state.oxygen=Math.max(0,state.oxygen-4);
+      sfxHurt();toast('🗑️ Хог ангилаагүй! -10 Амь -4% О₂','#ff4444');
+      updateHUD();checkDeath();garbageIdleTimer=0;bar.style.width='0%';
     }
   },1000);
 }
-
 function resetGarbageIdleTimer(){
-  garbageIdleTimer=0;garbageIdleProg=0;
+  garbageIdleTimer=0;
   document.getElementById('garbage-idle-bar').style.width='0%';
   document.getElementById('garbage-idle-label').style.display='none';
 }
@@ -610,28 +446,19 @@ function startStarvation(){
     if(!state.alive){clearInterval(starvationIv);updateStarvBar(0);return;}
     if(state.food>0){clearInterval(starvationIv);updateStarvBar(0);return;}
     starvProg+=0.2;updateStarvBar(starvProg);
-    if(starvProg>=1){starvProg=0;state.hp=Math.max(0,state.hp-5);sfxHurt();updateHUD();checkDeath();toast('😰 Өлсгөлөн! -5 Амь (хоол байхгүй)','#ff4444');}
+    if(starvProg>=1){starvProg=0;state.hp=Math.max(0,state.hp-5);sfxHurt();updateHUD();checkDeath();toast('😰 Өлсгөлөн! -5 Амь','#ff4444');}
   },1000);
 }
 function updateStarvBar(p){document.getElementById('starving-bar').style.transform=`scaleX(${p})`;}
 function checkStarvation(){if(state.food<=0&&state.alive)startStarvation();else{clearInterval(starvationIv);starvProg=0;updateStarvBar(0);}}
 
-// Passive HP drain REMOVED — HP only drains when no food (starvation) or from game events
-function startPassiveDrain(){ /* disabled — only starvation drains HP */ }
-
 // ═══════ BOW PIPS ═══════
-function renderBowPips(){const el=document.getElementById('bow-pips');el.innerHTML='';for(let i=0;i<Math.min(state.bows,5);i++){const d=document.createElement('span');d.className='bow-pip';d.textContent='🏹';el.appendChild(d);}if(state.bows>5){const d=document.createElement('span');d.style.cssText='font-size:9px;color:#aaa;';d.textContent='+'+( state.bows-5);el.appendChild(d);}}
-
-// ═══════ UPDATE BUTTONS ═══════
-function updateButtons(){
-  document.getElementById('btn-cut').classList.toggle('disabled',state.axes<=0);
-  document.getElementById('btn-hunt').classList.toggle('disabled',state.bows<=0);
-}
+function renderBowPips(){const el=document.getElementById('bow-pips');el.innerHTML='';for(let i=0;i<Math.min(state.bows,5);i++){const d=document.createElement('span');d.className='bow-pip';d.textContent='🏹';el.appendChild(d);}if(state.bows>5){const d=document.createElement('span');d.style.cssText='font-size:9px;color:#aaa;';d.textContent='+'+(state.bows-5);el.appendChild(d);}}
+function updateButtons(){document.getElementById('btn-cut').classList.toggle('disabled',state.axes<=0);document.getElementById('btn-hunt').classList.toggle('disabled',state.bows<=0);}
 
 // ═══════ HUD ═══════
 function updateHUD(){
-  const fr=state.fireRate,m=MONTHS[state.monthIdx];
-  const hp=state.hp/state.maxHp*100;
+  const fr=state.fireRate,m=MONTHS[state.monthIdx],hp=state.hp/state.maxHp*100;
   const bh=document.getElementById('bar-hp');
   bh.style.width=hp+'%';bh.style.background=hp>55?'#e84040':hp>25?'#ff8800':'#ff2200';
   bh.classList.toggle('low',hp<=30);
@@ -644,15 +471,14 @@ function updateHUD(){
   document.getElementById('val-oxygen').textContent=Math.round(state.oxygen)+'%';
   document.getElementById('score-val').textContent=state.score;
   document.getElementById('month-display').textContent=`${m.emoji} ${state.monthIdx+1}-р сар`;
-  document.getElementById('season-label').textContent=`${m.name.split(' ').slice(-1)[0] || m.name} · ${m.season}`;
+  document.getElementById('season-label').textContent=`${m.name} · ${m.season}`;
   document.getElementById('w-axe').textContent=state.axes;
   document.getElementById('w-bow').textContent=state.bows;
   renderBowPips();
   const fe=document.getElementById('w-firerate');
   fe.textContent=fr+'%';fe.style.color=fr<20?'#88ff88':fr<50?'#FFD700':fr<75?'#ff8844':'#ff2222';
   document.getElementById('w-food').textContent=state.food;
-  const al=Math.max(0,(fr-15)/85)*0.62;
-  const gv=Math.floor(Math.max(0,60*(1-fr/100)));
+  const al=Math.max(0,(fr-15)/85)*0.62,gv=Math.floor(Math.max(0,60*(1-fr/100)));
   document.getElementById('fire-vignette').style.background=`radial-gradient(ellipse at center,transparent 28%,rgba(220,${gv},0,${al}) 100%)`;
   updateSky();updateButtons();updateTreeButtons();updateRankDisplay();updateComboDisplay();
 }
@@ -680,7 +506,7 @@ function updateSky(){
 function buildWeatherOverlay(){
   const ov=document.getElementById('weather-overlay');ov.innerHTML='';ov.style.background='transparent';
   const m=MONTHS[state.monthIdx];
-  if(m.weather==='snow'){for(let i=0;i<28;i++){const el=document.createElement('div');el.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-14px;font-size:${11+Math.random()*9}px;opacity:${0.5+Math.random()*0.5};animation:fallsnow ${4+Math.random()*5}s ${Math.random()*6}s linear infinite;pointer-events:none;user-select:none;`;el.textContent='❄';ov.appendChild(el);}}
+  if(m.weather==='snow'){for(let i=0;i<28;i++){const el=document.createElement('div');el.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-14px;font-size:${11+Math.random()*9}px;opacity:${0.5+Math.random()*0.5};animation:fallsnow ${4+Math.random()*5}s ${Math.random()*6}s linear infinite;pointer-events:none;`;el.textContent='❄';ov.appendChild(el);}}
   else if(m.weather==='rain'){for(let i=0;i<52;i++){const el=document.createElement('div');el.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-12px;width:1.5px;height:${9+Math.random()*11}px;background:rgba(140,190,255,0.65);border-radius:2px;animation:fallrain ${0.6+Math.random()*0.5}s ${Math.random()*2}s linear infinite;pointer-events:none;`;ov.appendChild(el);}}
   else if(m.weather==='fog'){for(let i=0;i<3;i++){const el=document.createElement('div');el.className='fog-layer';ov.appendChild(el);}ov.style.background='rgba(40,52,64,0.1)';}
   else if(m.weather==='hot'){for(let i=0;i<7;i++){const el=document.createElement('div');el.style.cssText=`position:absolute;left:${10+Math.random()*80}%;bottom:55px;width:1px;height:${18+Math.random()*36}px;background:linear-gradient(transparent,rgba(255,175,0,0.14),transparent);animation:heatrise ${1+Math.random()*2}s ${Math.random()*3}s ease-in-out infinite alternate;pointer-events:none;`;ov.appendChild(el);}}
@@ -688,26 +514,17 @@ function buildWeatherOverlay(){
   bn.textContent=`${m.emoji} ${m.name} — ${m.season}`;bn.style.opacity='1';
   clearTimeout(buildWeatherOverlay._t);buildWeatherOverlay._t=setTimeout(()=>bn.style.opacity='0',3500);
 }
-
 const kf=document.createElement('style');
-kf.textContent=`@keyframes fallsnow{0%{transform:translateY(0) rotate(0) translateX(0);opacity:0.8;}50%{transform:translateY(50vh) rotate(180deg) translateX(12px);}100%{transform:translateY(110vh) rotate(360deg) translateX(-9px);opacity:0;}}@keyframes fallrain{0%{transform:translateY(0) skewX(-8deg);}100%{transform:translateY(110vh) skewX(-8deg);}}@keyframes heatrise{0%{transform:scaleY(1) translateY(0);opacity:0.35;}100%{transform:scaleY(1.5) translateY(-26px);opacity:0;}}`;
+kf.textContent=`@keyframes fallsnow{0%{transform:translateY(0) rotate(0);opacity:0.8;}50%{transform:translateY(50vh) rotate(180deg) translateX(12px);}100%{transform:translateY(110vh) rotate(360deg) translateX(-9px);opacity:0;}}@keyframes fallrain{0%{transform:translateY(0) skewX(-8deg);}100%{transform:translateY(110vh) skewX(-8deg);}}@keyframes heatrise{0%{transform:scaleY(1) translateY(0);opacity:0.35;}100%{transform:scaleY(1.5) translateY(-26px);opacity:0;}}`;
 document.head.appendChild(kf);
 
 // ═══════ AXE MINIGAME ═══════
 let axeProg=0,axeActive=false,axeGlowAngle=0,axeAnimId=null,axeTreeIdx=-1;
-function openAxeGame(idx){
-  axeTreeIdx=idx;axeProg=0;axeActive=true;
-  document.getElementById('axe-progress-bar').style.width='0%';
-  document.getElementById('axe-progress-label').textContent='Цохиж байна... 0%';
-  document.getElementById('axe-game').classList.add('active');
-  drawAxeGame();
-}
+function openAxeGame(idx){axeTreeIdx=idx;axeProg=0;axeActive=true;document.getElementById('axe-progress-bar').style.width='0%';document.getElementById('axe-progress-label').textContent='Цохиж байна... 0%';document.getElementById('axe-game').classList.add('active');drawAxeGame();}
 function drawAxeGame(){
   if(!axeActive)return;
-  const cvs=document.getElementById('axe-canvas'),ctx=cvs.getContext('2d');
-  const W=320,H=320,cx=160,cy=170;
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle='#1a1505';ctx.fillRect(0,0,W,H);
+  const cvs=document.getElementById('axe-canvas'),ctx=cvs.getContext('2d'),W=320,H=320,cx=160,cy=170;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#1a1505';ctx.fillRect(0,0,W,H);
   ctx.beginPath();ctx.ellipse(cx,cy+18,85,72,0,0,Math.PI*2);ctx.fillStyle='#3a3020';ctx.fill();
   ctx.beginPath();ctx.ellipse(cx-12,cy-9,72,58,0.2,0,Math.PI*2);ctx.fillStyle='#4a3e28';ctx.fill();
   ctx.strokeStyle=`rgba(255,200,80,${axeProg*0.85})`;ctx.lineWidth=2;
@@ -727,8 +544,7 @@ function drawAxeGame(){
 }
 function tapAxeCanvas(ex,ey){
   if(!axeActive)return;sfxChip();
-  const cvs=document.getElementById('axe-canvas');
-  const rect=cvs.getBoundingClientRect();
+  const cvs=document.getElementById('axe-canvas'),rect=cvs.getBoundingClientRect();
   const x=(ex-rect.left)*(320/rect.width),y=(ey-rect.top)*(320/rect.height);
   const gx=160+Math.cos(axeGlowAngle)*26,gy=170+Math.sin(axeGlowAngle*0.7)*20;
   axeProg=Math.min(1,axeProg+(Math.hypot(x-gx,y-gy)<52?0.09:0.02));
@@ -743,11 +559,7 @@ function tapAxeCanvas(ex,ey){
     setTimeout(()=>{
       document.getElementById('axe-game').classList.remove('active');
       state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+12);
-      if(axeTreeIdx>=0&&axeTreeIdx<trees.length){
-        const t=trees.splice(axeTreeIdx,1)[0];scene.remove(t);
-        const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));
-        st.position.copy(t.position);st.position.y=0.22;scene.add(st);stumps.push(st);
-      }
+      if(axeTreeIdx>=0&&axeTreeIdx<trees.length){const t=trees.splice(axeTreeIdx,1)[0];scene.remove(t);const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));st.position.copy(t.position);st.position.y=0.22;scene.add(st);stumps.push(st);}
       state.forest=Math.max(0,state.forest-10);state.oxygen=Math.max(0,state.oxygen-4);
       state.hasFirstAxe=true;addScore(20,'axe');updateHUD();sfxMilestone();
       toast('🪓 Анхны сүх бэлэн!\nОдоо "Огтлох" товч ажиллана!\n+1 Нум ч авлаа!','#FFD700');
@@ -768,67 +580,41 @@ const pathMesh=new THREE.Mesh(new THREE.PlaneGeometry(4,100),new THREE.MeshLambe
 pathMesh.rotation.x=-Math.PI/2;pathMesh.position.y=0.01;scene.add(pathMesh);
 
 let trees=[],stumps=[],burnParticles=[],treeBtnEls=[];
-
 function makeTree(x,z){
-  const g=new THREE.Group();
-  const m=MONTHS[state.monthIdx];
+  const g=new THREE.Group(),m=MONTHS[state.monthIdx];
   const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.27,1.6,8),new THREE.MeshLambertMaterial({color:0x8B6914}));
   trunk.position.y=0.8;trunk.castShadow=true;g.add(trunk);
   const lc=m.season.includes('Намар')?0xcc6611:m.season.includes('Өвөл')?0x9999bb:0x2d8a3e;
   [[2.4,1.1],[3.0,0.85],[3.45,0.6]].forEach(([py,r])=>{const lf=new THREE.Mesh(new THREE.ConeGeometry(r,1.1,7),new THREE.MeshLambertMaterial({color:lc}));lf.position.y=py;lf.castShadow=true;g.add(lf);});
   g.position.set(x,0,z);scene.add(g);trees.push(g);return g;
 }
-
-function rebuildForest(){
-  trees.forEach(t=>scene.remove(t));stumps.forEach(s=>scene.remove(s));treeBtnEls.forEach(b=>b.remove());
-  trees=[];stumps=[];treeBtnEls=[];
-  for(let i=0;i<20;i++){const side=Math.random()>0.5?1:-1;makeTree(side*(3.8+Math.random()*20),(Math.random()-0.5)*65);}
-  createTreeButtons();
-}
+function rebuildForest(){trees.forEach(t=>scene.remove(t));stumps.forEach(s=>scene.remove(s));treeBtnEls.forEach(b=>b.remove());trees=[];stumps=[];treeBtnEls=[];for(let i=0;i<20;i++){const side=Math.random()>0.5?1:-1;makeTree(side*(3.8+Math.random()*20),(Math.random()-0.5)*65);}createTreeButtons();}
 function spawnTree3D(){const side=Math.random()>0.5?1:-1;makeTree(side*(4+Math.random()*18),(Math.random()-0.5)*56);createTreeButtons();}
-function spawnTreeStump(){
-  if(!trees.length)return;
-  const idx=Math.floor(Math.random()*trees.length);const t=trees.splice(idx,1)[0];scene.remove(t);
-  const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));
-  st.position.copy(t.position);st.position.y=0.22;scene.add(st);stumps.push(st);createTreeButtons();
-}
-function burnRandomTree(){
-  if(!trees.length)return;const t=trees[Math.floor(Math.random()*trees.length)];
-  t.children.forEach((c,i)=>{c.material.color.setHex(i===0?0x2a1505:i%2===0?0xff3300:0xff7700);});
-  for(let i=0;i<7;i++){const p=new THREE.Mesh(new THREE.SphereGeometry(0.09+Math.random()*0.08,4,4),new THREE.MeshBasicMaterial({color:[0xff1100,0xff5500,0xff9900,0xffcc00][i%4]}));p.position.set(t.position.x+(Math.random()-0.5)*1.5,1.5+Math.random()*2.5,t.position.z+(Math.random()-0.5)*1.5);scene.add(p);burnParticles.push({mesh:p,vy:0.04+Math.random()*0.04,life:60+Math.floor(Math.random()*50)});}
-}
+function spawnTreeStump(){if(!trees.length)return;const idx=Math.floor(Math.random()*trees.length);const t=trees.splice(idx,1)[0];scene.remove(t);const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));st.position.copy(t.position);st.position.y=0.22;scene.add(st);stumps.push(st);createTreeButtons();}
+function burnRandomTree(){if(!trees.length)return;const t=trees[Math.floor(Math.random()*trees.length)];t.children.forEach((c,i)=>{c.material.color.setHex(i===0?0x2a1505:i%2===0?0xff3300:0xff7700);});for(let i=0;i<7;i++){const p=new THREE.Mesh(new THREE.SphereGeometry(0.09+Math.random()*0.08,4,4),new THREE.MeshBasicMaterial({color:[0xff1100,0xff5500,0xff9900,0xffcc00][i%4]}));p.position.set(t.position.x+(Math.random()-0.5)*1.5,1.5+Math.random()*2.5,t.position.z+(Math.random()-0.5)*1.5);scene.add(p);burnParticles.push({mesh:p,vy:0.04+Math.random()*0.04,life:60+Math.floor(Math.random()*50)});}}
 
-// ═══════ TREE BUTTONS ═══════
 const _v3=new THREE.Vector3();
 function projectWorld(wx,wy,wz){_v3.set(wx,wy,wz).project(camera);return{x:((_v3.x+1)/2)*innerWidth,y:((-_v3.y+1)/2)*innerHeight,behind:_v3.z>1};}
-
 function createTreeButtons(){
   treeBtnEls.forEach(b=>b.remove());treeBtnEls=[];
   trees.forEach((t,i)=>{
     const btn=document.createElement('button');btn.className='tree-btn';
-    btn.textContent=state.hasFirstAxe?'🪓 Огтлох':'🪓 Сүх хий';
-    btn.dataset.idx=i;
+    btn.textContent=state.hasFirstAxe?'🪓 Огтлох':'🪓 Сүх хий';btn.dataset.idx=i;
     const handler=()=>{if(!state.alive||state.won)return;sfxClick();state.hasFirstAxe?doTreeCut(i):openAxeGame(i);};
-    btn.addEventListener('click',handler);
-    btn.addEventListener('touchend',e=>{e.preventDefault();handler();});
+    btn.addEventListener('click',handler);btn.addEventListener('touchend',e=>{e.preventDefault();handler();});
     document.body.appendChild(btn);treeBtnEls.push(btn);
   });
 }
-
 function doTreeCut(idx){
   if(!trees[idx]||state.axes<=0)return;
-  const m=MONTHS[state.monthIdx];const loss=m.season.includes('Өвөл')?16:12;
+  const m=MONTHS[state.monthIdx],loss=m.season.includes('Өвөл')?16:12;
   state.forest=Math.max(0,state.forest-loss);state.oxygen=Math.max(0,state.oxygen-6);
   state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+18);state.hp=Math.max(0,state.hp-6);
-  addScore(5,'cut');
-  const t=trees.splice(idx,1)[0];scene.remove(t);
+  addScore(5,'cut');const t=trees.splice(idx,1)[0];scene.remove(t);
   const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));
   st.position.copy(t.position);st.position.y=0.22;scene.add(st);stumps.push(st);
-  burnRandomTree();createTreeButtons();
-  toast(`🪓 Мод огтоллоо!\n+1 Сүх +1 Нум 🔥+18%\n-${loss}% Ой -6 Амь`);
-  updateHUD();checkDeath();
+  burnRandomTree();createTreeButtons();toast(`🪓 Мод огтоллоо!\n+1 Сүх +1 Нум 🔥+18%\n-${loss}% Ой -6 Амь`);updateHUD();checkDeath();
 }
-
 function updateTreeButtons(){
   treeBtnEls.forEach((btn,i)=>{
     if(!trees[i]){btn.style.display='none';return;}
@@ -840,22 +626,20 @@ function updateTreeButtons(){
     else{btn.style.borderColor='rgba(255,215,0,0.6)';btn.style.animation='';btn.style.opacity='1';}
   });
 }
-
 const tp2=document.createElement('style');tp2.textContent='@keyframes treePulse{from{box-shadow:0 0 5px #FFD700;}to{box-shadow:0 0 16px #FFD700,0 0 28px #ff8800;}}';document.head.appendChild(tp2);
 
 // ═══════ ACTIONS ═══════
 function cutTree(){
   if(!state.alive||state.won)return;
   if(!state.hasFirstAxe){toast('🌲 Дэлхий дээрх модыг дарж анхны сүхээ хий!','#FFD700');return;}
-  if(state.axes<=0){toast('🪓 Сүх алга! Мод огтол.','#ff9944');return;}
+  if(state.axes<=0){toast('🪓 Сүх алга!','#ff9944');return;}
   if(state.forest<=8){toast('⚠️ Ой бараг үгүй болжээ!','#ff6666');return;}
   sfxClick();spawnTreeStump();burnRandomTree();
-  const m=MONTHS[state.monthIdx];const loss=m.season.includes('Өвөл')?16:12;
+  const m=MONTHS[state.monthIdx],loss=m.season.includes('Өвөл')?16:12;
   state.forest=Math.max(0,state.forest-loss);state.oxygen=Math.max(0,state.oxygen-6);
   state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+18);state.hp=Math.max(0,state.hp-6);
   addScore(5,'cut');toast(`🪓 Мод огтоллоо!\n+1 Сүх +1 Нум 🔥+18%\n-${loss}% Ой -6 Амь`);updateHUD();checkDeath();
 }
-
 function plantTree(){
   if(!state.alive||state.won)return;sfxClick();
   const m=MONTHS[state.monthIdx];
@@ -863,11 +647,9 @@ function plantTree(){
   if(state.food<3){toast('🌱 Мод тарихад 3 хоол хэрэгтэй!','#ff9944');return;}
   state.food-=3;state.forest=Math.min(100,state.forest+7);state.oxygen=Math.min(100,state.oxygen+4);
   state.fireRate=Math.max(0,state.fireRate-5);state.hp=Math.min(state.maxHp,state.hp+4);
-  totalTreesPlanted++;
-  addScore(8,'plant');spawnTree3D();checkStarvation();
-  toast('🌱 Мод тарилаа!\n+7% Ой +4% О₂ 🔥-5% +4 Амь\n(3 хоол зарцуулав)','#4ecb71');updateHUD();
+  totalTreesPlanted++;addScore(8,'plant');spawnTree3D();checkStarvation();
+  toast('🌱 Мод тарилаа!\n+7% Ой +4% О₂ 🔥-5% +4 Амь','#4ecb71');updateHUD();
 }
-
 function nextMonth(){
   if(!state.alive||state.won)return;sfxClick();
   if(state.monthIdx===11){triggerWin();return;}
@@ -886,81 +668,58 @@ function nextMonth(){
   state.fireRate=Math.max(0,Math.min(100,state.fireRate+frD));
   state.hp=Math.max(0,Math.min(state.maxHp,state.hp+hpD));
   state.food=Math.max(0,state.food-3);
-  monthStreak++;
-  const streakBonus=monthStreak*5; // +5 per consecutive month survived
-  addScore(12+streakBonus,'month');
-  if(monthStreak>=3){floatPoints(streakBonus,'🔥арав','#44ccff');}checkStarvation();
-  resetGarbageIdleTimer(); // reset idle timer on new month
+  monthStreak++;const streakBonus=monthStreak*5;addScore(12+streakBonus,'month');
+  if(monthStreak>=3)floatPoints(streakBonus,'🔥','#44ccff');
+  checkStarvation();resetGarbageIdleTimer();
   const col=m.season.includes('Зун')?'#ffaa44':m.season.includes('Өвөл')?'#aaddff':m.season.includes('Хавар')?'#aaffaa':'#ffcc88';
   toast(`${m.emoji} ${m.name}\n${m.desc}\nО₂${o2D>=0?'+':''}${o2D}  🔥${frD>=0?'+':''}${frD}%  ❤️${hpD>=0?'+':''}${hpD}`,col);
   updateHUD();buildWeatherOverlay();applySeasonToWorld();checkDeath();
 }
-
 function applySeasonToWorld(){
   const m=MONTHS[state.monthIdx];
-  trees.forEach(t=>{
-    const lc=m.season.includes('Намар')?[0xcc6611,0xff8822,0xdd4400][Math.floor(Math.random()*3)]:m.season.includes('Өвөл')?0x9999bb:m.season.includes('Хавар')?0x66cc77:0x2d8a3e;
-    t.children.forEach((c,i)=>{if(i>0)c.material.color.setHex(lc);});
-  });
+  trees.forEach(t=>{const lc=m.season.includes('Намар')?[0xcc6611,0xff8822,0xdd4400][Math.floor(Math.random()*3)]:m.season.includes('Өвөл')?0x9999bb:m.season.includes('Хавар')?0x66cc77:0x2d8a3e;t.children.forEach((c,i)=>{if(i>0)c.material.color.setHex(lc);});});
   if(MONTHS[state.monthIdx].weather==='snow')ground.material.color.setHex(0xddeeff);
 }
 
 // ═══════ DEATH / WIN ═══════
 function checkDeath(){
   if(!state.alive||state.won)return;
-  if(state.hp<=0)            triggerGameOver('💀 Та нас барлаа!\nАмь тэг болсон.','#ff4444');
-  else if(state.fireRate>=100) triggerGameOver('🔥 ГАЛД ШАТЛАА!\nГалын эрч 100% хүрлээ!','#ff3300');
-  else if(state.oxygen<=0)   triggerGameOver('😵 Хүчилтөрөгч дууслаа!\nМод тарь байсан бол...','#4488ff');
-  else if(state.forest<=0)   triggerGameOver('🪵 Ой устлаа.\nНэг ч мод үлдсэнгүй.','#8B4513');
+  if(state.hp<=0)             triggerGameOver('💀 Та нас барлаа!\nАмь тэг болсон.','#ff4444');
+  else if(state.fireRate>=100)triggerGameOver('🔥 ГАЛД ШАТЛАА!\nГалын эрч 100% хүрлээ!','#ff3300');
+  else if(state.oxygen<=0)    triggerGameOver('😵 Хүчилтөрөгч дууслаа!','#4488ff');
+  else if(state.forest<=0)    triggerGameOver('🪵 Ой устлаа.','#8B4513');
 }
 function triggerGameOver(reason,color){
-  state.alive=false;clearInterval(starvationIv);clearInterval(passiveDrainIv);clearInterval(garbageIdleIv);
+  state.alive=false;clearInterval(starvationIv);clearInterval(garbageIdleIv);
   const r=getCurrentRank();
   document.getElementById('gameover-title').style.color=color;
   document.getElementById('gameover-title').style.textShadow=`0 0 40px ${color}`;
   document.getElementById('gameover-reason').textContent=reason;
-  document.getElementById('gameover-score').innerHTML=
-    `<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>`+
-    `⭐ ${state.score} оноо · ${MONTHS[state.monthIdx].name}<br>`+
-    `<span style="font-size:16px;color:#aaa">`+
-    `🌲 Тарьсан: ${totalTreesPlanted} · `+
-    `🍖 Барьсан: ${totalAnimalsHunted} · `+
-    `♻️ Ангилсан: ${totalGarbageSorted}`+
-    `</span>`;
+  document.getElementById('gameover-score').innerHTML=`<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>⭐ ${state.score} оноо · ${MONTHS[state.monthIdx].name}<br><span style="font-size:16px;color:#aaa">🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}</span>`;
   document.getElementById('gameover').classList.add('active');sfxHurt();sfxHurt();
 }
 function triggerWin(){
-  state.alive=false;state.won=true;clearInterval(starvationIv);clearInterval(passiveDrainIv);clearInterval(garbageIdleIv);
-  const r=getCurrentRank();
-  // Calculate final bonus
-  const survivalBonus=500;
-  const statBonus=totalGarbageSorted*3+totalAnimalsHunted*5+totalTreesPlanted*8;
+  state.alive=false;state.won=true;clearInterval(starvationIv);clearInterval(garbageIdleIv);
+  const r=getCurrentRank(),survivalBonus=500,statBonus=totalGarbageSorted*3+totalAnimalsHunted*5+totalTreesPlanted*8;
   state.score+=survivalBonus+statBonus;
-  document.getElementById('win-score-val').innerHTML=
-    `<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>`+
-    `⭐ ${state.score} оноо<br>`+
-    `<span style="font-size:14px;color:#aaa">`+
-    `+${survivalBonus} амьд үлдсэний бонус · +${statBonus} үйл ажиллагааны бонус<br>`+
-    `🌲 ${totalTreesPlanted} тарьсан · 🍖 ${totalAnimalsHunted} барьсан · ♻️ ${totalGarbageSorted} ангилсан`+
-    `</span>`;
+  document.getElementById('win-score-val').innerHTML=`<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>⭐ ${state.score} оноо<br><span style="font-size:14px;color:#aaa">+${survivalBonus} бонус · +${statBonus} үйл ажиллагааны бонус<br>🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}</span>`;
   document.getElementById('winscreen').classList.add('active');sfxWin();
   const c=document.getElementById('win-confetti');c.innerHTML='';
   const cols=['#FFD700','#ff4444','#44ff88','#4488ff','#ff88ff','#ffaa44','#44ffff'];
   for(let i=0;i<80;i++){const el=document.createElement('div');el.className='confetti-piece';el.style.cssText=`left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};width:${6+Math.random()*9}px;height:${6+Math.random()*9}px;animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*2}s;border-radius:${Math.random()>0.5?'50%':'2px'};`;c.appendChild(el);}
 }
 function restartGame(){
-  clearInterval(starvationIv);clearInterval(passiveDrainIv);clearInterval(garbageIdleIv);
+  clearInterval(starvationIv);clearInterval(garbageIdleIv);
   state={hp:100,maxHp:100,forest:100,oxygen:75,score:0,monthIdx:0,axes:0,bows:0,fireRate:0,food:0,alive:true,won:false,hasFirstAxe:false};
-  nextMilestoneIdx=0;starvProg=0;garbageIdleTimer=0;garbageIdleProg=0;
-  combo=0;monthStreak=0;totalGarbageSorted=0;totalAnimalsHunted=0;totalTreesPlanted=0;
-  clearTimeout(comboTimer);
+  nextMilestoneIdx=0;starvProg=0;garbageIdleTimer=0;combo=0;monthStreak=0;
+  totalGarbageSorted=0;totalAnimalsHunted=0;totalTreesPlanted=0;clearTimeout(comboTimer);
   document.getElementById('gameover').classList.remove('active');document.getElementById('winscreen').classList.remove('active');
   document.getElementById('win-confetti').innerHTML='';document.getElementById('starving-bar').style.transform='scaleX(0)';
   document.getElementById('garbage-idle-bar').style.width='0%';document.getElementById('garbage-idle-label').style.display='none';
   burnParticles.forEach(p=>scene.remove(p.mesh));burnParticles=[];
   rebuildForest();rebuildGarbageSprites();buildWeatherOverlay();applySeasonToWorld();updateHUD();
-  startPassiveDrain();checkStarvation();startGarbageIdleTimer();
-  toast('🌍 12 сарыг амьд үлдвэл ялна!\n🌲 Дэлхий дээрх модыг дарж сүх хий!\n⚠️ 5 секунд тутам -5 Амь буурна!','#FFD700');
+  checkStarvation();startGarbageIdleTimer();
+  toast('🌍 12 сарыг амьд үлдвэл ялна!\n🌲 Модыг дарж сүх хий!\n♻️ Хог ангилаарай!','#FFD700');
 }
 
 // ═══════ GARBAGE ═══════
@@ -970,12 +729,9 @@ const GARBAGE_DB=[
   {emoji:'🧴',name:'Шампунь',bin:'plastic'},{emoji:'🥤',name:'Аяга',bin:'plastic'},{emoji:'🧃',name:'Шүүс',bin:'plastic'},
   {emoji:'🔋',name:'Батарей',bin:'hazard'},{emoji:'💊',name:'Эм',bin:'hazard'},{emoji:'🖥️',name:'Дэлгэц',bin:'hazard'},{emoji:'🧪',name:'Химийн бодис',bin:'hazard'},
 ];
-let currentGarbage=[],garbCorrect=0,garbTotal=0,garbTimer=null,garbTime=0;
-let touchDragItem=null;
-
+let currentGarbage=[],garbCorrect=0,garbTotal=0,garbTimer=null,garbTime=0,touchDragItem=null;
 function openGarbage(){
-  if(!state.alive||state.won)return;sfxClick();
-  resetGarbageIdleTimer(); // Reset idle timer when player opens garbage
+  if(!state.alive||state.won)return;sfxClick();resetGarbageIdleTimer();
   garbCorrect=0;document.getElementById('garbage-result').textContent='';
   const count=Math.min(8,4+Math.floor(state.monthIdx/2));
   currentGarbage=[...GARBAGE_DB].sort(()=>Math.random()-0.5).slice(0,count);
@@ -999,68 +755,45 @@ function openGarbage(){
     if(garbTime<=0){
       clearInterval(garbTimer);
       const unsorted=document.querySelectorAll('#garbage-items .garbage-item:not(.sorted)').length;
-      if(unsorted>0){
-        state.hp=Math.max(0,state.hp-unsorted*8);state.oxygen=Math.max(0,state.oxygen-unsorted*5);
-        state.fireRate=Math.min(100,state.fireRate+unsorted*6);sfxHurt();
-        toast(`⏰ Хугацаа дуусав! ${unsorted} хог буруу!\n❤️-${unsorted*8}  О₂-${unsorted*5}  🔥+${unsorted*6}%`,'#ff4444');
-        updateHUD();checkDeath();
-      }
+      if(unsorted>0){state.hp=Math.max(0,state.hp-unsorted*8);state.oxygen=Math.max(0,state.oxygen-unsorted*5);state.fireRate=Math.min(100,state.fireRate+unsorted*6);sfxHurt();toast(`⏰ Хугацаа! ${unsorted} хог буруу! ❤️-${unsorted*8}  О₂-${unsorted*5}`,'#ff4444');updateHUD();checkDeath();}
       setTimeout(closeGarbage,900);
     }
   },1000);
 }
-
 function updateGarbageProgress(){document.getElementById('garbage-progress').textContent=`Ангилсан: ${garbCorrect}/${garbTotal} ⏱️ ${garbTime}с`;}
 function binDragOver(e){e.preventDefault();e.currentTarget.classList.add('dragover');}
 function binDragLeave(e){e.currentTarget.classList.remove('dragover');}
 function dropBin(e,binType){e.preventDefault();e.currentTarget.classList.remove('dragover');const d=e.dataTransfer.getData('text/plain');if(!d)return;const[idx,cb]=d.split(':');processBinDrop(parseInt(idx),cb,binType);}
 function touchDropBin(e,binType){e.preventDefault();e.currentTarget.classList.remove('touch-over');if(!touchDragItem)return;const{idx,bin:cb}=touchDragItem;touchDragItem=null;document.querySelectorAll('.garbage-item.selected').forEach(x=>x.classList.remove('selected'));processBinDrop(idx,cb,binType);}
-
 function processBinDrop(idx,correctBin,binType){
   const itemEl=document.getElementById('garbage-items').children[idx];
   if(!itemEl||itemEl.classList.contains('sorted'))return;
   const res=document.getElementById('garbage-result');
   if(correctBin===binType){
-    garbCorrect++;addScore(20,'garbage');totalGarbageSorted++;
-    addCombo();
-    state.oxygen=Math.min(100,state.oxygen+2);state.food=Math.min(99,state.food+1);
-    state.fireRate=Math.max(0,state.fireRate-3);state.hp=Math.min(state.maxHp,state.hp+2);
+    garbCorrect++;addScore(20,'garbage');totalGarbageSorted++;addCombo();
+    state.oxygen=Math.min(100,state.oxygen+2);state.food=Math.min(99,state.food+1);state.fireRate=Math.max(0,state.fireRate-3);state.hp=Math.min(state.maxHp,state.hp+2);
     itemEl.classList.add('sorted');res.style.color='#4ecb71';
-    const mult=getComboMultiplier();
-    res.textContent=`✅ ${currentGarbage[idx].emoji} зөв! +20×${mult} оноо +2%О₂ +1Хоол 🔥-3% +2Амь`;
+    res.textContent=`✅ ${currentGarbage[idx].emoji} зөв! +20×${getComboMult()} оноо`;
     sfxCorrect();checkStarvation();
     if(garbCorrect===garbTotal){clearInterval(garbTimer);addScore(40,'garbage');res.textContent='🎉 Бүгдийг ангиллаа! +40 бонус!';sfxMilestone();setTimeout(closeGarbage,1100);}
   }else{
-    breakCombo();
-    state.oxygen=Math.max(0,state.oxygen-6);state.score=Math.max(0,state.score-15);
-    state.fireRate=Math.min(100,state.fireRate+8);state.hp=Math.max(0,state.hp-8);
+    breakCombo();state.oxygen=Math.max(0,state.oxygen-6);state.score=Math.max(0,state.score-15);state.fireRate=Math.min(100,state.fireRate+8);state.hp=Math.max(0,state.hp-8);
     itemEl.style.borderColor='#ff4444';itemEl.style.background='rgba(255,40,40,0.2)';
-    res.style.color='#ff6666';res.textContent=`❌ Буруу! -15оноо О₂-6% 🔥+8% ❤️-8Амь`;sfxHurt();
+    res.style.color='#ff6666';res.textContent=`❌ Буруу! -15оноо О₂-6% 🔥+8% ❤️-8`;sfxHurt();
   }
   updateHUD();checkDeath();updateGarbageProgress();
 }
-
-function closeGarbage(){
-  clearInterval(garbTimer);touchDragItem=null;
-  document.getElementById('garbage-game').classList.remove('active');
-  // Reset idle timer when player has sorted (or closed) garbage
-  resetGarbageIdleTimer();startGarbageIdleTimer();
-}
-
-document.querySelectorAll('.bin').forEach(b=>{
-  b.addEventListener('touchmove',e=>{e.preventDefault();document.querySelectorAll('.bin').forEach(x=>x.classList.remove('touch-over'));const t=e.touches[0];const el=document.elementFromPoint(t.clientX,t.clientY);if(el&&el.closest('.bin'))el.closest('.bin').classList.add('touch-over');},{passive:false});
-});
+function closeGarbage(){clearInterval(garbTimer);touchDragItem=null;document.getElementById('garbage-game').classList.remove('active');resetGarbageIdleTimer();startGarbageIdleTimer();}
+document.querySelectorAll('.bin').forEach(b=>{b.addEventListener('touchmove',e=>{e.preventDefault();document.querySelectorAll('.bin').forEach(x=>x.classList.remove('touch-over'));const t=e.touches[0];const el=document.elementFromPoint(t.clientX,t.clientY);if(el&&el.closest('.bin'))el.closest('.bin').classList.add('touch-over');},{passive:false});});
 
 // ═══════ HUNT ═══════
 let huntAnimals=[],huntIv=null,huntTimerIv=null,huntCaught=0,huntTime=0,huntShotsLeft=0,huntShotsFired=0;
 const ANIMAL_EMOJIS=['🦊','🐗','🦌','🐇','🦡','🦝','🐿️','🦔'];
 const SHOTS_PER_BOW=5;
-
 function buildAmmoUI(n){const el=document.getElementById('hunt-ammo');el.innerHTML='';for(let i=0;i<n;i++){const d=document.createElement('span');d.className='ammo-dot';d.id='ammo-'+i;el.appendChild(d);}}
-
 function openHunt(){
   if(!state.alive||state.won)return;sfxClick();
-  if(state.bows<1){toast('🏹 Нум алга! Мод огтол.','#ff9944');return;}
+  if(state.bows<1){toast('🏹 Нум алга!','#ff9944');return;}
   state.bows=Math.max(0,state.bows-1);updateHUD();
   huntCaught=0;huntShotsLeft=SHOTS_PER_BOW;huntShotsFired=0;huntTime=18;huntAnimals=[];
   document.getElementById('hunt-bow-info').textContent=`🏹 1 Нум хэрэглэв — ${SHOTS_PER_BOW} сум!`;
@@ -1068,8 +801,7 @@ function openHunt(){
   document.getElementById('hunt-score').textContent='Барьсан: 0';
   document.getElementById('hunt-time').textContent='⏱️ 18с';
   document.getElementById('hunt-game').classList.add('active');
-  const cvs=document.getElementById('hunt-canvas'),ctx=cvs.getContext('2d');
-  const W=520,H=300,m=MONTHS[state.monthIdx],isFog=m.weather==='fog';
+  const cvs=document.getElementById('hunt-canvas'),ctx=cvs.getContext('2d'),W=520,H=300,m=MONTHS[state.monthIdx],isFog=m.weather==='fog';
   const spd=1.2+state.fireRate/100+(state.monthIdx/20);
   let ac=4+Math.floor(state.monthIdx/2);
   if(m.weather==='snow')ac=Math.max(2,ac-2);if(m.weather==='hot')ac+=3;
@@ -1078,26 +810,16 @@ function openHunt(){
   const sh=m.skyDay,sr=(sh>>16)&0xff,sg=(sh>>8)&0xff,sb=(sh)&0xff;
   huntIv=setInterval(()=>{
     ctx.clearRect(0,0,W,H);const fr=state.fireRate;
-    const bgR=Math.min(255,Math.floor(sr*(1-fr/200)+fr*1.2)),bgG=Math.max(0,Math.floor(sg*(1-fr/150))),bgB=Math.max(0,Math.floor(sb*(1-fr/100)));
-    ctx.fillStyle=`rgb(${bgR},${bgG},${bgB})`;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=`rgb(${Math.min(255,Math.floor(sr*(1-fr/200)+fr*1.2))},${Math.max(0,Math.floor(sg*(1-fr/150)))},${Math.max(0,Math.floor(sb*(1-fr/100)))})`;ctx.fillRect(0,0,W,H);
     if(isFog){ctx.fillStyle='rgba(130,155,175,0.45)';ctx.fillRect(0,0,W,H);}
     const gh=m.ground,gr=(gh>>16)&0xff,gg=(gh>>8)&0xff,gb=(gh)&0xff;
     ctx.fillStyle=`rgb(${gr},${gg},${gb})`;ctx.fillRect(0,H-36,W,36);
-    const tc=Math.max(0,Math.floor(state.forest/12));
-    for(let i=0;i<tc;i++){ctx.font='17px serif';ctx.fillText(m.season.includes('Намар')?'🍂':'🌲',6+i*55,H-9);}
+    for(let i=0;i<Math.max(0,Math.floor(state.forest/12));i++){ctx.font='17px serif';ctx.fillText(m.season.includes('Намар')?'🍂':'🌲',6+i*55,H-9);}
     if(isFog){ctx.fillStyle='rgba(140,165,185,0.25)';ctx.fillRect(0,0,W,H);}
-    huntAnimals.forEach(a=>{
-      if(!a.alive)return;
-      a.x+=a.vx;a.y+=a.vy;if(a.x<14||a.x>W-14)a.vx*=-1;if(a.y<18||a.y>H-48)a.vy*=-1;
-      ctx.globalAlpha=isFog?0.5:(a.flash>0?0.27:1);if(a.flash>0)a.flash--;
-      ctx.font='24px serif';ctx.fillText(a.emoji,a.x-12,a.y+9);ctx.globalAlpha=1;
-    });
-    ctx.fillStyle='rgba(0,0,0,0.64)';ctx.fillRect(0,0,W,19);
-    ctx.fillStyle='#fff';ctx.font='bold 10px Nunito';
-    ctx.fillText(`🏹 ${huntShotsLeft} сум  🍖 ${huntCaught} барьсан  ⏱️ ${huntTime}с`,7,13);
+    huntAnimals.forEach(a=>{if(!a.alive)return;a.x+=a.vx;a.y+=a.vy;if(a.x<14||a.x>W-14)a.vx*=-1;if(a.y<18||a.y>H-48)a.vy*=-1;ctx.globalAlpha=isFog?0.5:(a.flash>0?0.27:1);if(a.flash>0)a.flash--;ctx.font='24px serif';ctx.fillText(a.emoji,a.x-12,a.y+9);ctx.globalAlpha=1;});
+    ctx.fillStyle='rgba(0,0,0,0.64)';ctx.fillRect(0,0,W,19);ctx.fillStyle='#fff';ctx.font='bold 10px Nunito';ctx.fillText(`🏹 ${huntShotsLeft} сум  🍖 ${huntCaught} барьсан  ⏱️ ${huntTime}с`,7,13);
   },30);
   huntTimerIv=setInterval(()=>{huntTime--;document.getElementById('hunt-time').textContent='⏱️ '+huntTime+'с';if(huntTime<=0)endHunt();},1000);
-
   function doShot(mx,my){
     if(huntShotsLeft<=0)return;
     const di=huntShotsFired++;huntShotsLeft--;
@@ -1109,12 +831,7 @@ function openHunt(){
   cvs.onclick=(e)=>{const r=cvs.getBoundingClientRect();doShot((e.clientX-r.left)*(520/r.width),(e.clientY-r.top)*(300/r.height));};
   cvs.ontouchstart=(e)=>{e.preventDefault();const r=cvs.getBoundingClientRect(),t=e.touches[0];doShot((t.clientX-r.left)*(520/r.width),(t.clientY-r.top)*(300/r.height));};
 }
-
-function endHunt(){clearInterval(huntIv);clearInterval(huntTimerIv);state.hp=Math.min(state.maxHp,state.hp+huntCaught*3);checkStarvation();
-  if(huntCaught>0){addScore(huntCaught*10,'hunt');sfxMilestone();}
-  const bonus=huntCaught>=4?'🎯 Мэргэн буудагч! +бонус':huntCaught===0?'💨 Нэгийг ч барьсангүй':'';
-  toast(`🎯 Ан дууслаа!\n${huntCaught} амьтан · +${huntCaught} хоол · +${huntCaught*3} Амь\n${bonus}`,'#ff8844');
-  setTimeout(closeHunt,600);}
+function endHunt(){clearInterval(huntIv);clearInterval(huntTimerIv);state.hp=Math.min(state.maxHp,state.hp+huntCaught*3);checkStarvation();if(huntCaught>0){addScore(huntCaught*10,'hunt');sfxMilestone();}toast(`🎯 Ан дууслаа!\n${huntCaught} амьтан · +${huntCaught} хоол · +${huntCaught*3} Амь`,'#ff8844');setTimeout(closeHunt,600);}
 function closeHunt(){clearInterval(huntIv);clearInterval(huntTimerIv);document.getElementById('hunt-game').classList.remove('active');const cvs=document.getElementById('hunt-canvas');cvs.onclick=null;cvs.ontouchstart=null;updateHUD();}
 
 // ═══════ GARBAGE WORLD SPRITES ═══════
@@ -1128,260 +845,105 @@ function makeCloud(x,y,z){const g=new THREE.Group();[[0,0,0],[1,0.2,0],[-0.9,0.1
 const clouds=[];for(let i=0;i<9;i++)clouds.push(makeCloud((Math.random()-0.5)*75,10+Math.random()*5,(Math.random()-0.5)*50));
 rebuildForest();
 
-// ═══════ CONTROLS — mouse + touch ═══════
+// ═══════ CONTROLS ═══════
 let isDragging=false,lastX=0,camAngle=0,camDist=20,camY=8,touchStartDist=0;
 const mainCvs=document.getElementById('canvas');
 mainCvs.addEventListener('mousedown',e=>{isDragging=true;lastX=e.clientX;});
 document.addEventListener('mouseup',()=>isDragging=false);
 document.addEventListener('mousemove',e=>{if(!isDragging)return;camAngle+=(e.clientX-lastX)*0.008;lastX=e.clientX;});
 document.addEventListener('wheel',e=>{camDist=Math.max(8,Math.min(42,camDist+e.deltaY*0.025));},{passive:true});
-mainCvs.addEventListener('touchstart',e=>{if(e.touches.length===1){isDragging=true;lastX=e.touches[0].clientX;}if(e.touches.length===2){touchStartDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}},{passive:true});
+mainCvs.addEventListener('touchstart',e=>{if(e.touches.length===1){isDragging=true;lastX=e.touches[0].clientX;}if(e.touches.length===2)touchStartDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);},{passive:true});
 mainCvs.addEventListener('touchend',()=>isDragging=false,{passive:true});
-mainCvs.addEventListener('touchmove',e=>{
-  e.preventDefault();
-  if(e.touches.length===1&&isDragging){camAngle+=(e.touches[0].clientX-lastX)*0.01;lastX=e.touches[0].clientX;}
-  if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);camDist=Math.max(8,Math.min(42,camDist*(touchStartDist/d)));touchStartDist=d;}
-},{passive:false});
-
-// Axe canvas
+mainCvs.addEventListener('touchmove',e=>{e.preventDefault();if(e.touches.length===1&&isDragging){camAngle+=(e.touches[0].clientX-lastX)*0.01;lastX=e.touches[0].clientX;}if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);camDist=Math.max(8,Math.min(42,camDist*(touchStartDist/d)));touchStartDist=d;}},{passive:false});
 const axeCvs=document.getElementById('axe-canvas');
 axeCvs.addEventListener('click',e=>tapAxeCanvas(e.clientX,e.clientY));
-axeCvs.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0];tapAxeCanvas(t.clientX,t.clientY);},{passive:false});
+axeCvs.addEventListener('touchstart',e=>{e.preventDefault();tapAxeCanvas(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 
 // ═══════ ANIMATE ═══════
 let tick=0;
 function animate(){
   requestAnimationFrame(animate);tick++;
   camera.position.x=Math.sin(camAngle)*camDist;camera.position.z=Math.cos(camAngle)*camDist;camera.position.y=camY;camera.lookAt(0,0,0);
-  const m=MONTHS[state.monthIdx];const wind=m.weather==='windy'?0.022:0.007;
+  const m=MONTHS[state.monthIdx],wind=m.weather==='windy'?0.022:0.007;
   clouds.forEach((c,i)=>{c.position.x+=wind*(i%2===0?1:-1);if(c.position.x>42)c.position.x=-42;if(c.position.x<-42)c.position.x=42;});
   trees.forEach((t,i)=>t.rotation.z=Math.sin(tick*0.013+i)*(m.weather==='windy'?0.1:0.032));
   burnParticles=burnParticles.filter(p=>{p.mesh.position.y+=p.vy;p.mesh.position.x+=(Math.random()-0.5)*0.05;p.mesh.material.transparent=true;p.mesh.material.opacity=Math.max(0,p.life/100);p.life--;if(p.life<=0){scene.remove(p.mesh);return false;}return true;});
   if(state.alive&&state.fireRate>20&&tick%5===0&&trees.length>0){const t=trees[Math.floor(Math.random()*trees.length)];if(t){const p=new THREE.Mesh(new THREE.SphereGeometry(0.05+Math.random()*0.07,4,4),new THREE.MeshBasicMaterial({color:[0xff1100,0xff5500,0xff9900,0xffcc00,0xffee44][Math.floor(Math.random()*5)]}));p.position.set(t.position.x+(Math.random()-0.5)*1.8,1+Math.random()*3.5,t.position.z+(Math.random()-0.5)*1.8);scene.add(p);burnParticles.push({mesh:p,vy:0.05+Math.random()*0.05,life:26+Math.floor(Math.random()*22)});}}
-  garbageSprites.forEach(s=>{const by=s.wy+Math.sin(tick*0.04+s.bob)*0.14;const pos=projectWorld(s.wx,by,s.wz);if(pos.behind||pos.x<-20||pos.x>innerWidth+20||pos.y<-20||pos.y>innerHeight+20){s.el.style.opacity='0';}else{s.el.style.opacity='1';s.el.style.left=pos.x+'px';s.el.style.top=pos.y+'px';}});
-  updateTreeButtons();
-  renderer.render(scene,camera);
+  garbageSprites.forEach(s=>{const by=s.wy+Math.sin(tick*0.04+s.bob)*0.14;const pos=projectWorld(s.wx,by,s.wz);if(pos.behind||pos.x<-20||pos.x>innerWidth+20||pos.y<-20||pos.y>innerHeight+20)s.el.style.opacity='0';else{s.el.style.opacity='1';s.el.style.left=pos.x+'px';s.el.style.top=pos.y+'px';}});
+  updateTreeButtons();renderer.render(scene,camera);
 }
 animate();
-
 window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 
-// ═══════ LEADERBOARD — Firebase Firestore ═══════
-const LB_COLLECTION = 'ecosurvivor_scores';
-let lbTab  = 'all';
-let lbSort = 'score';
-let pendingEntry = null;
-let isWinEntry   = false;
-let lbCache      = [];   // last fetched data
+// ═══════════════════════════════════════════════════════════
+//  LEADERBOARD — Firebase Realtime Database (compat SDK)
+// ═══════════════════════════════════════════════════════════
+let lbTab='all',lbSort='score',pendingEntry=null,lbCache=[];
 
-// ── Firebase helpers (wait until module is ready) ──
-function fbReady() { return !!window._fbReady && !!window._fbDb; }
-
-async function fbSaveScore(entry) {
-  if (!fbReady()) { console.warn('Firebase not ready'); return false; }
-  try {
-    await window._fbAddDoc(
-      window._fbCollection(window._fbDb, LB_COLLECTION),
-      { ...entry, ts: window._fbTimestamp() }
-    );
-    return true;
-  } catch(e) { console.error('Firebase save error:', e); return false; }
+function openNameEntry(isWin){
+  const r=getCurrentRank();
+  pendingEntry={score:state.score,month:state.monthIdx+1,monthName:MONTHS[state.monthIdx].name,won:isWin,rank:r.name,rankEmoji:r.emoji,rankColor:r.color,trees:totalTreesPlanted,animals:totalAnimalsHunted,garbage:totalGarbageSorted,date:new Date().toLocaleDateString('mn-MN')};
+  const inp=document.getElementById('player-name-input');inp.value='';
+  document.getElementById('name-entry-msg').textContent='';
+  document.getElementById('name-entry-score').innerHTML=`<span style="color:${r.color};font-weight:900;">${r.emoji} ${r.name}</span><br>⭐ <strong style="color:#FFD700">${state.score} оноо</strong> · ${MONTHS[state.monthIdx].name}<br>🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}`;
+  document.getElementById('name-entry').style.display='flex';
+  setTimeout(()=>inp.focus(),120);
 }
+function validateNameInput(){const v=document.getElementById('player-name-input').value.trim();const btn=document.getElementById('name-submit-btn');btn.style.opacity=v.length>0?'1':'0.4';btn.disabled=v.length===0;}
+function closeNameEntry(){document.getElementById('name-entry').style.display='none';pendingEntry=null;}
 
-async function fbLoadScores() {
-  if (!fbReady()) return [];
-  try {
-    const q = window._fbQuery(
-      window._fbCollection(window._fbDb, LB_COLLECTION),
-      window._fbOrderBy('score', 'desc'),
-      window._fbLimit(100)
-    );
-    const snap = await window._fbGetDocs(q);
-    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  } catch(e) { console.error('Firebase load error:', e); return []; }
+async function submitScore(){
+  const name=document.getElementById('player-name-input').value.trim();
+  if(!name||!pendingEntry)return;
+  const btn=document.getElementById('name-submit-btn');
+  btn.disabled=true;btn.textContent='⏳ Хадгалж байна...';
+  pendingEntry.name=name;
+  const ok=await window.fbSaveScore(pendingEntry);
+  const msg=document.getElementById('name-entry-msg');
+  if(ok){msg.textContent='✅ Амжилттай хадгаллаа!';msg.style.color='#44ff88';sfxMilestone();setTimeout(()=>{closeNameEntry();openLeaderboard();},900);}
+  else{msg.textContent='❌ Алдаа гарлаа. Console шалгана уу.';msg.style.color='#ff6666';btn.disabled=false;btn.textContent='✅ Хадгалах';}
 }
+document.getElementById('player-name-input').addEventListener('keydown',e=>{if(e.key==='Enter')submitScore();});
 
-// ── Name entry ──
-function openNameEntry(isWin) {
-  isWinEntry = isWin;
-  const r = getCurrentRank();
-  pendingEntry = {
-    score:     state.score,
-    month:     state.monthIdx + 1,
-    monthName: MONTHS[state.monthIdx].name,
-    won:       isWin,
-    rank:      r.name,
-    rankEmoji: r.emoji,
-    rankColor: r.color,
-    trees:     totalTreesPlanted,
-    animals:   totalAnimalsHunted,
-    garbage:   totalGarbageSorted,
-    date:      new Date().toLocaleDateString('mn-MN'),
-  };
-  const ne  = document.getElementById('name-entry');
-  const inp = document.getElementById('player-name-input');
-  inp.value = '';
-  document.getElementById('name-entry-msg').textContent = '';
-  document.getElementById('name-entry-score').innerHTML =
-    `<span style="color:${r.color};font-weight:900;">${r.emoji} ${r.name}</span><br>` +
-    `⭐ <strong style="color:#FFD700">${state.score} оноо</strong> · ${MONTHS[state.monthIdx].name}<br>` +
-    `🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}`;
-  ne.style.display = 'flex';
-  setTimeout(() => inp.focus(), 120);
+async function openLeaderboard(){
+  lbTab='all';lbSort='score';
+  document.getElementById('leaderboard-modal').style.display='flex';
+  refreshLBTabButtons();refreshLBSortButtons();
+  const loading=document.getElementById('lb-loading'),entries=document.getElementById('lb-entries'),empty=document.getElementById('lb-empty');
+  loading.style.display='block';entries.innerHTML='';empty.style.display='none';
+  lbCache=await window.fbLoadScores();
+  loading.style.display='none';renderLeaderboard();
 }
-
-function validateNameInput() {
-  const v   = document.getElementById('player-name-input').value.trim();
-  const btn = document.getElementById('name-submit-btn');
-  btn.style.opacity = v.length > 0 ? '1' : '0.4';
-  btn.disabled = v.length === 0;
-}
-
-function closeNameEntry() {
-  document.getElementById('name-entry').style.display = 'none';
-  pendingEntry = null;
-}
-
-async function submitScore() {
-  const name = document.getElementById('player-name-input').value.trim();
-  if (!name || !pendingEntry) return;
-
-  const btn = document.getElementById('name-submit-btn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Хадгалж байна...';
-
-  pendingEntry.name = name;
-
-  const ok = await fbSaveScore(pendingEntry);
-
-  const msg = document.getElementById('name-entry-msg');
-  if (ok) {
-    msg.textContent = '✅ Амжилттай хадгаллаа!';
-    msg.style.color = '#44ff88';
-    sfxMilestone();
-    setTimeout(() => { closeNameEntry(); openLeaderboard(); }, 900);
-  } else {
-    msg.textContent = '❌ Алдаа гарлаа. Firebase тохиргоо шалгана уу.';
-    msg.style.color = '#ff6666';
-    btn.disabled = false;
-    btn.textContent = '✅ Хадгалах';
-  }
-}
-
-document.getElementById('player-name-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') submitScore();
-});
-
-// ── Leaderboard display ──
-function openLeaderboard() {
-  lbTab  = 'all';
-  lbSort = 'score';
-  document.getElementById('leaderboard-modal').style.display = 'flex';
-  refreshLBTabButtons();
-  refreshLBSortButtons();
-  fetchAndRender();
-}
-
-function closeLeaderboard() {
-  document.getElementById('leaderboard-modal').style.display = 'none';
-}
-
-async function fetchAndRender() {
-  const loading = document.getElementById('lb-loading');
-  const entries = document.getElementById('lb-entries');
-  const empty   = document.getElementById('lb-empty');
-  loading.style.display = 'block';
-  entries.innerHTML = '';
-  empty.style.display = 'none';
-
-  if (!fbReady()) {
-    loading.innerHTML = '<div style="font-size:24px;margin-bottom:8px;">⚙️</div>Firebase тохируулаагүй байна.<br><span style="font-size:11px;color:#888;">Script доторх firebaseConfig-г өөрийн утгаар сольно уу.</span>';
-    return;
-  }
-
-  lbCache = await fbLoadScores();
-  loading.style.display = 'none';
-  renderLeaderboard();
-}
-
-function setLBTab(tab) {
-  lbTab = tab;
-  refreshLBTabButtons();
-  renderLeaderboard();
-}
-
-function setLBSort(sort) {
-  lbSort = sort;
-  refreshLBSortButtons();
-  renderLeaderboard();
-}
-
-function refreshLBTabButtons() {
-  ['all','win','month'].forEach(t => {
-    const btn = document.getElementById('tab-'+t);
-    if (!btn) return;
-    const active = t === lbTab;
-    btn.style.background   = active ? 'rgba(255,215,0,0.2)' : 'rgba(255,255,255,0.05)';
-    btn.style.borderColor  = active ? '#FFD700' : 'rgba(255,255,255,0.2)';
-    btn.style.color        = active ? '#FFD700' : '#aaa';
-  });
-}
-
-function refreshLBSortButtons() {
-  ['score','month','trees'].forEach(s => {
-    const btn = document.getElementById('sort-'+s);
-    if (!btn) return;
-    const active = s === lbSort;
-    btn.style.background  = active ? 'rgba(255,215,0,0.18)' : 'rgba(255,255,255,0.05)';
-    btn.style.borderColor = active ? '#FFD700' : '#444';
-    btn.style.color       = active ? '#FFD700' : '#888';
-  });
-}
-
-function renderLeaderboard() {
-  let data = [...lbCache];
-
-  if (lbTab === 'win')   data = data.filter(e => e.won);
-  if (lbTab === 'month') data = data.filter(e => e.month >= 6);
-
-  if (lbSort === 'score')  data.sort((a,b) => (b.score||0) - (a.score||0));
-  if (lbSort === 'month')  data.sort((a,b) => ((b.month||0)-(a.month||0)) || ((b.score||0)-(a.score||0)));
-  if (lbSort === 'trees')  data.sort((a,b) => ((b.trees||0)-(a.trees||0)) || ((b.score||0)-(a.score||0)));
-
-  const container = document.getElementById('lb-entries');
-  const empty     = document.getElementById('lb-empty');
-
-  if (data.length === 0) {
-    container.innerHTML = '';
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
-
-  const medals = ['🥇','🥈','🥉'];
-
-  container.innerHTML = data.slice(0, 50).map((e, i) => {
-    const medal    = i < 3 ? medals[i] : `<span style="color:#555;font-size:12px;">#${i+1}</span>`;
-    const wonBadge = e.won
-      ? `<span style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:900;margin-left:4px;">🏆 ЯЛСАН</span>`
-      : '';
-    const bg = i===0
-      ? 'linear-gradient(135deg,rgba(255,215,0,0.14),rgba(255,140,0,0.07))'
-      : i===1 ? 'linear-gradient(135deg,rgba(200,200,200,0.09),rgba(180,180,180,0.04))'
-      : i===2 ? 'linear-gradient(135deg,rgba(180,120,60,0.11),rgba(160,100,40,0.05))'
-      : 'rgba(255,255,255,0.025)';
-    const bdr = i===0?'rgba(255,215,0,0.35)':i===1?'rgba(200,200,200,0.22)':i===2?'rgba(180,120,60,0.28)':'rgba(255,255,255,0.07)';
-    const rc  = e.rankColor || '#aaa';
+function closeLeaderboard(){document.getElementById('leaderboard-modal').style.display='none';}
+function setLBTab(tab){lbTab=tab;refreshLBTabButtons();renderLeaderboard();}
+function setLBSort(sort){lbSort=sort;refreshLBSortButtons();renderLeaderboard();}
+function refreshLBTabButtons(){['all','win','month'].forEach(t=>{const btn=document.getElementById('tab-'+t);if(!btn)return;const a=t===lbTab;btn.style.background=a?'rgba(255,215,0,0.2)':'rgba(255,255,255,0.05)';btn.style.borderColor=a?'#FFD700':'rgba(255,255,255,0.2)';btn.style.color=a?'#FFD700':'#aaa';});}
+function refreshLBSortButtons(){['score','month','trees'].forEach(s=>{const btn=document.getElementById('sort-'+s);if(!btn)return;const a=s===lbSort;btn.style.background=a?'rgba(255,215,0,0.18)':'rgba(255,255,255,0.05)';btn.style.borderColor=a?'#FFD700':'#444';btn.style.color=a?'#FFD700':'#888';});}
+function renderLeaderboard(){
+  let data=[...lbCache];
+  if(lbTab==='win')data=data.filter(e=>e.won);
+  if(lbTab==='month')data=data.filter(e=>e.month>=6);
+  if(lbSort==='score')data.sort((a,b)=>(b.score||0)-(a.score||0));
+  if(lbSort==='month')data.sort((a,b)=>((b.month||0)-(a.month||0))||((b.score||0)-(a.score||0)));
+  if(lbSort==='trees')data.sort((a,b)=>((b.trees||0)-(a.trees||0))||((b.score||0)-(a.score||0)));
+  const container=document.getElementById('lb-entries'),empty=document.getElementById('lb-empty');
+  if(data.length===0){container.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  const medals=['🥇','🥈','🥉'];
+  container.innerHTML=data.slice(0,50).map((e,i)=>{
+    const medal=i<3?medals[i]:`<span style="color:#555;font-size:12px;">#${i+1}</span>`;
+    const wonBadge=e.won?`<span style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:900;margin-left:4px;">🏆 ЯЛСАН</span>`:'';
+    const bg=i===0?'linear-gradient(135deg,rgba(255,215,0,0.14),rgba(255,140,0,0.07))':i===1?'linear-gradient(135deg,rgba(200,200,200,0.09),rgba(180,180,180,0.04))':i===2?'linear-gradient(135deg,rgba(180,120,60,0.11),rgba(160,100,40,0.05))':'rgba(255,255,255,0.025)';
+    const bdr=i===0?'rgba(255,215,0,0.35)':i===1?'rgba(200,200,200,0.22)':i===2?'rgba(180,120,60,0.28)':'rgba(255,255,255,0.07)';
     return `<div style="background:${bg};border:1px solid ${bdr};border-radius:13px;padding:11px 13px;margin-bottom:7px;display:flex;align-items:center;gap:10px;">
       <div style="font-size:${i<3?'24px':'16px'};min-width:28px;text-align:center;">${medal}</div>
       <div style="flex:1;min-width:0;">
         <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:2px;">
           <span style="font-weight:900;font-size:14px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px;">${escHtml(e.name||'?')}</span>
-          <span style="font-size:9px;font-weight:700;color:${rc};">${e.rankEmoji||''} ${e.rank||''}</span>
-          ${wonBadge}
+          <span style="font-size:9px;font-weight:700;color:${e.rankColor||'#aaa'};">${e.rankEmoji||''} ${e.rank||''}</span>${wonBadge}
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:9px;color:#aaa;">📅 ${e.monthName||((e.month||'?')+'-р сар')}</span>
+          <span style="font-size:9px;color:#aaa;">📅 ${e.monthName||e.month+'-р сар'}</span>
           <span style="font-size:9px;color:#777;">🌲${e.trees||0} 🍖${e.animals||0} ♻️${e.garbage||0}</span>
           <span style="font-size:9px;color:#555;">${e.date||''}</span>
         </div>
@@ -1393,17 +955,12 @@ function renderLeaderboard() {
     </div>`;
   }).join('');
 }
-
-function escHtml(s) {
-  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+function escHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 // ═══════ INIT ═══════
-updateHUD();buildWeatherOverlay();applySeasonToWorld();updateSky();
-startPassiveDrain();checkStarvation();startGarbageIdleTimer();
-
+updateHUD();buildWeatherOverlay();applySeasonToWorld();updateSky();checkStarvation();startGarbageIdleTimer();
 setTimeout(()=>{
-  toast('🌍 ЭкоАмьд!\n🌲 Модыг дарж анхны сүхээ хий!\n♻️ Хог ангилаарай — эс бол 60с тутам -10 Амь!\n⚠️ 5с тутам -5 Амь буурна!','#FFD700');
+  toast('🌍 ЭкоАмьд!\n🌲 Модыг дарж анхны сүхээ хий!\n♻️ Хог ангилаарай — 60с тутам -10 Амь!','#FFD700');
   document.getElementById('weather-banner').style.opacity='1';
   setTimeout(()=>document.getElementById('weather-banner').style.opacity='0',4000);
 },400);
