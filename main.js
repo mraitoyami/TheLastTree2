@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 import { PlayerController, ThirdPersonCameraController } from './rosie/controls/rosieControls.js';
 import { CONFIG } from './config.js';
 import { Player } from './entities/Player.js';
