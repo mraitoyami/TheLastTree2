@@ -292,6 +292,7 @@ export class HUD {
         const height = this.miniMapCanvas.height;
         const centerX = width / 2;
         const centerY = height / 2;
+        if (!CONFIG || !CONFIG.WORLD) return;
         const worldSize = CONFIG.WORLD.SIZE;
         const scale = (width / 2) / worldSize;
 
@@ -477,45 +478,60 @@ export class HUD {
     setupListeners() {
         window.addEventListener('player-stats-updated', (e) => {
             const s = e.detail;
-            document.getElementById('health-stat').innerText = `❤️ Эрүүл мэнд: ${Math.ceil(s.health)}`;
-            document.getElementById('oxygen-stat').innerText = `🌀 Хүчилтөрөгч: ${Math.round(s.oxygen)}%`;
-            document.getElementById('money-stat').innerText = `💰 $${s.money}`;
-            document.getElementById('wood-stat').innerText = `🪵 ${s.wood}`;
-            
+            const healthEl = document.getElementById('health-stat');
+            const oxygenEl = document.getElementById('oxygen-stat');
+            const moneyEl = document.getElementById('money-stat');
+            const woodEl = document.getElementById('wood-stat');
             const nBar = document.getElementById('nature-bar');
-            const nPercent = Math.min(100, (s.natureScore / CONFIG.MISSION.NATURE_SCORE_TARGET) * 100);
-            nBar.style.width = `${nPercent}%`;
+            const repBar = document.getElementById('reputation-bar');
+            const repStat = document.getElementById('reputation-stat');
+            const warning = document.getElementById('burn-warning');
+            const timer = document.getElementById('mission-timer');
+            
+            if (healthEl) healthEl.innerText = `❤️ Эрүүл мэнд: ${Math.ceil(s.health)}`;
+            if (oxygenEl) oxygenEl.innerText = `🌀 Хүчилтөрөгч: ${Math.round(s.oxygen)}%`;
+            if (moneyEl) moneyEl.innerText = `💰 $${s.money}`;
+            if (woodEl) woodEl.innerText = `🪵 ${s.wood}`;
+            
+            if (nBar) {
+                const nPercent = Math.min(100, (s.natureScore / CONFIG.MISSION.NATURE_SCORE_TARGET) * 100);
+                nBar.style.width = `${nPercent}%`;
+            }
             
             // Reputation bar logic (-50 to 100 range for visualization)
-            const repBar = document.getElementById('reputation-bar');
-            const repMin = -50, repMax = 100;
-            const repRange = repMax - repMin;
-            const repPercent = Math.min(100, Math.max(0, ((s.reputation - repMin) / repRange) * 100));
-            repBar.style.width = `${repPercent}%`;
-            
-            let repText = "Хэвийн";
-            let repColor = "#888";
-            if (s.reputation < CONFIG.REPUTATION.ANGRY_THRESHOLD) {
-                repText = "🔴 Үзэн ядагдсан";
-                repColor = "#ff4444";
-            } else if (s.reputation > CONFIG.REPUTATION.TRUST_THRESHOLD) {
-                repText = "🌟 Итгэл хүлээсэн";
-                repColor = "#ffcc00";
-            } else if (s.reputation > CONFIG.REPUTATION.FRIENDLY_THRESHOLD) {
-                repText = "🟢 Найрсаг";
-                repColor = "#44ff44";
+            if (repBar) {
+                const repMin = -50, repMax = 100;
+                const repRange = repMax - repMin;
+                const repPercent = Math.min(100, Math.max(0, ((s.reputation - repMin) / repRange) * 100));
+                repBar.style.width = `${repPercent}%`;
+                
+                let repText = "Хэвийн";
+                let repColor = "#888";
+                if (s.reputation < CONFIG.REPUTATION.ANGRY_THRESHOLD) {
+                    repText = "🔴 Үзэн ядагдсан";
+                    repColor = "#ff4444";
+                } else if (s.reputation > CONFIG.REPUTATION.TRUST_THRESHOLD) {
+                    repText = "🌟 Итгэл хүлээсэн";
+                    repColor = "#ffcc00";
+                } else if (s.reputation > CONFIG.REPUTATION.FRIENDLY_THRESHOLD) {
+                    repText = "🟢 Найрсаг";
+                    repColor = "#44ff44";
+                }
+                repBar.style.background = repColor;
+                if (repStat) {
+                    repStat.innerText = repText;
+                    repStat.style.color = repColor;
+                }
             }
-            repBar.style.background = repColor;
-            document.getElementById('reputation-stat').innerText = repText;
-            document.getElementById('reputation-stat').style.color = repColor;
 
-            const warning = document.getElementById('burn-warning');
-            warning.style.display = s.oxygen < CONFIG.STATS.CRITICAL_OXYGEN ? 'block' : 'none';
+            if (warning) warning.style.display = s.oxygen < CONFIG.STATS.CRITICAL_OXYGEN ? 'block' : 'none';
 
             // Timer update
-            const minutes = Math.floor(this.player.missionTimer / 60);
-            const seconds = Math.floor(this.player.missionTimer % 60);
-            document.getElementById('mission-timer').innerText = `Сүйрэх хугацаа: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timer) {
+                const minutes = Math.floor(this.player.missionTimer / 60);
+                const seconds = Math.floor(this.player.missionTimer % 60);
+                timer.innerText = `Сүйрэх хугацаа: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
 
             if (this.shopModal.style.display === 'block') this.renderShop();
         });
@@ -607,8 +623,10 @@ export class HUD {
         this.endModal.innerHTML = `
             <h1 style="color:${color};">${title}</h1>
             <p style="font-size: 1.2em;">${text}</p>
-            <button onclick="window.location.reload()" style="padding: 15px 30px; font-size: 1.2em; background:${color}; color:black; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:20px;">RESTART MISSION</button>
+            <button id="restart-btn" style="padding: 15px 30px; font-size: 1.2em; background:${color}; color:black; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:20px;">RESTART MISSION</button>
         `;
+        const btn = this.endModal.querySelector('#restart-btn');
+        if (btn) btn.onpointerdown = () => window.location.reload();
         this.endModal.style.display = 'block';
     }
 
