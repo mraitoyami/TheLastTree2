@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ЭкоАмьд 3D</title>
+<title>Сүүлчийн Мод 3D</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -116,6 +116,58 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 .final-score{font-family:'Bangers';font-size:38px;color:#FFD700;}
 #restart-btn{margin-top:14px;background:#FFD700;color:#000;border:none;border-radius:11px;padding:11px 32px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';}
 .world-label{position:fixed;font-size:18px;pointer-events:none;z-index:4;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 4px #000c);transition:opacity 0.2s;}
+
+/* ═══ START MENU ═══ */
+#start-menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+#start-bg{position:absolute;inset:0;background:linear-gradient(160deg,#0a1a0a 0%,#0d2010 40%,#111a08 100%);}
+.start-tree{position:absolute;bottom:0;font-size:clamp(60px,14vw,120px);opacity:0.18;pointer-events:none;animation:treeSway 4s ease-in-out infinite alternate;}
+@keyframes treeSway{0%{transform:rotate(-3deg);}100%{transform:rotate(3deg);}}
+.start-star{position:absolute;border-radius:50%;background:#fff;animation:twinkle ease-in-out infinite alternate;}
+@keyframes twinkle{0%{opacity:0.1;}100%{opacity:0.7;}}
+#start-content{position:relative;z-index:2;text-align:center;padding:20px;width:100%;max-width:420px;}
+#start-logo{font-family:'Bangers';font-size:clamp(52px,14vw,88px);color:#4ecb71;text-shadow:0 0 40px rgba(78,203,113,0.5),0 4px 0 #1a5a28;line-height:1;margin-bottom:4px;animation:logoPulse 2.5s ease-in-out infinite alternate;}
+@keyframes logoPulse{0%{text-shadow:0 0 30px rgba(78,203,113,0.4),0 4px 0 #1a5a28;}100%{text-shadow:0 0 70px rgba(78,203,113,0.8),0 0 120px rgba(255,215,0,0.3),0 4px 0 #1a5a28;}}
+#start-subtitle{font-family:'Bangers';font-size:clamp(14px,4vw,20px);color:#FFD700;letter-spacing:3px;margin-bottom:6px;opacity:0.9;}
+#start-tagline{font-size:clamp(10px,3vw,13px);color:rgba(255,255,255,0.5);margin-bottom:clamp(20px,5vw,36px);line-height:1.5;}
+.start-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:280px;margin:0 auto 10px;padding:clamp(12px,3vw,16px) 24px;border-radius:14px;font-family:'Nunito';font-size:clamp(14px,4vw,17px);font-weight:900;cursor:pointer;transition:all 0.15s;border:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
+.start-btn:active{transform:scale(0.96);}
+#btn-play{background:linear-gradient(135deg,#4ecb71,#2da84f);color:#fff;box-shadow:0 4px 20px rgba(78,203,113,0.4);}
+#btn-play:active{box-shadow:0 2px 8px rgba(78,203,113,0.3);}
+#btn-howto{background:rgba(255,215,0,0.12);color:#FFD700;border:2px solid rgba(255,215,0,0.4);}
+#btn-howto:active{background:rgba(255,215,0,0.22);}
+#btn-about{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);border:2px solid rgba(255,255,255,0.14);}
+#btn-about:active{background:rgba(255,255,255,0.12);}
+#start-version{position:absolute;bottom:10px;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1px;}
+
+/* ═══ HOW TO PLAY PANEL ═══ */
+#howto-panel,#about-panel{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,0.97);display:none;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 12px 24px;}
+#howto-panel.active,#about-panel.active{display:flex;}
+.panel-inner{width:100%;max-width:440px;}
+.panel-title{font-family:'Bangers';font-size:clamp(28px,8vw,40px);color:#FFD700;text-align:center;margin-bottom:16px;padding-top:8px;}
+.panel-close{display:block;width:100%;max-width:280px;margin:0 auto 18px;padding:12px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.18);color:#aaa;border-radius:12px;font-family:'Nunito';font-size:14px;font-weight:700;cursor:pointer;text-align:center;}
+.panel-close:active{background:rgba(255,255,255,0.15);}
+.how-section{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+.how-section-title{font-family:'Bangers';font-size:18px;color:#FFD700;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.how-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px;}
+.how-row:last-child{margin-bottom:0;}
+.how-icon{font-size:22px;min-width:28px;text-align:center;margin-top:1px;}
+.how-text{flex:1;}
+.how-text strong{display:block;font-size:13px;font-weight:900;color:#fff;margin-bottom:2px;}
+.how-text span{font-size:11px;color:rgba(255,255,255,0.55);line-height:1.45;}
+.stat-pill{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:3px 8px;font-size:10px;font-weight:700;margin:3px 3px 0 0;}
+.sp-red{color:#ff6666;border-color:rgba(255,80,80,0.3);}
+.sp-green{color:#4ecb71;border-color:rgba(78,203,113,0.3);}
+.sp-blue{color:#66ccff;border-color:rgba(100,200,255,0.3);}
+.sp-yellow{color:#FFD700;border-color:rgba(255,215,0,0.3);}
+.sp-orange{color:#ff9944;border-color:rgba(255,150,60,0.3);}
+.tip-box{background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.25);border-radius:10px;padding:10px 14px;margin-top:8px;}
+.tip-box p{font-size:11px;color:rgba(255,215,0,0.85);line-height:1.5;margin-bottom:5px;}
+.tip-box p:last-child{margin-bottom:0;}
+.about-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;margin-bottom:10px;text-align:center;}
+.about-emoji{font-size:44px;margin-bottom:8px;display:block;}
+.about-block h3{font-family:'Bangers';font-size:20px;color:#FFD700;margin-bottom:6px;}
+.about-block p{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;}
+.about-credits{font-size:10px;color:rgba(255,255,255,0.25);text-align:center;margin-top:10px;}
 </style>
 </head>
 <body>
@@ -201,7 +253,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
   <button id="hunt-close" onclick="closeHunt()">Дуусгах</button>
 </div>
 <div id="winscreen">
-  <h1>🏆 АМЖИЛТ!</h1>
+  <h1>🏆 БАЯР ХҮРГЭЕ!</h1>
   <p>Та 12 сар амьд үлдлээ — нэг жил!<br>Ой чиний ачаар амьд байна. 🌍</p>
   <div class="win-score" id="win-score-val"></div>
   <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;justify-content:center;">
@@ -267,13 +319,182 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
   </div>
 </div>
 
-<!-- ═══ FIREBASE — Pure REST API, zero SDK, zero CDN, always works ═══ -->
+<!-- ═══ START MENU ═══ -->
+<div id="start-menu">
+  <div id="start-bg"></div>
+
+  <!-- Decorative background trees -->
+  <div class="start-tree" style="left:2%;bottom:0;animation-delay:0s;">🌲</div>
+  <div class="start-tree" style="left:12%;bottom:0;font-size:clamp(40px,9vw,80px);animation-delay:0.5s;opacity:0.12;">🌳</div>
+  <div class="start-tree" style="right:4%;bottom:0;animation-delay:1s;">🌲</div>
+  <div class="start-tree" style="right:16%;bottom:0;font-size:clamp(35px,8vw,70px);animation-delay:1.5s;opacity:0.1;">🌳</div>
+  <div class="start-tree" style="left:28%;bottom:0;font-size:clamp(25px,6vw,50px);animation-delay:0.8s;opacity:0.08;">🌲</div>
+  <div class="start-tree" style="right:30%;bottom:0;font-size:clamp(28px,6vw,55px);animation-delay:0.3s;opacity:0.09;">🌲</div>
+
+  <div id="start-content">
+    <div id="start-logo">Сүүлчийн Мод</div>
+    <div id="start-subtitle">3D БАЙГАЛИЙН ТОГЛООМ</div>
+    <div id="start-tagline">🌍 12 сарыг амьд үлд — дэлхийгээ авар!</div>
+
+    <button class="start-btn" id="btn-play" onclick="startGame()">
+      🌱 &nbsp; Тоглох
+    </button>
+    <button class="start-btn" id="btn-howto" onclick="showHowTo()">
+      📖 &nbsp; Хэрхэн тоглох вэ?
+    </button>
+    <button class="start-btn" id="btn-about" onclick="showAbout()">
+      🌿 &nbsp; Тоглоомын тухай
+    </button>
+  </div>
+
+  <div id="start-version">v1.0 · Сүүлчийн Мод 3D</div>
+</div>
+
+<!-- ═══ HOW TO PLAY PANEL ═══ -->
+<div id="howto-panel">
+  <div class="panel-inner">
+    <div class="panel-title">📖 Хэрхэн тоглох вэ?</div>
+    <button class="panel-close" onclick="closeHowTo()">← Буцах</button>
+
+    <!-- Goal -->
+    <div class="how-section">
+      <div class="how-section-title">🎯 Зорилго</div>
+      <div class="how-row">
+        <div class="how-icon">📅</div>
+        <div class="how-text">
+          <strong>12 сарыг амьд үлд!</strong>
+          <span>Нэг жилийг дуустал дараах 4 зүйлийг хэвийн байлга. Нэг нь тэгт хүрвэл тоглоом дуусна.</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+        <span class="stat-pill sp-red">❤️ Амь — 0 болбол үхнэ</span>
+        <span class="stat-pill sp-green">🌳 Ой — 0 болбол устана</span>
+        <span class="stat-pill sp-blue">🌬️ О₂ — 0 болбол амьсгал дуусна</span>
+        <span class="stat-pill sp-orange">🔥 Гал — 100% болбол шатна</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="how-section">
+      <div class="how-section-title">⚡ Үйлдлүүд</div>
+      <div class="how-row">
+        <div class="how-icon">🪓</div>
+        <div class="how-text">
+          <strong>Мод огтлох</strong>
+          <span>Эхний удаа 3D дэлхийн модыг дарж минигаймыг тоглоод анхны сүхээ хий. Дараа нь "Огтлох" товч ашиглана. Сүх ба нум авна, гэхдээ ой буурна!</span>
+        </div>
+      </div>
+      <div class="how-row">
+        <div class="how-icon">🌱</div>
+        <div class="how-text">
+          <strong>Мод тарих</strong>
+          <span>3 хоол зарцуулж мод тарина. Ой, О₂ нэмэгдэж галын эрч буурна. Зөвхөн өвлөөс бусад улиралд тарих боломжтой!</span>
+        </div>
+      </div>
+      <div class="how-row">
+        <div class="how-icon">♻️</div>
+        <div class="how-text">
+          <strong>Хог ангилах</strong>
+          <span>Хогийг зөв саванд хий — цаас, органик, хуванцар, аюулт. Зөв хийвэл оноо, хоол, О₂ нэмэгдэнэ. Буруу хийвэл амь, оноо буурна! 60 секунд ангилаагүй бол -10 Амь авна.</span>
+        </div>
+      </div>
+      <div class="how-row">
+        <div class="how-icon">🎯</div>
+        <div class="how-text">
+          <strong>Ан хийх</strong>
+          <span>1 нум ашиглаж 5 сумаар амьтан буудна. Барьсан тутам +1 хоол, +3 Амь авна. Нум эхлээд модноос л олдоно.</span>
+        </div>
+      </div>
+      <div class="how-row">
+        <div class="how-icon">📅</div>
+        <div class="how-text">
+          <strong>Дараа сар</strong>
+          <span>Дараагийн сар руу шилжинэ. Улирлаас хамааран О₂, гал, амь өөрчлөгдөнө. Зун — галын аюул өндөр, Өвөл — хоол 3 зарцуулна.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scoring -->
+    <div class="how-section">
+      <div class="how-section-title">⭐ Оноо & Комбо</div>
+      <div class="how-row">
+        <div class="how-icon">🔥</div>
+        <div class="how-text">
+          <strong>Комбо систем</strong>
+          <span>Дараалан зөв хог ангилах, ан хийхэд комбо нэмэгдэнэ. ×1.5 → ×2 → ×3 → ×4 хүртэл оноо нэмэгдэнэ. 12 секунд үйлдэл хийхгүй бол комбо тасарна!</span>
+        </div>
+      </div>
+      <div class="how-row">
+        <div class="how-icon">🏅</div>
+        <div class="how-text">
+          <strong>Цол дэвших</strong>
+          <span>Оноо нэмэгдэхийн хэрээр 🌱 → 🌿 → 🌲 → 🦅 → ⭐ → 🏆 → 🌍 цол дэвшинэ!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="how-section">
+      <div class="how-section-title">💡 Зөвлөгөө</div>
+      <div class="tip-box">
+        <p>🌱 Хавар (3–5-р сар) мод тарихад хамгийн тохиромжтой — хамгийн их О₂ нэмэгдэнэ.</p>
+        <p>♻️ Хог ангилалтыг байнга хий — 60с тутам ангилаагүй бол амь буурна!</p>
+        <p>🍖 Хоолгүй бол өлсгөлөн эхэлж 5 секунд тутам -5 Амь авна. Ан хиймэр байгаарай.</p>
+        <p>🔥 Галын эрч 30%+ болбол мод өөрөө шатаж эхэлнэ. Ой тарьж гал бууруул!</p>
+        <p>📅 Дараа сар руу шилжихийн өмнө нөөцөө бэлдээрэй — хоол, нум, сүх чухал!</p>
+      </div>
+    </div>
+
+    <button class="panel-close" onclick="closeHowTo()" style="margin-top:14px;background:rgba(78,203,113,0.15);border-color:rgba(78,203,113,0.4);color:#4ecb71;">🌱 Ойлголоо, тоглоё!</button>
+  </div>
+</div>
+
+<!-- ═══ ABOUT PANEL ═══ -->
+<div id="about-panel">
+  <div class="panel-inner">
+    <div class="panel-title">🌿 Тоглоомын тухай</div>
+    <button class="panel-close" onclick="closeAbout()">← Буцах</button>
+
+    <div class="about-block">
+      <span class="about-emoji">🌍</span>
+      <h3>Сүүлчийн Мод 3D гэж юу вэ?</h3>
+      <p>"Сүүлчийн Мод" бол байгалийн тэнцвэрийг хамгаалах 3D амьд үлдэх тоглоом. Та ойн удирдагчийн хувиар 12 сарыг амьд давж, дэлхийн уушгийг — ойг устаж үгүй болохоос хамгаална.</p>
+    </div>
+
+    <div class="about-block">
+      <span class="about-emoji">♻️</span>
+      <h3>Байгаль орчны мессеж</h3>
+      <p>Хог ангилах, мод тарих, хүнсний нөөцөө зөв хуваарилах — эдгээр нь бодит амьдрал дахь чухал ойлголтуудыг тоглоомоор дамжуулан сурах боломж юм. Тоглоом бүрт ой огтлохоос учрах хор уршгийг мэдэрнэ.</p>
+    </div>
+
+    <div class="about-block">
+      <span class="about-emoji">🎮</span>
+      <h3>Тоглоомын онцлог</h3>
+      <p>
+        🌲 3D Three.js ертөнц · 12 сар, 4 улирал<br>
+        ♻️ Хог ангилах минигайм · 🎯 Нумны ан<br>
+        🪓 Сүх хийх минигайм · 🏆 Дэлхийн топ жагсаалт<br>
+        🔥 Галын систем · 🌬️ Хүчилтөрөгчийн механик<br>
+        ⭐ Комбо систем · 7 шатны цол дэвших
+      </p>
+    </div>
+
+    <div class="about-block">
+      <span class="about-emoji">🏆</span>
+      <h3>Ялах нөхцөл</h3>
+      <p>12 дугаар сарыг дуустал Амь, Ой, О₂ тэгт хүрэхгүй, Галын эрч 100%-д хүрэхгүй байвал ялна! Ялсны дараа топ жагсаалтад нэрээ бүртгүүл.</p>
+    </div>
+
+    <div class="about-credits">Хийсэн: Сүүлчийн Мод багийнхан · Амин-Эрдэнэ · Батзаяа · Хүслэн </div>
+
+    <button class="panel-close" onclick="closeAbout()" style="margin-top:14px;background:rgba(78,203,113,0.15);border-color:rgba(78,203,113,0.4);color:#4ecb71;">← Буцах цэс рүү</button>
+  </div>
+</div>
+
+<!-- ═══════ FIREBASE — Pure REST API ═══════ -->
 <script>
-  // Uses Firebase Realtime Database REST API directly — no SDK needed
   const FB_URL = 'https://thelasttree2-default-rtdb.asia-southeast1.firebasedatabase.app';
   const FB_PATH = '/ecosurvivor_scores';
-
-  // Save: POST to REST endpoint (creates auto-key like push())
   window.fbSaveScore = async function(entry) {
     try {
       const res = await fetch(FB_URL + FB_PATH + '.json', {
@@ -290,8 +511,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
       return false;
     }
   };
-
-  // Load: fetch ALL entries, sort client-side (no index rules needed)
   window.fbLoadScores = async function() {
     try {
       const res = await fetch(FB_URL + FB_PATH + '.json');
@@ -307,9 +526,43 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
       return [];
     }
   };
-
   window._fbReady = true;
   console.log('✅ Firebase REST API ready — no SDK needed');
+</script>
+
+<!-- ═══ START MENU LOGIC ═══ -->
+<script>
+  // Spawn twinkling stars in the start menu bg
+  (function(){
+    const bg = document.getElementById('start-bg');
+    for(let i = 0; i < 60; i++){
+      const s = document.createElement('div');
+      const size = 1 + Math.random() * 2;
+      s.className = 'start-star';
+      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*80}%;width:${size}px;height:${size}px;animation-duration:${1.5+Math.random()*3}s;animation-delay:${Math.random()*4}s;`;
+      bg.appendChild(s);
+    }
+  })();
+
+  function startGame(){
+    const menu = document.getElementById('start-menu');
+    menu.style.transition = 'opacity 0.5s';
+    menu.style.opacity = '0';
+    setTimeout(() => { menu.style.display = 'none'; }, 500);
+  }
+
+  function showHowTo(){
+    document.getElementById('howto-panel').classList.add('active');
+  }
+  function closeHowTo(){
+    document.getElementById('howto-panel').classList.remove('active');
+  }
+  function showAbout(){
+    document.getElementById('about-panel').classList.add('active');
+  }
+  function closeAbout(){
+    document.getElementById('about-panel').classList.remove('active');
+  }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -357,12 +610,12 @@ let totalGarbageSorted=0,totalAnimalsHunted=0,totalTreesPlanted=0;
 
 const RANKS=[
   {min:0,   name:'Анхан шатны',      emoji:'🌱',color:'#88cc88'},
-  {min:100, name:'Эко дайчин',        emoji:'🌿',color:'#44cc66'},
-  {min:300, name:'Ойн манаач',        emoji:'🌲',color:'#22aa44'},
-  {min:600, name:'Байгалийн баатар',  emoji:'🦅',color:'#44aaff'},
-  {min:1000,name:'Дэлхийн аврагч',   emoji:'⭐',color:'#FFD700'},
-  {min:1500,name:'Эко Легенд',        emoji:'🏆',color:'#ff8800'},
-  {min:2500,name:'Байгалийн Бурхан',  emoji:'🌍',color:'#ff44ff'},
+  {min:500, name:'Эко дайчин',        emoji:'🌿',color:'#44cc66'},
+  {min:1000, name:'Ойн манаач',        emoji:'🌲',color:'#22aa44'},
+  {min:1500, name:'Байгалийн баатар',  emoji:'🦅',color:'#44aaff'},
+  {min:2500,name:'Дэлхийн аврагч',   emoji:'⭐',color:'#FFD700'},
+  {min:3500,name:'Эко Легенд',        emoji:'🏆',color:'#ff8800'},
+  {min:4500,name:'Байгалийн Бурхан',  emoji:'🌍',color:'#ff44ff'},
 ];
 function getCurrentRank(){let r=RANKS[0];for(const rk of RANKS)if(state.score>=rk.min)r=rk;return r;}
 function getComboMult(){if(combo<=1)return 1;if(combo<=3)return 1.5;if(combo<=6)return 2;if(combo<=10)return 3;return 4;}
