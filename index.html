@@ -130,6 +130,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 #btn-pause.visible{display:flex;}
 #btn-pause:active{border-color:#FFD700;color:#FFD700;}
 
+/* ═══ LANGUAGE TOGGLE BUTTON ═══ */
+#btn-lang{position:fixed;top:6px;right:52px;z-index:21;background:rgba(0,0,0,0.82);border:2px solid rgba(255,215,0,0.5);color:#FFD700;border-radius:10px;width:52px;height:38px;font-size:11px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;pointer-events:all;backdrop-filter:blur(6px);font-family:'Nunito';letter-spacing:0.5px;transition:all 0.2s;}
+#btn-lang:active{background:#FFD700;color:#000;}
+#btn-lang.start-visible{display:flex;}
+
 /* ═══ START MENU ═══ */
 #start-menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
 #start-bg{position:absolute;inset:0;background:linear-gradient(160deg,#0a1a0a 0%,#0d2010 40%,#111a08 100%);}
@@ -188,44 +193,47 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 <div id="fire-vignette"></div>
 <div id="weather-overlay"></div>
 <div id="garbage-idle-bar-wrap">
-  <div id="garbage-idle-label">⚠️ Хог ангилаагүй байна — Амь буурч байна!</div>
+  <div id="garbage-idle-label" data-mn="⚠️ Хог ангилаагүй байна — Амь буурч байна!" data-en="⚠️ Waste not sorted — Health dropping!">⚠️ Хог ангилаагүй байна — Амь буурч байна!</div>
   <div id="garbage-idle-bg"><div id="garbage-idle-bar"></div></div>
 </div>
 <div id="starving-bar"></div>
 <div id="score-pop"></div>
 <div id="win-confetti"></div>
 
+<!-- LANGUAGE TOGGLE -->
+<button id="btn-lang" class="start-visible" onclick="toggleLang()">MN</button>
+
 <!-- PAUSE BUTTON -->
 <button id="btn-pause" onclick="togglePause()">⏸</button>
 
 <!-- PAUSE OVERLAY -->
 <div id="pause-overlay">
-  <h2>⏸ Завсарлага</h2>
-  <p>Тоглоом түр зогссон байна.<br>Үргэлжлүүлэхийн тулд товчийг дар.</p>
-  <button id="pause-resume-btn" onclick="togglePause()">▶ Үргэлжлүүлэх</button>
+  <h2>⏸ <span data-mn="Завсарлага" data-en="Paused">Завсарлага</span></h2>
+  <p data-mn="Тоглоом түр зогссон байна.<br>Үргэлжлүүлэхийн тулд товчийг дар." data-en="Game is paused.<br>Press the button to continue.">Тоглоом түр зогссон байна.<br>Үргэлжлүүлэхийн тулд товчийг дар.</p>
+  <button id="pause-resume-btn" onclick="togglePause()" data-mn="▶ Үргэлжлүүлэх" data-en="▶ Resume">▶ Үргэлжлүүлэх</button>
 </div>
 
 <div id="hud">
   <div class="stat-box">
-    <div class="stat-label">❤️ АМЬ</div>
+    <div class="stat-label" data-mn="❤️ АМЬ" data-en="❤️ HEALTH">❤️ АМЬ</div>
     <div class="stat-bar-bg"><div class="stat-bar" id="bar-hp" style="width:100%"></div></div>
     <div class="stat-val" id="val-hp">100/100</div>
-    <div class="stat-label" style="margin-top:4px">🌳 Ой</div>
+    <div class="stat-label" style="margin-top:4px" data-mn="🌳 Ой" data-en="🌳 Forest">🌳 Ой</div>
     <div class="stat-bar-bg"><div class="stat-bar" id="bar-forest" style="background:#4ecb71;width:100%"></div></div>
     <div class="stat-val" id="val-forest">100%</div>
-    <div class="stat-label" style="margin-top:4px">🌬️ О₂</div>
+    <div class="stat-label" style="margin-top:4px" data-mn="🌬️ О₂" data-en="🌬️ O₂">🌬️ О₂</div>
     <div class="stat-bar-bg"><div class="stat-bar" id="bar-oxygen" style="background:#66ccff;width:80%"></div></div>
     <div class="stat-val" id="val-oxygen">80%</div>
   </div>
   <div class="stat-box" id="score-box">
-    <div class="lbl">Оноо</div>
+    <div class="lbl" data-mn="Оноо" data-en="Score">Оноо</div>
     <div class="big" id="score-val">0</div>
     <div id="rank-label" style="font-size:9px;font-weight:900;color:#88cc88;margin-top:1px;">🌱 Анхан шатны</div>
     <div id="month-display">❄️ 1-р сар</div>
     <div id="season-label">1-р сар · Өвөл</div>
   </div>
   <div class="stat-box">
-    <div class="stat-label">⚔️ Зэвсэг</div>
+    <div class="stat-label" data-mn="⚔️ Зэвсэг" data-en="⚔️ Weapons">⚔️ Зэвсэг</div>
     <div class="weapon-item"><span class="weapon-icon">🪓</span><span class="weapon-count" id="w-axe">0</span></div>
     <div class="weapon-item"><span class="weapon-icon">🏹</span><span class="weapon-count" id="w-bow">0</span></div>
     <div id="bow-pips"></div>
@@ -237,53 +245,53 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 <div id="combo-display" style="display:none;position:fixed;bottom:82px;left:50%;transform:translateX(-50%);font-family:'Bangers';font-size:18px;color:#FFD700;text-shadow:0 0 12px #FFD700;z-index:22;pointer-events:none;background:rgba(0,0,0,0.7);border-radius:20px;padding:3px 14px;border:1px solid rgba(255,215,0,0.3);white-space:nowrap;"></div>
 <div id="toast"></div>
 <div id="actions">
-  <button class="action-btn destructive disabled" id="btn-cut" onclick="cutTree()"><span class="btn-icon">🪓</span>Огтлох</button>
-  <button class="action-btn" id="btn-plant" onclick="plantTree()"><span class="btn-icon">🌱</span>Тарих</button>
-  <button class="action-btn" id="btn-garbage" onclick="openGarbage()"><span class="btn-icon">♻️</span>Хог</button>
-  <button class="action-btn disabled" id="btn-hunt" onclick="openHunt()"><span class="btn-icon">🎯</span>Ан</button>
-  <button class="action-btn season-btn" onclick="nextMonth()"><span class="btn-icon">📅</span>Дараа сар</button>
-  <button class="action-btn" style="border-color:rgba(255,215,0,0.5);color:#FFD700;" onclick="openLeaderboard()"><span class="btn-icon">🏆</span>Топ</button>
+  <button class="action-btn destructive disabled" id="btn-cut" onclick="cutTree()"><span class="btn-icon">🪓</span><span data-mn="Огтлох" data-en="Cut">Огтлох</span></button>
+  <button class="action-btn" id="btn-plant" onclick="plantTree()"><span class="btn-icon">🌱</span><span data-mn="Тарих" data-en="Plant">Тарих</span></button>
+  <button class="action-btn" id="btn-garbage" onclick="openGarbage()"><span class="btn-icon">♻️</span><span data-mn="Хог" data-en="Waste">Хог</span></button>
+  <button class="action-btn disabled" id="btn-hunt" onclick="openHunt()"><span class="btn-icon">🎯</span><span data-mn="Ан" data-en="Hunt">Ан</span></button>
+  <button class="action-btn season-btn" onclick="nextMonth()"><span class="btn-icon">📅</span><span data-mn="Дараа сар" data-en="Next Month">Дараа сар</span></button>
+  <button class="action-btn" style="border-color:rgba(255,215,0,0.5);color:#FFD700;" onclick="openLeaderboard()"><span class="btn-icon">🏆</span><span data-mn="Топ" data-en="Top">Топ</span></button>
 </div>
 <div id="axe-game">
-  <h2>🪓 Анхны сүх хийх!</h2>
-  <p>Гялалзаж буй цэгийг дарж чулуу цохиж сүх хий!</p>
+  <h2 data-mn="🪓 Анхны сүх хийх!" data-en="🪓 Craft Your First Axe!">🪓 Анхны сүх хийх!</h2>
+  <p data-mn="Гялалзаж буй цэгийг дарж чулуу цохиж сүх хий!" data-en="Tap the glowing point to strike the rock and craft your axe!">Гялалзаж буй цэгийг дарж чулуу цохиж сүх хий!</p>
   <div id="axe-canvas-wrap"><canvas id="axe-canvas" width="320" height="320"></canvas></div>
   <div id="axe-progress-wrap">
-    <div id="axe-progress-label">Цохиж байна... 0%</div>
+    <div id="axe-progress-label" data-mn="Цохиж байна... 0%" data-en="Striking... 0%">Цохиж байна... 0%</div>
     <div id="axe-progress-bg"><div id="axe-progress-bar"></div></div>
   </div>
 </div>
 <div id="garbage-game">
-  <h2>♻️ Хог ангилах!</h2>
-  <p>Зүйлийг дарж → зөв хогийн саванд хий! Алдаа = Амь буурна!</p>
+  <h2 data-mn="♻️ Хог ангилах!" data-en="♻️ Sort the Waste!">♻️ Хог ангилах!</h2>
+  <p data-mn="Зүйлийг дарж → зөв хогийн саванд хий! Алдаа = Амь буурна!" data-en="Tap an item → drop it in the correct bin! Wrong = lose health!">Зүйлийг дарж → зөв хогийн саванд хий! Алдаа = Амь буурна!</p>
   <div id="garbage-items"></div>
   <div id="bins">
-    <div class="bin bin-blue"   ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'paper')"   ontouchend="touchDropBin(event,'paper')"><span class="bin-icon">📄</span>Цаас</div>
-    <div class="bin bin-green"  ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'organic')" ontouchend="touchDropBin(event,'organic')"><span class="bin-icon">🌿</span>Органик</div>
-    <div class="bin bin-yellow" ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'plastic')" ontouchend="touchDropBin(event,'plastic')"><span class="bin-icon">🧴</span>Хуванцар</div>
-    <div class="bin bin-red"    ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'hazard')"  ontouchend="touchDropBin(event,'hazard')"><span class="bin-icon">☢️</span>Аюулт</div>
+    <div class="bin bin-blue"   ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'paper')"   ontouchend="touchDropBin(event,'paper')"><span class="bin-icon">📄</span><span data-mn="Цаас" data-en="Paper">Цаас</span></div>
+    <div class="bin bin-green"  ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'organic')" ontouchend="touchDropBin(event,'organic')"><span class="bin-icon">🌿</span><span data-mn="Органик" data-en="Organic">Органик</span></div>
+    <div class="bin bin-yellow" ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'plastic')" ontouchend="touchDropBin(event,'plastic')"><span class="bin-icon">🧴</span><span data-mn="Хуванцар" data-en="Plastic">Хуванцар</span></div>
+    <div class="bin bin-red"    ondragover="binDragOver(event)" ondragleave="binDragLeave(event)" ondrop="dropBin(event,'hazard')"  ontouchend="touchDropBin(event,'hazard')"><span class="bin-icon">☢️</span><span data-mn="Аюулт" data-en="Hazard">Аюулт</span></div>
   </div>
   <div id="garbage-result"></div>
   <div id="garbage-progress"></div>
   <div id="garbage-timer-bar-bg"><div id="garbage-timer-bar"></div></div>
-  <button id="garbage-close" onclick="closeGarbage()">Хаах</button>
+  <button id="garbage-close" onclick="closeGarbage()" data-mn="Хаах" data-en="Close">Хаах</button>
 </div>
 <div id="hunt-game">
-  <h2>🎯 Ан хийх!</h2>
+  <h2 data-mn="🎯 Ан хийх!" data-en="🎯 Go Hunting!">🎯 Ан хийх!</h2>
   <div id="hunt-bow-info">🏹 1 Нум = 5 сум!</div>
   <div id="hunt-ammo"></div>
   <div id="hunt-canvas-wrap"><canvas id="hunt-canvas" width="520" height="300"></canvas></div>
-  <div id="hunt-info"><span id="hunt-score">Барьсан: 0</span> | <span id="hunt-time">⏱️ 18с</span></div>
-  <button id="hunt-close" onclick="closeHunt()">Дуусгах</button>
+  <div id="hunt-info"><span id="hunt-score" data-mn-prefix="Барьсан: " data-en-prefix="Caught: ">Барьсан: 0</span> | <span id="hunt-time">⏱️ 18с</span></div>
+  <button id="hunt-close" onclick="closeHunt()" data-mn="Дуусгах" data-en="Finish">Дуусгах</button>
 </div>
 <div id="winscreen">
-  <h1>🏆 БАЯР ХҮРГЭЕ!</h1>
-  <p>Та 12 сар амьд үлдлээ — нэг жил!<br>Ой чиний ачаар амьд байна. 🌍</p>
+  <h1>🏆 <span data-mn="БАЯР ХҮРГЭЕ!" data-en="CONGRATULATIONS!">БАЯР ХҮРГЭЕ!</span></h1>
+  <p data-mn="Та 12 сар амьд үлдлээ — нэг жил!<br>Ой чиний ачаар амьд байна. 🌍" data-en="You survived 12 months — a full year!<br>The forest lives because of you. 🌍">Та 12 сар амьд үлдлээ — нэг жил!<br>Ой чиний ачаар амьд байна. 🌍</p>
   <div class="win-score" id="win-score-val"></div>
   <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;justify-content:center;">
-    <button id="play-again-btn" onclick="restartGame()">🔄 Дахин тоглох</button>
-    <button onclick="openNameEntry(true)" style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border:none;border-radius:12px;padding:12px 24px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">🏅 Топ жагсаалтад оруулах</button>
-    <button onclick="openLeaderboard()" style="background:rgba(255,215,0,0.15);color:#FFD700;border:2px solid #FFD700;border-radius:12px;padding:12px 24px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">📊 Топ харах</button>
+    <button id="play-again-btn" onclick="restartGame()">🔄 <span data-mn="Дахин тоглох" data-en="Play Again">Дахин тоглох</span></button>
+    <button onclick="openNameEntry(true)" style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border:none;border-radius:12px;padding:12px 24px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">🏅 <span data-mn="Топ жагсаалтад оруулах" data-en="Add to Leaderboard">Топ жагсаалтад оруулах</span></button>
+    <button onclick="openLeaderboard()" style="background:rgba(255,215,0,0.15);color:#FFD700;border:2px solid #FFD700;border-radius:12px;padding:12px 24px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">📊 <span data-mn="Топ харах" data-en="View Top">Топ харах</span></button>
   </div>
 </div>
 <div id="gameover">
@@ -291,25 +299,28 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
   <p id="gameover-reason"></p>
   <div class="final-score" id="gameover-score"></div>
   <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:center;">
-    <button id="restart-btn" onclick="restartGame()">🔄 Дахин тоглох</button>
-    <button onclick="openNameEntry(false)" style="background:rgba(255,100,100,0.2);color:#ffaaaa;border:2px solid #ff6666;border-radius:12px;padding:11px 22px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito';">🏅 Оноогоо хадгалах</button>
-    <button onclick="openLeaderboard()" style="background:rgba(255,215,0,0.12);color:#FFD700;border:2px solid rgba(255,215,0,0.5);border-radius:12px;padding:11px 22px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito';">📊 Топ харах</button>
+    <button id="restart-btn" onclick="restartGame()">🔄 <span data-mn="Дахин тоглох" data-en="Play Again">Дахин тоглох</span></button>
+    <button onclick="openNameEntry(false)" style="background:rgba(255,100,100,0.2);color:#ffaaaa;border:2px solid #ff6666;border-radius:12px;padding:11px 22px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito';">🏅 <span data-mn="Оноогоо хадгалах" data-en="Save Score">Оноогоо хадгалах</span></button>
+    <button onclick="openLeaderboard()" style="background:rgba(255,215,0,0.12);color:#FFD700;border:2px solid rgba(255,215,0,0.5);border-radius:12px;padding:11px 22px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito';">📊 <span data-mn="Топ харах" data-en="View Top">Топ харах</span></button>
   </div>
 </div>
 
 <!-- NAME ENTRY -->
 <div id="name-entry" style="position:fixed;inset:0;background:rgba(0,0,0,0.95);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:55;padding:20px;">
   <div style="background:rgba(20,20,30,0.98);border:2px solid rgba(255,215,0,0.4);border-radius:20px;padding:28px 32px;max-width:380px;width:100%;text-align:center;">
-    <div style="font-family:'Bangers';font-size:32px;color:#FFD700;margin-bottom:8px;">🏅 Нэрээ оруулах</div>
+    <div style="font-family:'Bangers';font-size:32px;color:#FFD700;margin-bottom:8px;">🏅 <span data-mn="Нэрээ оруулах" data-en="Enter Your Name">Нэрээ оруулах</span></div>
     <div id="name-entry-score" style="color:#aaa;font-size:14px;margin-bottom:18px;line-height:1.5;"></div>
-    <input id="player-name-input" type="text" maxlength="16" placeholder="Нэрээ бич..."
+    <input id="player-name-input" type="text" maxlength="16"
+      data-mn-placeholder="Нэрээ бич..."
+      data-en-placeholder="Enter your name..."
+      placeholder="Нэрээ бич..."
       style="width:100%;background:rgba(255,255,255,0.08);border:2px solid rgba(255,215,0,0.4);border-radius:10px;padding:12px 14px;font-size:16px;color:#fff;font-family:'Nunito';outline:none;margin-bottom:14px;text-align:center;"
       oninput="validateNameInput()"/>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
       <button onclick="submitScore()" id="name-submit-btn"
-        style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border:none;border-radius:10px;padding:11px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">✅ Хадгалах</button>
+        style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border:none;border-radius:10px;padding:11px 26px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito';">✅ <span data-mn="Хадгалах" data-en="Save">Хадгалах</span></button>
       <button onclick="closeNameEntry()"
-        style="background:rgba(255,255,255,0.08);color:#aaa;border:1px solid #444;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Nunito';">Болих</button>
+        style="background:rgba(255,255,255,0.08);color:#aaa;border:1px solid #444;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Nunito';"><span data-mn="Болих" data-en="Cancel">Болих</span></button>
     </div>
     <div id="name-entry-msg" style="margin-top:10px;font-size:12px;color:#888;min-height:16px;"></div>
   </div>
@@ -319,26 +330,26 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 <div id="leaderboard-modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.96);display:none;flex-direction:column;align-items:center;justify-content:flex-start;z-index:55;padding:12px 10px;overflow-y:auto;-webkit-overflow-scrolling:touch;">
   <div style="width:100%;max-width:480px;padding-bottom:20px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-top:8px;">
-      <div style="font-family:'Bangers';font-size:clamp(22px,6vw,34px);color:#FFD700;text-shadow:0 0 20px #FFD70088;">🏆 Топ Жагсаалт</div>
-      <button onclick="closeLeaderboard()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#aaa;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:44px;">✕ Хаах</button>
+      <div style="font-family:'Bangers';font-size:clamp(22px,6vw,34px);color:#FFD700;text-shadow:0 0 20px #FFD70088;">🏆 <span data-mn="Топ Жагсаалт" data-en="Leaderboard">Топ Жагсаалт</span></div>
+      <button onclick="closeLeaderboard()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#aaa;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:44px;" data-mn="✕ Хаах" data-en="✕ Close">✕ Хаах</button>
     </div>
     <div style="display:flex;gap:6px;margin-bottom:14px;">
-      <button id="tab-all"   onclick="setLBTab('all')"   style="flex:1;background:rgba(255,215,0,0.2);border:2px solid #FFD700;color:#FFD700;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">🌍 Бүгд</button>
-      <button id="tab-win"   onclick="setLBTab('win')"   style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">🏆 Ялагчид</button>
-      <button id="tab-month" onclick="setLBTab('month')" style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;">📅 Сараар</button>
+      <button id="tab-all"   onclick="setLBTab('all')"   style="flex:1;background:rgba(255,215,0,0.2);border:2px solid #FFD700;color:#FFD700;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;" data-mn="🌍 Бүгд" data-en="🌍 All">🌍 Бүгд</button>
+      <button id="tab-win"   onclick="setLBTab('win')"   style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;" data-mn="🏆 Ялагчид" data-en="🏆 Winners">🏆 Ялагчид</button>
+      <button id="tab-month" onclick="setLBTab('month')" style="flex:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.2);color:#aaa;border-radius:10px;padding:10px 4px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito';min-height:44px;" data-mn="📅 Сараар" data-en="📅 By Month">📅 Сараар</button>
     </div>
     <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
-      <span style="font-size:10px;color:#666;">Эрэмбэ:</span>
-      <button onclick="setLBSort('score')" id="sort-score" style="background:rgba(255,215,0,0.18);border:1px solid #FFD700;color:#FFD700;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">⭐ Оноо</button>
-      <button onclick="setLBSort('month')" id="sort-month" style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">📅 Сар</button>
-      <button onclick="setLBSort('trees')" id="sort-trees" style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;">🌲 Мод</button>
+      <span style="font-size:10px;color:#666;" data-mn="Эрэмбэ:" data-en="Sort:">Эрэмбэ:</span>
+      <button onclick="setLBSort('score')" id="sort-score" style="background:rgba(255,215,0,0.18);border:1px solid #FFD700;color:#FFD700;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;" data-mn="⭐ Оноо" data-en="⭐ Score">⭐ Оноо</button>
+      <button onclick="setLBSort('month')" id="sort-month" style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;" data-mn="📅 Сар" data-en="📅 Month">📅 Сар</button>
+      <button onclick="setLBSort('trees')" id="sort-trees" style="background:rgba(255,255,255,0.05);border:1px solid #444;color:#888;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito';min-height:36px;" data-mn="🌲 Мод" data-en="🌲 Trees">🌲 Мод</button>
     </div>
     <div id="lb-loading" style="text-align:center;padding:30px 0;color:#666;font-size:13px;">
-      <div style="font-size:32px;margin-bottom:8px;display:inline-block;animation:spin 1s linear infinite;">⏳</div><br>Ачааллаж байна...
+      <div style="font-size:32px;margin-bottom:8px;display:inline-block;animation:spin 1s linear infinite;">⏳</div><br><span data-mn="Ачааллаж байна..." data-en="Loading...">Ачааллаж байна...</span>
     </div>
     <div id="lb-entries"></div>
     <div id="lb-empty" style="display:none;text-align:center;padding:40px 0;color:#555;font-size:13px;">
-      <div style="font-size:46px;margin-bottom:10px;">🌱</div>Одоохондоо оноо алга.<br>Тоглоод оноогоо хадгал!
+      <div style="font-size:46px;margin-bottom:10px;">🌱</div><span data-mn="Одоохондоо оноо алга.<br>Тоглоод оноогоо хадгал!" data-en="No scores yet.<br>Play and save your score!">Одоохондоо оноо алга.<br>Тоглоод оноогоо хадгал!</span>
     </div>
   </div>
 </div>
@@ -346,8 +357,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
 <!-- ═══ START MENU ═══ -->
 <div id="start-menu">
   <div id="start-bg"></div>
-
-  <!-- Decorative background trees -->
   <div class="start-tree" style="left:2%;bottom:0;animation-delay:0s;">🌲</div>
   <div class="start-tree" style="left:12%;bottom:0;font-size:clamp(40px,9vw,80px);animation-delay:0.5s;opacity:0.12;">🌳</div>
   <div class="start-tree" style="right:4%;bottom:0;animation-delay:1s;">🌲</div>
@@ -356,166 +365,178 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
   <div class="start-tree" style="right:30%;bottom:0;font-size:clamp(28px,6vw,55px);animation-delay:0.3s;opacity:0.09;">🌲</div>
 
   <div id="start-content">
-    <div id="start-logo">Сүүлчийн Мод</div>
-    <div id="start-subtitle">3D БАЙГАЛИЙН ТОГЛООМ</div>
-    <div id="start-tagline">🌍 12 сар амьд үлд — дэлхийгээ авар!</div>
+    <div id="start-logo" data-mn="Сүүлчийн Мод" data-en="The Last Tree">Сүүлчийн Мод</div>
+    <div id="start-subtitle" data-mn="3D БАЙГАЛИЙН ТОГЛООМ" data-en="3D NATURE SURVIVAL GAME">3D БАЙГАЛИЙН ТОГЛООМ</div>
+    <div id="start-tagline" data-mn="🌍 12 сар амьд үлд — дэлхийгээ авар!" data-en="🌍 Survive 12 months — save your world!">🌍 12 сар амьд үлд — дэлхийгээ авар!</div>
 
     <button class="start-btn" id="btn-play" onclick="startGame()">
-      🌱 &nbsp; Тоглох
+      🌱 &nbsp; <span data-mn="Тоглох" data-en="Play">Тоглох</span>
     </button>
     <button class="start-btn" id="btn-howto" onclick="showHowTo()">
-      📖 &nbsp; Хэрхэн тоглох вэ?
+      📖 &nbsp; <span data-mn="Хэрхэн тоглох вэ?" data-en="How to Play?">Хэрхэн тоглох вэ?</span>
     </button>
     <button class="start-btn" id="btn-about" onclick="showAbout()">
-      🌿 &nbsp; Тоглоомын тухай
+      🌿 &nbsp; <span data-mn="Тоглоомын тухай" data-en="About the Game">Тоглоомын тухай</span>
+    </button>
+
+    <!-- ── IN-MENU LANGUAGE BUTTON ── -->
+    <button id="btn-lang-menu" onclick="toggleLang()" style="
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      width:100%;max-width:280px;margin:4px auto 0;
+      padding:10px 24px;border-radius:14px;
+      font-family:'Nunito';font-size:15px;font-weight:900;
+      cursor:pointer;transition:all 0.18s;
+      background:rgba(255,215,0,0.1);
+      border:2px solid rgba(255,215,0,0.45);
+      color:#FFD700;
+      letter-spacing:1px;
+      -webkit-user-select:none;user-select:none;
+    ">
+      🌐 &nbsp; <span id="lang-menu-label">MN → EN</span>
     </button>
   </div>
 
-  <div id="start-version">v1.0 · Сүүлчийн Мод 3D</div>
+  <div id="start-version">v1.0 · <span data-mn="Сүүлчийн Мод 3D" data-en="The Last Tree 3D">Сүүлчийн Мод 3D</span></div>
 </div>
 
 <!-- ═══ HOW TO PLAY PANEL ═══ -->
 <div id="howto-panel">
   <div class="panel-inner">
-    <div class="panel-title">📖 Хэрхэн тоглох вэ?</div>
-    <button class="panel-close" onclick="closeHowTo()">← Буцах</button>
+    <div class="panel-title">📖 <span data-mn="Хэрхэн тоглох вэ?" data-en="How to Play?">Хэрхэн тоглох вэ?</span></div>
+    <button class="panel-close" onclick="closeHowTo()" data-mn="← Буцах" data-en="← Back">← Буцах</button>
 
-    <!-- Goal -->
     <div class="how-section">
-      <div class="how-section-title">🎯 Зорилго</div>
+      <div class="how-section-title">🎯 <span data-mn="Зорилго" data-en="Goal">Зорилго</span></div>
       <div class="how-row">
         <div class="how-icon">📅</div>
         <div class="how-text">
-          <strong>12 сар амьд үлд!</strong>
-          <span>Нэг жилийг дуустал дараах 4 зүйлийг хэвийн байлга. Нэг нь тэгт хүрвэл тоглоом дуусна.</span>
+          <strong data-mn="12 сар амьд үлд!" data-en="Survive 12 months!">12 сар амьд үлд!</strong>
+          <span data-mn="Нэг жилийг дуустал дараах 4 зүйлийг хэвийн байлга. Нэг нь тэгт хүрвэл тоглоом дуусна." data-en="Keep these 4 things healthy for a full year. If any reaches zero (or fire hits 100%), it's game over.">Нэг жилийг дуустал дараах 4 зүйлийг хэвийн байлга. Нэг нь тэгт хүрвэл тоглоом дуусна.</span>
         </div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
-        <span class="stat-pill sp-red">❤️ Амь — 0 болбол үхнэ</span>
-        <span class="stat-pill sp-green">🌳 Ой — 0 болбол устана</span>
-        <span class="stat-pill sp-blue">🌬️ О₂ — 0 болбол амьсгал дуусна</span>
-        <span class="stat-pill sp-orange">🔥 Гал — 100% болбол шатна</span>
+        <span class="stat-pill sp-red" data-mn="❤️ Амь — 0 болбол үхнэ" data-en="❤️ Health — die at 0">❤️ Амь — 0 болбол үхнэ</span>
+        <span class="stat-pill sp-green" data-mn="🌳 Ой — 0 болбол устана" data-en="🌳 Forest — vanishes at 0">🌳 Ой — 0 болбол устана</span>
+        <span class="stat-pill sp-blue" data-mn="🌬️ О₂ — 0 болбол амьсгал дуусна" data-en="🌬️ O₂ — suffocate at 0">🌬️ О₂ — 0 болбол амьсгал дуусна</span>
+        <span class="stat-pill sp-orange" data-mn="🔥 Гал — 100% болбол шатна" data-en="🔥 Fire — burn at 100%">🔥 Гал — 100% болбол шатна</span>
       </div>
     </div>
 
-    <!-- Actions -->
     <div class="how-section">
-      <div class="how-section-title">⚡ Үйлдлүүд</div>
+      <div class="how-section-title">⚡ <span data-mn="Үйлдлүүд" data-en="Actions">Үйлдлүүд</span></div>
       <div class="how-row">
         <div class="how-icon">🪓</div>
         <div class="how-text">
-          <strong>Мод огтлох</strong>
-          <span>Эхний удаа 3D дэлхийн модыг дарж минигаймыг тоглоод анхны сүхээ хий. Дараа нь "Огтлох" товч ашиглана. Сүх ба нум авна, гэхдээ ой буурна!</span>
+          <strong data-mn="Мод огтлох" data-en="Chop Tree">Мод огтлох</strong>
+          <span data-mn="Эхний удаа 3D дэлхийн модыг дарж минигаймыг тоглоод анхны сүхээ хий. Дараа нь 'Огтлох' товч ашиглана. Сүх ба нум авна, гэхдээ ой буурна!" data-en="First time: tap a tree in the 3D world to play the minigame and craft your first axe. Then use the Cut button. Gain axes & bows, but forest shrinks!">Эхний удаа 3D дэлхийн модыг дарж минигаймыг тоглоод анхны сүхээ хий. Дараа нь "Огтлох" товч ашиглана. Сүх ба нум авна, гэхдээ ой буурна!</span>
         </div>
       </div>
       <div class="how-row">
         <div class="how-icon">🌱</div>
         <div class="how-text">
-          <strong>Мод тарих</strong>
-          <span>3 хоол зарцуулж мод тарина. Ой, О₂ нэмэгдэж галын эрч буурна. Зөвхөн өвлөөс бусад улиралд тарих боломжтой!</span>
+          <strong data-mn="Мод тарих" data-en="Plant Tree">Мод тарих</strong>
+          <span data-mn="3 хоол зарцуулж мод тарина. Ой, О₂ нэмэгдэж галын эрч буурна. Зөвхөн өвлөөс бусад улиралд тарих боломжтой!" data-en="Spend 3 food to plant a tree. Boosts forest & O₂, reduces fire. Only possible outside winter!">3 хоол зарцуулж мод тарина. Ой, О₂ нэмэгдэж галын эрч буурна. Зөвхөн өвлөөс бусад улиралд тарих боломжтой!</span>
         </div>
       </div>
       <div class="how-row">
         <div class="how-icon">♻️</div>
         <div class="how-text">
-          <strong>Хог ангилах</strong>
-          <span>Хогийг зөв саванд хий — цаас, органик, хуванцар, аюулт. Зөв хийвэл оноо, хоол, О₂ нэмэгдэнэ. Буруу хийвэл амь, оноо буурна! 60 секунд ангилаагүй бол -10 Амь авна.</span>
+          <strong data-mn="Хог ангилах" data-en="Sort Waste">Хог ангилах</strong>
+          <span data-mn="Хогийг зөв саванд хий — цаас, органик, хуванцар, аюулт. Зөв хийвэл оноо, хоол, О₂ нэмэгдэнэ. Буруу хийвэл амь, оноо буурна! 60 секунд ангилаагүй бол -10 Амь авна." data-en="Sort waste into the right bin — paper, organic, plastic, hazard. Correct = score, food, O₂. Wrong = lose health & score! Not sorting for 60s = -10 health.">Хогийг зөв саванд хий — цаас, органик, хуванцар, аюулт. Зөв хийвэл оноо, хоол, О₂ нэмэгдэнэ. Буруу хийвэл амь, оноо буурна! 60 секунд ангилаагүй бол -10 Амь авна.</span>
         </div>
       </div>
       <div class="how-row">
         <div class="how-icon">🎯</div>
         <div class="how-text">
-          <strong>Ан хийх</strong>
-          <span>1 нум ашиглаж 5 сумаар амьтан буудна. Барьсан тутам +1 хоол, +3 Амь авна. Нум эхлээд модноос л олдоно.</span>
+          <strong data-mn="Ан хийх" data-en="Hunt">Ан хийх</strong>
+          <span data-mn="1 нум ашиглаж 5 сумаар амьтан буудна. Барьсан тутам +1 хоол, +3 Амь авна. Нум эхлээд модноос л олдоно." data-en="Use 1 bow with 5 arrows to shoot animals. Each catch = +1 food, +3 health. Bows only come from chopping trees.">1 нум ашиглаж 5 сумаар амьтан буудна. Барьсан тутам +1 хоол, +3 Амь авна. Нум эхлээд модноос л олдоно.</span>
         </div>
       </div>
       <div class="how-row">
         <div class="how-icon">📅</div>
         <div class="how-text">
-          <strong>Дараа сар</strong>
-          <span>Дараагийн сар руу шилжинэ. Улирлаас хамааран О₂, гал, амь өөрчлөгдөнө. Зун — галын аюул өндөр, Өвөл — хоол 3 зарцуулна.</span>
+          <strong data-mn="Дараа сар" data-en="Next Month">Дараа сар</strong>
+          <span data-mn="Дараагийн сар руу шилжинэ. Улирлаас хамааран О₂, гал, амь өөрчлөгдөнө. Зун — галын аюул өндөр, Өвөл — хоол 3 зарцуулна." data-en="Advance to the next month. Season affects O₂, fire & health. Summer = high fire risk, Winter = costs 3 food.">Дараагийн сар руу шилжинэ. Улирлаас хамааран О₂, гал, амь өөрчлөгдөнө. Зун — галын аюул өндөр, Өвөл — хоол 3 зарцуулна.</span>
         </div>
       </div>
     </div>
 
-    <!-- Scoring -->
     <div class="how-section">
-      <div class="how-section-title">⭐ Оноо & Комбо</div>
+      <div class="how-section-title">⭐ <span data-mn="Оноо & Комбо" data-en="Score & Combo">Оноо & Комбо</span></div>
       <div class="how-row">
         <div class="how-icon">🔥</div>
         <div class="how-text">
-          <strong>Комбо систем</strong>
-          <span>Дараалан зөв хог ангилах, ан хийхэд комбо нэмэгдэнэ. ×1.5 → ×2 → ×3 → ×4 хүртэл оноо нэмэгдэнэ. 12 секунд үйлдэл хийхгүй бол комбо тасарна!</span>
+          <strong data-mn="Комбо систем" data-en="Combo System">Комбо систем</strong>
+          <span data-mn="Дараалан зөв хог ангилах, ан хийхэд комбо нэмэгдэнэ. ×1.5 → ×2 → ×3 → ×4 хүртэл оноо нэмэгдэнэ. 12 секунд үйлдэл хийхгүй бол комбо тасарна!" data-en="Chain correct waste sorting or hunting to build combo. ×1.5 → ×2 → ×3 → ×4 score multiplier. Combo breaks after 12s of inactivity!">Дараалан зөв хог ангилах, ан хийхэд комбо нэмэгдэнэ. ×1.5 → ×2 → ×3 → ×4 хүртэл оноо нэмэгдэнэ. 12 секунд үйлдэл хийхгүй бол комбо тасарна!</span>
         </div>
       </div>
       <div class="how-row">
         <div class="how-icon">🏅</div>
         <div class="how-text">
-          <strong>Цол дэвших</strong>
-          <span>Оноо нэмэгдэхийн хэрээр 🌱 → 🌿 → 🌲 → 🦅 → ⭐ → 🏆 → 🌍 цол дэвшинэ!</span>
+          <strong data-mn="Цол дэвших" data-en="Rank Up">Цол дэвших</strong>
+          <span data-mn="Оноо нэмэгдэхийн хэрээр 🌱 → 🌿 → 🌲 → 🦅 → ⭐ → 🏆 → 🌍 цол дэвшинэ!" data-en="As your score grows, rank up: 🌱 → 🌿 → 🌲 → 🦅 → ⭐ → 🏆 → 🌍!">Оноо нэмэгдэхийн хэрээр 🌱 → 🌿 → 🌲 → 🦅 → ⭐ → 🏆 → 🌍 цол дэвшинэ!</span>
         </div>
       </div>
     </div>
 
-    <!-- Tips -->
     <div class="how-section">
-      <div class="how-section-title">💡 Зөвлөгөө</div>
+      <div class="how-section-title">💡 <span data-mn="Зөвлөгөө" data-en="Tips">Зөвлөгөө</span></div>
       <div class="tip-box">
-        <p>🌱 Хавар (3–5-р сар) мод тарихад хамгийн тохиромжтой — хамгийн их О₂ нэмэгдэнэ.</p>
-        <p>♻️ Хог ангилалтыг байнга хий — 60с тутам ангилаагүй бол амь буурна!</p>
-        <p>🍖 Хоолгүй бол өлсгөлөн эхэлж 5 секунд тутам -5 Амь авна. Ан хиймэр байгаарай.</p>
-        <p>🔥 Галын эрч 30%+ болбол мод өөрөө шатаж эхэлнэ. Ой тарьж гал бууруул!</p>
-        <p>📅 Дараа сар руу шилжихийн өмнө нөөцөө бэлдээрэй — хоол, нум, сүх чухал!</p>
+        <p data-mn="🌱 Хавар (3–5-р сар) мод тарихад хамгийн тохиромжтой — хамгийн их О₂ нэмэгдэнэ." data-en="🌱 Spring (months 3–5) is best for planting — maximum O₂ gain.">🌱 Хавар (3–5-р сар) мод тарихад хамгийн тохиромжтой — хамгийн их О₂ нэмэгдэнэ.</p>
+        <p data-mn="♻️ Хог ангилалтыг байнга хий — 60с тутам ангилаагүй бол амь буурна!" data-en="♻️ Sort waste regularly — not sorting for 60s drains health!">♻️ Хог ангилалтыг байнга хий — 60с тутам ангилаагүй бол амь буурна!</p>
+        <p data-mn="🍖 Хоолгүй бол өлсгөлөн эхэлж 5 секунд тутам -5 Амь авна. Ан хиймэр байгаарай." data-en="🍖 With no food, starvation kicks in: -5 health every 5s. Keep hunting!">🍖 Хоолгүй бол өлсгөлөн эхэлж 5 секунд тутам -5 Амь авна. Ан хиймэр байгаарай.</p>
+        <p data-mn="🔥 Галын эрч 30%+ болбол мод өөрөө шатаж эхэлнэ. Ой тарьж гал бууруул!" data-en="🔥 Fire above 30% starts burning trees. Plant trees to reduce fire!">🔥 Галын эрч 30%+ болбол мод өөрөө шатаж эхэлнэ. Ой тарьж гал бууруул!</p>
+        <p data-mn="📅 Дараа сар руу шилжихийн өмнө нөөцөө бэлдээрэй — хоол, нум, сүх чухал!" data-en="📅 Prepare supplies before advancing months — food, bows, axes matter!">📅 Дараа сар руу шилжихийн өмнө нөөцөө бэлдээрэй — хоол, нум, сүх чухал!</p>
       </div>
     </div>
 
-    <button class="panel-close" onclick="closeHowTo()" style="margin-top:14px;background:rgba(78,203,113,0.15);border-color:rgba(78,203,113,0.4);color:#4ecb71;">🌱 Ойлголоо, тоглоё!</button>
+    <button class="panel-close" onclick="closeHowTo()" style="margin-top:14px;background:rgba(78,203,113,0.15);border-color:rgba(78,203,113,0.4);color:#4ecb71;" data-mn="🌱 Ойлголоо, тоглоё!" data-en="🌱 Got it, let's play!">🌱 Ойлголоо, тоглоё!</button>
   </div>
 </div>
 
 <!-- ═══ ABOUT PANEL ═══ -->
 <div id="about-panel">
   <div class="panel-inner">
-    <div class="panel-title">🌿 Тоглоомын тухай</div>
-    <button class="panel-close" onclick="closeAbout()">← Буцах</button>
+    <div class="panel-title">🌿 <span data-mn="Тоглоомын тухай" data-en="About the Game">Тоглоомын тухай</span></div>
+    <button class="panel-close" onclick="closeAbout()" data-mn="← Буцах" data-en="← Back">← Буцах</button>
 
     <div class="about-block">
       <span class="about-emoji">🌍</span>
-      <h3>Сүүлчийн Мод 3D гэж юу вэ?</h3>
-      <p>"Сүүлчийн Мод" бол байгалийн тэнцвэрийг хамгаалах 3D амьд үлдэх тоглоом. Та ойн удирдагчийн хувиар 12 сарыг амьд давж, дэлхийн уушгийг — ойг устаж үгүй болохоос хамгаална.</p>
+      <h3 data-mn="Сүүлчийн Мод 3D гэж юу вэ?" data-en="What is The Last Tree 3D?">Сүүлчийн Мод 3D гэж юу вэ?</h3>
+      <p data-mn='"Сүүлчийн Мод" бол байгалийн тэнцвэрийг хамгаалах 3D амьд үлдэх тоглоом. Та ойн удирдагчийн хувиар 12 сарыг амьд давж, дэлхийн уушгийг — ойг устаж үгүй болохоос хамгаална.' data-en='"The Last Tree" is a 3D survival game about protecting nature\'s balance. As forest guardian, survive 12 months and stop the world\'s lungs — the forest — from disappearing.'"Сүүлчийн Мод" бол байгалийн тэнцвэрийг хамгаалах 3D амьд үлдэх тоглоом. Та ойн удирдагчийн хувиар 12 сарыг амьд давж, дэлхийн уушгийг — ойг устаж үгүй болохоос хамгаална.</p>
     </div>
 
     <div class="about-block">
       <span class="about-emoji">♻️</span>
-      <h3>Байгаль орчны мессеж</h3>
-      <p>Хог ангилах, мод тарих, хүнсний нөөцөө зөв хуваарилах — эдгээр нь бодит амьдрал дахь чухал ойлголтуудыг тоглоомоор дамжуулан сурах боломж юм. Тоглоом бүрт ой огтлохоос учрах хор уршгийг мэдэрнэ.</p>
+      <h3 data-mn="Байгаль орчны мессеж" data-en="Environmental Message">Байгаль орчны мессеж</h3>
+      <p data-mn="Хог ангилах, мод тарих, хүнсний нөөцөө зөв хуваарилах — эдгээр нь бодит амьдрал дахь чухал ойлголтуудыг тоглоомоор дамжуулан сурах боломж юм. Тоглоом бүрт ой огтлохоос учрах хор уршгийг мэдэрнэ." data-en="Sorting waste, planting trees, managing food resources — these are real-life concepts you learn through gameplay. Every session you feel the true cost of deforestation.">Хог ангилах, мод тарих, хүнсний нөөцөө зөв хуваарилах — эдгээр нь бодит амьдрал дахь чухал ойлголтуудыг тоглоомоор дамжуулан сурах боломж юм. Тоглоом бүрт ой огтлохоос учрах хор уршгийг мэдэрнэ.</p>
     </div>
 
     <div class="about-block">
       <span class="about-emoji">🎮</span>
-      <h3>Тоглоомын онцлог</h3>
+      <h3 data-mn="Тоглоомын онцлог" data-en="Game Features">Тоглоомын онцлог</h3>
       <p>
-        🌲 3D Three.js ертөнц · 12 сар, 4 улирал<br>
-        ♻️ Хог ангилах минигайм · 🎯 Нумны ан<br>
-        🪓 Сүх хийх минигайм · 🏆 Дэлхийн топ жагсаалт<br>
-        🔥 Галын систем · 🌬️ Хүчилтөрөгчийн механик<br>
-        ⭐ Комбо систем · 7 шатны цол дэвших
+        🌲 3D Three.js · <span data-mn="12 сар, 4 улирал" data-en="12 months, 4 seasons">12 сар, 4 улирал</span><br>
+        ♻️ <span data-mn="Хог ангилах минигайм" data-en="Waste sorting minigame">Хог ангилах минигайм</span> · 🎯 <span data-mn="Нумны ан" data-en="Bow hunting">Нумны ан</span><br>
+        🪓 <span data-mn="Сүх хийх минигайм" data-en="Axe crafting minigame">Сүх хийх минигайм</span> · 🏆 <span data-mn="Дэлхийн топ жагсаалт" data-en="Global leaderboard">Дэлхийн топ жагсаалт</span><br>
+        🔥 <span data-mn="Галын систем" data-en="Fire system">Галын систем</span> · 🌬️ <span data-mn="Хүчилтөрөгчийн механик" data-en="Oxygen mechanic">Хүчилтөрөгчийн механик</span><br>
+        ⭐ <span data-mn="Комбо систем" data-en="Combo system">Комбо систем</span> · <span data-mn="7 шатны цол дэвших" data-en="7-tier rank system">7 шатны цол дэвших</span>
       </p>
     </div>
 
     <div class="about-block">
       <span class="about-emoji">🏆</span>
-      <h3>Ялах нөхцөл</h3>
-      <p>12 дугаар сарыг дуустал Амь, Ой, О₂ тэгт хүрэхгүй, Галын эрч 100%-д хүрэхгүй байвал ялна! Ялсны дараа топ жагсаалтад нэрээ бүртгүүл.</p>
+      <h3 data-mn="Ялах нөхцөл" data-en="Win Condition">Ялах нөхцөл</h3>
+      <p data-mn="12 дугаар сарыг дуустал Амь, Ой, О₂ тэгт хүрэхгүй, Галын эрч 100%-д хүрэхгүй байвал ялна! Ялсны дараа топ жагсаалтад нэрээ бүртгүүл." data-en="Reach the end of December without Health, Forest, or O₂ hitting zero, and fire staying under 100% — you win! Then register your name on the leaderboard.">12 дугаар сарыг дуустал Амь, Ой, О₂ тэгт хүрэхгүй, Галын эрч 100%-д хүрэхгүй байвал ялна! Ялсны дараа топ жагсаалтад нэрээ бүртгүүл.</p>
     </div>
 
-    <div class="about-credits">Хийсэн: Сүүлчийн Мод багийнхан · Амин-Эрдэнэ · Батзаяа · Хүслэн </div>
+    <div class="about-credits">Хийсэн: Сүүлчийн Мод багийнхан · Амин-Эрдэнэ · Батзаяа · Хүслэн</div>
 
-    <button class="panel-close" onclick="closeAbout()" style="margin-top:14px;background:rgba(78,203,113,0.15);border-color:rgba(78,203,113,0.4);color:#4ecb71;">← Буцах цэс рүү</button>
+    <button class="panel-close" onclick="closeAbout()" style="margin-top:14px;background:rgba(78,203,113,0.15);border-color:rgba(78,203,113,0.4);color:#4ecb71;" data-mn="← Буцах цэс рүү" data-en="← Back to Menu">← Буцах цэс рүү</button>
   </div>
 </div>
 
-<!-- ═══════ FIREBASE — Pure REST API ═══════ -->
+<!-- ═══════ FIREBASE ═══════ -->
 <script>
   const FB_URL = 'https://thelasttree2-default-rtdb.asia-southeast1.firebasedatabase.app';
   const FB_PATH = '/ecosurvivor_scores';
@@ -528,12 +549,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      console.log('✅ Saved:', data.name);
       return true;
-    } catch(e) {
-      console.error('❌ Save error:', e);
-      return false;
-    }
+    } catch(e) { console.error('❌ Save error:', e); return false; }
   };
   window.fbLoadScores = async function() {
     try {
@@ -543,20 +560,128 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
       if (!data || typeof data !== 'object') return [];
       const arr = Object.entries(data).map(([id, val]) => ({ id, ...val }));
       arr.sort((a, b) => (b.score || 0) - (a.score || 0));
-      console.log('✅ Loaded', arr.length, 'scores');
       return arr;
-    } catch(e) {
-      console.error('❌ Load error:', e);
-      return [];
-    }
+    } catch(e) { console.error('❌ Load error:', e); return []; }
   };
   window._fbReady = true;
-  console.log('✅ Firebase REST API ready — no SDK needed');
+</script>
+
+<!-- ═══════════════════════════════════════════════════════
+     LANGUAGE SYSTEM
+═══════════════════════════════════════════════════════ -->
+<script>
+  // ── Language state ──────────────────────────────────────
+  let currentLang = 'mn'; // 'mn' or 'en'
+
+  function toggleLang() {
+    currentLang = currentLang === 'mn' ? 'en' : 'mn';
+
+    // Floating top-right button
+    const btn = document.getElementById('btn-lang');
+    btn.textContent = currentLang === 'mn' ? 'MN' : 'EN';
+    btn.style.color = currentLang === 'mn' ? '#FFD700' : '#44ccff';
+    btn.style.borderColor = currentLang === 'mn' ? 'rgba(255,215,0,0.5)' : 'rgba(68,204,255,0.5)';
+
+    // In-menu button label
+    const menuLabel = document.getElementById('lang-menu-label');
+    if (menuLabel) {
+      menuLabel.textContent = currentLang === 'mn' ? 'MN → EN' : 'EN → MN';
+    }
+    const menuBtn = document.getElementById('btn-lang-menu');
+    if (menuBtn) {
+      menuBtn.style.color = currentLang === 'mn' ? '#FFD700' : '#44ccff';
+      menuBtn.style.borderColor = currentLang === 'mn' ? 'rgba(255,215,0,0.45)' : 'rgba(68,204,255,0.45)';
+      menuBtn.style.background = currentLang === 'mn' ? 'rgba(255,215,0,0.1)' : 'rgba(68,204,255,0.1)';
+    }
+
+    applyLanguage();
+  }
+
+  function t(mn, en) {
+    return currentLang === 'mn' ? mn : en;
+  }
+
+  function applyLanguage() {
+    // Update all elements with data-mn / data-en attributes
+    document.querySelectorAll('[data-mn]').forEach(el => {
+      const mn = el.getAttribute('data-mn');
+      const en = el.getAttribute('data-en');
+      if (!en) return;
+      if (el.tagName === 'INPUT') {
+        // skip — handled by placeholder
+      } else {
+        // Don't overwrite children that have their own data-mn spans
+        if (!el.querySelector('[data-mn]')) {
+          el.innerHTML = currentLang === 'mn' ? mn : en;
+        }
+      }
+    });
+
+    // Placeholders
+    document.querySelectorAll('[data-mn-placeholder]').forEach(el => {
+      el.placeholder = currentLang === 'mn'
+        ? el.getAttribute('data-mn-placeholder')
+        : el.getAttribute('data-en-placeholder');
+    });
+
+    // Dynamic text nodes in spans within buttons etc.
+    document.querySelectorAll('span[data-mn]').forEach(el => {
+      const mn = el.getAttribute('data-mn');
+      const en = el.getAttribute('data-en');
+      if (mn && en) el.textContent = currentLang === 'mn' ? mn : en;
+    });
+  }
+
+  // Convenience strings used in JS (toast messages, etc.)
+  const L = {
+    get cutNoAxe()      { return t('🌲 Дэлхий дээрх модыг дарж анхны сүхээ хий!', '🌲 Tap a tree in the 3D world to craft your first axe!'); },
+    get cutNoAxeItem()  { return t('🪓 Сүх алга!', '🪓 No axe!'); },
+    get cutLowForest()  { return t('⚠️ Ой бараг үгүй болжээ!', '⚠️ Forest almost gone!'); },
+    get cutResult()     { return (loss) => t(`🪓 Мод огтоллоо!\n+1 Сүх +1 Нум 🔥+18%\n-${loss}% Ой -6 Амь`, `🪓 Tree chopped!\n+1 Axe +1 Bow 🔥+18%\n-${loss}% Forest -6 HP`); },
+    get winterNoPlant() { return t('❄️ Өвөлд мод тарих боломжгүй!', '❄️ Cannot plant in winter!'); },
+    get noFoodPlant()   { return t('🌱 Мод тарихад 3 хоол хэрэгтэй!', '🌱 Need 3 food to plant a tree!'); },
+    get plantResult()   { return t('🌱 Мод тарилаа!\n+7% Ой +4% О₂ 🔥-5% +4 Амь', '🌱 Tree planted!\n+7% Forest +4% O₂ 🔥-5% +4 HP'); },
+    get noHunt()        { return t('🏹 Нум алга!', '🏹 No bow!'); },
+    get huntEnd()       { return (n) => t(`🎯 Ан дууслаа!\n${n} амьтан · +${n} хоол · +${n*3} Амь`, `🎯 Hunt over!\n${n} animals · +${n} food · +${n*3} HP`); },
+    get garbageIdle()   { return t('🗑️ Хог ангилаагүй! -10 Амь -4% О₂', '🗑️ Waste unsorted! -10 HP -4% O₂'); },
+    get starvation()    { return t('😰 Өлсгөлөн! -5 Амь', '😰 Starving! -5 HP'); },
+    get garbWrong()     { return t('❌ Буруу! -15оноо О₂-6% 🔥+8% ❤️-8', '❌ Wrong bin! -15 pts O₂-6% 🔥+8% ❤️-8'); },
+    get garbAll()       { return t('🎉 Бүгдийг ангиллаа! +40 бонус!', '🎉 All sorted! +40 bonus!'); },
+    get garbTimeout()   { return (n) => t(`⏰ Хугацаа! ${n} хог буруу! ❤️-${n*8}  О₂-${n*5}`, `⏰ Time up! ${n} unsorted! ❤️-${n*8}  O₂-${n*5}`); },
+    get initToast()     { return t('🌍 ЭкоАмьд!\n🌲 Модыг дарж анхны сүхээ хий!\n♻️ Хог ангилаарай — 60с тутам -10 Амь!', '🌍 EcoSurvivor!\n🌲 Tap a tree to craft your first axe!\n♻️ Sort waste — every 60s unsorted = -10 HP!'); },
+    get restartToast()  { return t('🌍 12 сарыг амьд үлдвэл ялна!\n🌲 Модыг дарж сүх хий!\n♻️ Хог ангилаарай!', '🌍 Survive 12 months to win!\n🌲 Tap a tree to craft an axe!\n♻️ Sort your waste!'); },
+    get axeDone()       { return t('🪓 Анхны сүх бэлэн!\nОдоо "Огтлох" товч ажиллана!\n+1 Нум ч авлаа!', '🪓 First axe ready!\nThe "Cut" button is now active!\n+1 Bow earned too!'); },
+    get axeStriking()   { return (pct) => t(`Цохиж байна... ${pct}%`, `Striking... ${pct}%`); },
+    get comboBreak()    { return t('💥 Комбо тасарлаа!', '💥 Combo broken!'); },
+    get garbSorted()    { return (pct) => t(`Ангилсан: ${pct}`, `Sorted: ${pct}`); },
+    get garbTimer()     { return (s) => t(`⏱️ ${s}с`, `⏱️ ${s}s`); },
+    get huntBowInfo()   { return t('🏹 1 Нум хэрэглэв — 5 сум!', '🏹 1 Bow used — 5 arrows!'); },
+    get huntCaught()    { return (n) => t(`Барьсан: ${n}`, `Caught: ${n}`); },
+    get huntTime()      { return (s) => t(`⏱️ ${s}с`, `⏱️ ${s}s`); },
+    get pauseMsg()      { return t('Тоглоом түр зогссон байна.\nҮргэлжлүүлэхийн тулд товчийг дар.', 'Game is paused.\nPress the button to continue.'); },
+    get milestoneSuffix(){ return (pts, rank) => t(`${rank} ${pts} оноо хүрлээ!\nЦол: ${rank}`, `${rank} Reached ${pts} points!\nRank: ${rank}`); },
+    get rankNames()     { return [
+      t('Анхан шатны','Beginner'), t('Эко дайчин','Eco Warrior'), t('Ойн манаач','Forest Guard'),
+      t('Байгалийн баатар','Nature Hero'), t('Дэлхийн аврагч','World Savior'), t('Эко Легенд','Eco Legend'), t('Байгалийн Бурхан','Nature God')
+    ]; },
+    get season()       { return {
+      mn: ['❄️ Өвөл','🌸 Хавар','☀️ Зун','🍂 Намар'],
+      en: ['❄️ Winter','🌸 Spring','☀️ Summer','🍂 Autumn']
+    }[currentLang]; },
+    get monthOf()      { return (idx) => t(`${idx+1}-р сар`, `Month ${idx+1}`); },
+    gameoverTitle()    { return t('ТОГЛООМ ДУУСЛАА', 'GAME OVER'); },
+    winTitle()         { return t('🏆 БАЯР ХҮРГЭЕ!', '🏆 CONGRATULATIONS!'); },
+    winDesc()          { return t('Та 12 сар амьд үлдлээ — нэг жил!\nОй чиний ачаар амьд байна. 🌍', 'You survived 12 months — a full year!\nThe forest lives because of you. 🌍'); },
+    survivalBonus()    { return t('+500 бонус', '+500 survival bonus'); },
+    get lbLoading()    { return t('Ачааллаж байна...', 'Loading...'); },
+    get lbEmpty()      { return t('Одоохондоо оноо алга.<br>Тоглоод оноогоо хадгал!', 'No scores yet.<br>Play and save your score!'); },
+    get lbScore()      { return t('оноо', 'pts'); },
+    get lbWon()        { return t('🏆 ЯЛСАН', '🏆 WON'); },
+  };
 </script>
 
 <!-- ═══ START MENU LOGIC ═══ -->
 <script>
-  // Spawn twinkling stars in the start menu bg
   (function(){
     const bg = document.getElementById('start-bg');
     for(let i = 0; i < 60; i++){
@@ -568,8 +693,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
     }
   })();
 
-  // ── PAUSE SYSTEM ──────────────────────────────
-  let gamePaused = true; // starts paused until "Тоглох" is pressed
+  let gamePaused = true;
 
   function togglePause() {
     if (!state.alive || state.won) return;
@@ -579,13 +703,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
     if (gamePaused) {
       btn.textContent = '▶';
       overlay.classList.add('active');
-      // stop timers
       clearInterval(starvationIv);
       clearInterval(garbageIdleIv);
     } else {
       btn.textContent = '⏸';
       overlay.classList.remove('active');
-      // resume timers
       checkStarvation();
       startGarbageIdleTimer();
     }
@@ -597,29 +719,20 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Nu
     menu.style.opacity = '0';
     setTimeout(() => {
       menu.style.display = 'none';
-      // ── UNPAUSE & show pause button ──
       gamePaused = false;
       document.getElementById('btn-pause').classList.add('visible');
       checkStarvation();
       startGarbageIdleTimer();
-      toast('🌍 ЭкоАмьд!\n🌲 Модыг дарж анхны сүхээ хий!\n♻️ Хог ангилаарай — 60с тутам -10 Амь!','#FFD700');
+      toast(L.initToast, '#FFD700');
       document.getElementById('weather-banner').style.opacity='1';
       setTimeout(()=>document.getElementById('weather-banner').style.opacity='0',4000);
     }, 500);
   }
 
-  function showHowTo(){
-    document.getElementById('howto-panel').classList.add('active');
-  }
-  function closeHowTo(){
-    document.getElementById('howto-panel').classList.remove('active');
-  }
-  function showAbout(){
-    document.getElementById('about-panel').classList.add('active');
-  }
-  function closeAbout(){
-    document.getElementById('about-panel').classList.remove('active');
-  }
+  function showHowTo(){ document.getElementById('howto-panel').classList.add('active'); }
+  function closeHowTo(){ document.getElementById('howto-panel').classList.remove('active'); }
+  function showAbout(){ document.getElementById('about-panel').classList.add('active'); }
+  function closeAbout(){ document.getElementById('about-panel').classList.remove('active'); }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -635,8 +748,8 @@ function sfxMilestone(){[261,330,392,523,659,784].forEach((f,i)=>playTone(f,'sin
 function sfxWin(){[261,330,392,523,659,784,1046].forEach((f,i)=>playTone(f,'sine',0.42,0.26,i*0.11));setTimeout(()=>[523,659,784,1046,1318].forEach((f,i)=>playTone(f,'triangle',0.32,0.2,i*0.09)),1100);}
 function sfxClick(){playTone(440,'sine',0.04,0.09);}
 
-// ═══════ MONTHS ═══════
-const MONTHS=[
+// ═══════ MONTHS (bilingual) ═══════
+const MONTHS_MN=[
   {name:'Нэгдүгээр сар',  season:'❄️ Өвөл', skyDay:0xc8dff5,ground:0xddeeff,sunCol:0xddddff,sunInt:0.7, emoji:'❄️',weather:'snow', desc:'Хүйтэн & цастай. Тарих боломжгүй. О₂ буурна.'},
   {name:'Хоёрдугаар сар', season:'❄️ Өвөл', skyDay:0xd0e0f0,ground:0xe0eaf6,sunCol:0xeeeeff,sunInt:0.75,emoji:'🌨️',weather:'snow', desc:'Өвлийн хатуу. Өлсгөлөн хурдан ажилна.'},
   {name:'Гуравдугаар сар',season:'🌸 Хавар',skyDay:0x8fd8f0,ground:0x5ab870,sunCol:0xfff0cc,sunInt:1.0, emoji:'🌸',weather:'clear',desc:'Хавар! Мод тарь. О₂ аажим сэргэнэ.'},
@@ -650,6 +763,21 @@ const MONTHS=[
   {name:'Арваннэгдүгээр сар',season:'🍂 Намар',skyDay:0x6a7a8a,ground:0x554433,sunCol:0xff9933,sunInt:0.8,emoji:'🌫️',weather:'fog',desc:'Манан. Ан хийхэд маш хэцүү.'},
   {name:'Арванхоёрдугаар сар',season:'❄️ Өвөл',skyDay:0xb0ccee,ground:0xddeeff,sunCol:0xccddff,sunInt:0.6,emoji:'🎄',weather:'snow',desc:'Сүүлийн шат! Тэвч!'},
 ];
+const MONTHS_EN=[
+  {name:'January',   season:'❄️ Winter',skyDay:0xc8dff5,ground:0xddeeff,sunCol:0xddddff,sunInt:0.7, emoji:'❄️',weather:'snow', desc:'Cold & snowy. No planting. O₂ drops.'},
+  {name:'February',  season:'❄️ Winter',skyDay:0xd0e0f0,ground:0xe0eaf6,sunCol:0xeeeeff,sunInt:0.75,emoji:'🌨️',weather:'snow', desc:'Harsh winter. Starvation acts fast.'},
+  {name:'March',     season:'🌸 Spring',skyDay:0x8fd8f0,ground:0x5ab870,sunCol:0xfff0cc,sunInt:1.0, emoji:'🌸',weather:'clear',desc:'Spring! Plant trees. O₂ slowly recovers.'},
+  {name:'April',     season:'🌸 Spring',skyDay:0x7ecce8,ground:0x4ab060,sunCol:0xfff5bb,sunInt:1.1, emoji:'🌧️',weather:'rain', desc:'Rain reduces fire intensity.'},
+  {name:'May',       season:'🌸 Spring',skyDay:0x6bbce0,ground:0x44aa58,sunCol:0xffee99,sunInt:1.2, emoji:'🌼',weather:'clear',desc:'Best month to plant. Go for it!'},
+  {name:'June',      season:'☀️ Summer',skyDay:0x4aa8e0,ground:0x3a9844,sunCol:0xffdd66,sunInt:1.5, emoji:'☀️',weather:'clear',desc:'Hot summer. Fire risk rises!'},
+  {name:'July',      season:'☀️ Summer',skyDay:0x3898d8,ground:0x2a8838,sunCol:0xffcc44,sunInt:1.6, emoji:'🌞',weather:'hot',  desc:'Hottest month. Forest self-ignites!'},
+  {name:'August',    season:'☀️ Summer',skyDay:0x44a0d8,ground:0x389040,sunCol:0xffcc55,sunInt:1.55,emoji:'🌤️',weather:'hot',  desc:'Heat continues. Sort that waste!'},
+  {name:'September', season:'🍂 Autumn',skyDay:0x88b8d8,ground:0x996622,sunCol:0xffa022,sunInt:1.1, emoji:'🍂',weather:'windy',desc:'O₂ slowly drops. Hunt before winter.'},
+  {name:'October',   season:'🍂 Autumn',skyDay:0x9090a8,ground:0x884411,sunCol:0xff8811,sunInt:0.9, emoji:'🎃',weather:'windy',desc:'Strong winds. Animals move faster.'},
+  {name:'November',  season:'🍂 Autumn',skyDay:0x6a7a8a,ground:0x554433,sunCol:0xff9933,sunInt:0.8, emoji:'🌫️',weather:'fog',  desc:'Fog. Very hard to hunt.'},
+  {name:'December',  season:'❄️ Winter',skyDay:0xb0ccee,ground:0xddeeff,sunCol:0xccddff,sunInt:0.6, emoji:'🎄',weather:'snow', desc:'Final stretch! Hold on!'},
+];
+function MONTHS(){ return currentLang==='mn' ? MONTHS_MN : MONTHS_EN; }
 
 // ═══════ STATE ═══════
 let state={hp:100,maxHp:100,forest:100,oxygen:75,score:0,monthIdx:0,axes:0,bows:0,fireRate:0,food:0,alive:true,won:false,hasFirstAxe:false};
@@ -666,15 +794,21 @@ let combo=0,comboTimer=null,monthStreak=0;
 let totalGarbageSorted=0,totalAnimalsHunted=0,totalTreesPlanted=0;
 
 const RANKS=[
-  {min:0,   name:'Анхан шатны',      emoji:'🌱',color:'#88cc88'},
-  {min:500, name:'Эко дайчин',        emoji:'🌿',color:'#44cc66'},
-  {min:1000, name:'Ойн манаач',        emoji:'🌲',color:'#22aa44'},
-  {min:1500, name:'Байгалийн баатар',  emoji:'🦅',color:'#44aaff'},
-  {min:2500,name:'Дэлхийн аврагч',   emoji:'⭐',color:'#FFD700'},
-  {min:3500,name:'Эко Легенд',        emoji:'🏆',color:'#ff8800'},
-  {min:4500,name:'Байгалийн Бурхан',  emoji:'🌍',color:'#ff44ff'},
+  {min:0,    emoji:'🌱',color:'#88cc88'},
+  {min:500,  emoji:'🌿',color:'#44cc66'},
+  {min:1000, emoji:'🌲',color:'#22aa44'},
+  {min:1500, emoji:'🦅',color:'#44aaff'},
+  {min:2500, emoji:'⭐',color:'#FFD700'},
+  {min:3500, emoji:'🏆',color:'#ff8800'},
+  {min:4500, emoji:'🌍',color:'#ff44ff'},
 ];
-function getCurrentRank(){let r=RANKS[0];for(const rk of RANKS)if(state.score>=rk.min)r=rk;return r;}
+function getCurrentRank(){
+  let idx=0;
+  for(let i=0;i<RANKS.length;i++) if(state.score>=RANKS[i].min) idx=i;
+  const r=RANKS[idx];
+  const names=L.rankNames;
+  return {...r, name: names[idx]};
+}
 function getComboMult(){if(combo<=1)return 1;if(combo<=3)return 1.5;if(combo<=6)return 2;if(combo<=10)return 3;return 4;}
 
 function scorePop(txt,color='#FFD700'){const el=document.getElementById('score-pop');el.textContent=txt;el.style.color=color;el.classList.add('show');clearTimeout(scorePop._t);scorePop._t=setTimeout(()=>el.classList.remove('show'),1600);}
@@ -704,15 +838,15 @@ function updateRankDisplay(){
 function checkMilestone(){
   if(MILESTONES[nextMilestoneIdx]!==undefined&&state.score>=MILESTONES[nextMilestoneIdx]){
     const m=MILESTONES[nextMilestoneIdx++];const r=getCurrentRank();
-    sfxMilestone();scorePop(`${r.emoji} ${m} оноо!`,r.color);
-    toast(`${r.emoji} ${m} оноо хүрлээ!\nЦол: ${r.name}`,r.color);
+    sfxMilestone();scorePop(`${r.emoji} ${m} ${t('оноо','pts')}!`,r.color);
+    toast(`${r.emoji} ${m} ${t('оноо хүрлээ!','points reached!')}\n${t('Цол:','Rank:')} ${r.name}`,r.color);
   }
 }
-function breakCombo(){if(combo>0){const old=combo;combo=0;clearTimeout(comboTimer);if(old>=3)toast(`💥 Комбо тасарлаа!`,'#ff6644');updateComboDisplay();}}
+function breakCombo(){if(combo>0){const old=combo;combo=0;clearTimeout(comboTimer);if(old>=3)toast(L.comboBreak,'#ff6644');updateComboDisplay();}}
 function addCombo(){
   clearTimeout(comboTimer);combo++;
   const mult=getComboMult();updateComboDisplay();
-  if(combo>1)scorePop(`🔥 ×${mult} КОМБО!`,combo>=6?'#ff4444':combo>=3?'#ff8800':'#FFD700');
+  if(combo>1)scorePop(`🔥 ×${mult} ${t('КОМБО','COMBO')}!`,combo>=6?'#ff4444':combo>=3?'#ff8800':'#FFD700');
   comboTimer=setTimeout(()=>{combo=0;updateComboDisplay();},12000);
 }
 function updateComboDisplay(){
@@ -720,7 +854,7 @@ function updateComboDisplay(){
   if(combo<=1){el.style.display='none';return;}
   el.style.display='block';
   const mult=getComboMult();
-  el.textContent=`🔥 ×${mult} КОМБО (${combo})`;
+  el.textContent=`🔥 ×${mult} ${t('КОМБО','COMBO')} (${combo})`;
   el.style.color=combo>=10?'#ff2222':combo>=6?'#ff6600':combo>=3?'#FFD700':'#ffcc44';
 }
 
@@ -730,14 +864,20 @@ function startGarbageIdleTimer(){
   const label=document.getElementById('garbage-idle-label'),bar=document.getElementById('garbage-idle-bar');
   label.style.display='none';bar.style.width='0%';
   garbageIdleIv=setInterval(()=>{
-    if(gamePaused)return; // ← pause guard
+    if(gamePaused)return;
     if(!state.alive||state.won){clearInterval(garbageIdleIv);return;}
     garbageIdleTimer++;
     bar.style.width=(Math.min(1,garbageIdleTimer/GARBAGE_IDLE_MAX)*100)+'%';
-    if(garbageIdleTimer>=20){label.style.display='block';bar.style.background=garbageIdleTimer>45?'linear-gradient(90deg,#ff0000,#ff4400)':'linear-gradient(90deg,#ff4400,#ffaa00)';}
+    if(garbageIdleTimer>=20){
+      label.textContent = currentLang==='mn'
+        ? '⚠️ Хог ангилаагүй байна — Амь буурч байна!'
+        : '⚠️ Waste not sorted — Health dropping!';
+      label.style.display='block';
+      bar.style.background=garbageIdleTimer>45?'linear-gradient(90deg,#ff0000,#ff4400)':'linear-gradient(90deg,#ff4400,#ffaa00)';
+    }
     if(garbageIdleTimer>=GARBAGE_IDLE_MAX){
       state.hp=Math.max(0,state.hp-10);state.oxygen=Math.max(0,state.oxygen-4);
-      sfxHurt();toast('🗑️ Хог ангилаагүй! -10 Амь -4% О₂','#ff4444');
+      sfxHurt();toast(L.garbageIdle,'#ff4444');
       updateHUD();checkDeath();garbageIdleTimer=0;bar.style.width='0%';
     }
   },1000);
@@ -753,11 +893,11 @@ function startStarvation(){
   clearInterval(starvationIv);starvProg=0;
   if(state.food>0||!state.alive){updateStarvBar(0);return;}
   starvationIv=setInterval(()=>{
-    if(gamePaused)return; // ← pause guard
+    if(gamePaused)return;
     if(!state.alive){clearInterval(starvationIv);updateStarvBar(0);return;}
     if(state.food>0){clearInterval(starvationIv);updateStarvBar(0);return;}
     starvProg+=0.2;updateStarvBar(starvProg);
-    if(starvProg>=1){starvProg=0;state.hp=Math.max(0,state.hp-5);sfxHurt();updateHUD();checkDeath();toast('😰 Өлсгөлөн! -5 Амь','#ff4444');}
+    if(starvProg>=1){starvProg=0;state.hp=Math.max(0,state.hp-5);sfxHurt();updateHUD();checkDeath();toast(L.starvation,'#ff4444');}
   },1000);
 }
 function updateStarvBar(p){document.getElementById('starving-bar').style.transform=`scaleX(${p})`;}
@@ -769,7 +909,7 @@ function updateButtons(){document.getElementById('btn-cut').classList.toggle('di
 
 // ═══════ HUD ═══════
 function updateHUD(){
-  const fr=state.fireRate,m=MONTHS[state.monthIdx],hp=state.hp/state.maxHp*100;
+  const fr=state.fireRate,m=MONTHS()[state.monthIdx],hp=state.hp/state.maxHp*100;
   const bh=document.getElementById('bar-hp');
   bh.style.width=hp+'%';bh.style.background=hp>55?'#e84040':hp>25?'#ff8800':'#ff2200';
   bh.classList.toggle('low',hp<=30);
@@ -781,7 +921,7 @@ function updateHUD(){
   bo.style.width=state.oxygen+'%';bo.style.background=state.oxygen>50?'#66ccff':state.oxygen>25?'#e8c020':'#ff4444';
   document.getElementById('val-oxygen').textContent=Math.round(state.oxygen)+'%';
   document.getElementById('score-val').textContent=state.score;
-  document.getElementById('month-display').textContent=`${m.emoji} ${state.monthIdx+1}-р сар`;
+  document.getElementById('month-display').textContent=`${m.emoji} ${L.monthOf(state.monthIdx)}`;
   document.getElementById('season-label').textContent=`${m.name} · ${m.season}`;
   document.getElementById('w-axe').textContent=state.axes;
   document.getElementById('w-bow').textContent=state.bows;
@@ -792,12 +932,18 @@ function updateHUD(){
   const al=Math.max(0,(fr-15)/85)*0.62,gv=Math.floor(Math.max(0,60*(1-fr/100)));
   document.getElementById('fire-vignette').style.background=`radial-gradient(ellipse at center,transparent 28%,rgba(220,${gv},0,${al}) 100%)`;
   updateSky();updateButtons();updateTreeButtons();updateRankDisplay();updateComboDisplay();
+  // also re-apply stat labels
+  document.getElementById('hud').querySelectorAll('[data-mn]').forEach(el=>{
+    const key = currentLang==='mn' ? 'mn' : 'en';
+    const val = el.getAttribute('data-'+key);
+    if(val && !el.querySelector('[data-mn]')) el.textContent = val;
+  });
 }
 
 // ═══════ SKY ═══════
 function updateSky(){
   if(!scene)return;
-  const m=MONTHS[state.monthIdx],fr=state.fireRate;
+  const m=MONTHS()[state.monthIdx],fr=state.fireRate;
   let sh=m.skyDay,r=(sh>>16)&0xff,g=(sh>>8)&0xff,b=sh&0xff;
   r=Math.min(255,Math.floor(r+(255-r)*(fr/100)*0.82));g=Math.max(0,Math.floor(g-g*(fr/100)*0.72));b=Math.max(0,Math.floor(b-b*(fr/100)*0.92));
   const sc=new THREE.Color(`rgb(${r},${g},${b})`);scene.background=sc;scene.fog.color=sc;
@@ -816,7 +962,7 @@ function updateSky(){
 // ═══════ WEATHER ═══════
 function buildWeatherOverlay(){
   const ov=document.getElementById('weather-overlay');ov.innerHTML='';ov.style.background='transparent';
-  const m=MONTHS[state.monthIdx];
+  const m=MONTHS()[state.monthIdx];
   if(m.weather==='snow'){for(let i=0;i<28;i++){const el=document.createElement('div');el.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-14px;font-size:${11+Math.random()*9}px;opacity:${0.5+Math.random()*0.5};animation:fallsnow ${4+Math.random()*5}s ${Math.random()*6}s linear infinite;pointer-events:none;`;el.textContent='❄';ov.appendChild(el);}}
   else if(m.weather==='rain'){for(let i=0;i<52;i++){const el=document.createElement('div');el.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-12px;width:1.5px;height:${9+Math.random()*11}px;background:rgba(140,190,255,0.65);border-radius:2px;animation:fallrain ${0.6+Math.random()*0.5}s ${Math.random()*2}s linear infinite;pointer-events:none;`;ov.appendChild(el);}}
   else if(m.weather==='fog'){for(let i=0;i<3;i++){const el=document.createElement('div');el.className='fog-layer';ov.appendChild(el);}ov.style.background='rgba(40,52,64,0.1)';}
@@ -831,7 +977,18 @@ document.head.appendChild(kf);
 
 // ═══════ AXE MINIGAME ═══════
 let axeProg=0,axeActive=false,axeGlowAngle=0,axeAnimId=null,axeTreeIdx=-1;
-function openAxeGame(idx){axeTreeIdx=idx;axeProg=0;axeActive=true;document.getElementById('axe-progress-bar').style.width='0%';document.getElementById('axe-progress-label').textContent='Цохиж байна... 0%';document.getElementById('axe-game').classList.add('active');drawAxeGame();}
+function openAxeGame(idx){
+  axeTreeIdx=idx;axeProg=0;axeActive=true;
+  document.getElementById('axe-progress-bar').style.width='0%';
+  document.getElementById('axe-progress-label').textContent=L.axeStriking(0);
+  // update h2 and p
+  document.getElementById('axe-game').querySelector('h2').textContent=
+    t('🪓 Анхны сүх хийх!','🪓 Craft Your First Axe!');
+  document.getElementById('axe-game').querySelector('p').textContent=
+    t('Гялалзаж буй цэгийг дарж чулуу цохиж сүх хий!','Tap the glowing point to strike the rock and craft your axe!');
+  document.getElementById('axe-game').classList.add('active');
+  drawAxeGame();
+}
 function drawAxeGame(){
   if(!axeActive)return;
   const cvs=document.getElementById('axe-canvas'),ctx=cvs.getContext('2d'),W=320,H=320,cx=160,cy=170;
@@ -860,20 +1017,21 @@ function tapAxeCanvas(ex,ey){
   const gx=160+Math.cos(axeGlowAngle)*26,gy=170+Math.sin(axeGlowAngle*0.7)*20;
   axeProg=Math.min(1,axeProg+(Math.hypot(x-gx,y-gy)<52?0.09:0.02));
   document.getElementById('axe-progress-bar').style.width=(axeProg*100)+'%';
-  document.getElementById('axe-progress-label').textContent=`Цохиж байна... ${Math.round(axeProg*100)}%`;
+  document.getElementById('axe-progress-label').textContent=L.axeStriking(Math.round(axeProg*100));
   if(axeProg>=1){
     axeActive=false;cancelAnimationFrame(axeAnimId);
     const ctx=document.getElementById('axe-canvas').getContext('2d');
     ctx.clearRect(0,0,320,320);ctx.fillStyle='#1a1505';ctx.fillRect(0,0,320,320);
     ctx.font='70px serif';ctx.textAlign='center';ctx.fillText('🪓',160,178);
-    ctx.fillStyle='#FFD700';ctx.font='bold 18px Nunito';ctx.fillText('АНХНЫ СҮХ БЭЛЭН!',160,230);
+    ctx.fillStyle='#FFD700';ctx.font='bold 18px Nunito';
+    ctx.fillText(t('АНХНЫ СҮХ БЭЛЭН!','FIRST AXE READY!'),160,230);
     setTimeout(()=>{
       document.getElementById('axe-game').classList.remove('active');
       state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+12);
-      if(axeTreeIdx>=0&&axeTreeIdx<trees.length){const t=trees.splice(axeTreeIdx,1)[0];scene.remove(t);const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));st.position.copy(t.position);st.position.y=0.22;scene.add(st);stumps.push(st);}
+      if(axeTreeIdx>=0&&axeTreeIdx<trees.length){const t2=trees.splice(axeTreeIdx,1)[0];scene.remove(t2);const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));st.position.copy(t2.position);st.position.y=0.22;scene.add(st);stumps.push(st);}
       state.forest=Math.max(0,state.forest-10);state.oxygen=Math.max(0,state.oxygen-4);
       state.hasFirstAxe=true;addScore(20,'axe');updateHUD();sfxMilestone();
-      toast('🪓 Анхны сүх бэлэн!\nОдоо "Огтлох" товч ажиллана!\n+1 Нум ч авлаа!','#FFD700');
+      toast(L.axeDone,'#FFD700');
     },1100);
   }
 }
@@ -892,10 +1050,10 @@ pathMesh.rotation.x=-Math.PI/2;pathMesh.position.y=0.01;scene.add(pathMesh);
 
 let trees=[],stumps=[],burnParticles=[],treeBtnEls=[];
 function makeTree(x,z){
-  const g=new THREE.Group(),m=MONTHS[state.monthIdx];
+  const g=new THREE.Group(),m=MONTHS()[state.monthIdx];
   const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.27,1.6,8),new THREE.MeshLambertMaterial({color:0x8B6914}));
   trunk.position.y=0.8;trunk.castShadow=true;g.add(trunk);
-  const lc=m.season.includes('Намар')?0xcc6611:m.season.includes('Өвөл')?0x9999bb:0x2d8a3e;
+  const lc=m.season.includes('Намар')||m.season.includes('Autumn')?0xcc6611:m.season.includes('Өвөл')||m.season.includes('Winter')?0x9999bb:0x2d8a3e;
   [[2.4,1.1],[3.0,0.85],[3.45,0.6]].forEach(([py,r])=>{const lf=new THREE.Mesh(new THREE.ConeGeometry(r,1.1,7),new THREE.MeshLambertMaterial({color:lc}));lf.position.y=py;lf.castShadow=true;g.add(lf);});
   g.position.set(x,0,z);scene.add(g);trees.push(g);return g;
 }
@@ -908,9 +1066,12 @@ const _v3=new THREE.Vector3();
 function projectWorld(wx,wy,wz){_v3.set(wx,wy,wz).project(camera);return{x:((_v3.x+1)/2)*innerWidth,y:((-_v3.y+1)/2)*innerHeight,behind:_v3.z>1};}
 function createTreeButtons(){
   treeBtnEls.forEach(b=>b.remove());treeBtnEls=[];
-  trees.forEach((t,i)=>{
+  trees.forEach((tr,i)=>{
     const btn=document.createElement('button');btn.className='tree-btn';
-    btn.textContent=state.hasFirstAxe?'🪓 Огтлох':'🪓 Сүх хий';btn.dataset.idx=i;
+    btn.textContent=state.hasFirstAxe
+      ? t('🪓 Огтлох','🪓 Chop')
+      : t('🪓 Сүх хий','🪓 Make Axe');
+    btn.dataset.idx=i;
     const handler=()=>{if(!state.alive||state.won)return;sfxClick();state.hasFirstAxe?doTreeCut(i):openAxeGame(i);};
     btn.addEventListener('click',handler);btn.addEventListener('touchend',e=>{e.preventDefault();handler();});
     document.body.appendChild(btn);treeBtnEls.push(btn);
@@ -918,13 +1079,15 @@ function createTreeButtons(){
 }
 function doTreeCut(idx){
   if(!trees[idx]||state.axes<=0)return;
-  const m=MONTHS[state.monthIdx],loss=m.season.includes('Өвөл')?16:12;
+  const m=MONTHS()[state.monthIdx];
+  const isWinter=m.season.includes('Өвөл')||m.season.includes('Winter');
+  const loss=isWinter?16:12;
   state.forest=Math.max(0,state.forest-loss);state.oxygen=Math.max(0,state.oxygen-6);
   state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+18);state.hp=Math.max(0,state.hp-6);
-  addScore(5,'cut');const t=trees.splice(idx,1)[0];scene.remove(t);
+  addScore(5,'cut');const t2=trees.splice(idx,1)[0];scene.remove(t2);
   const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));
-  st.position.copy(t.position);st.position.y=0.22;scene.add(st);stumps.push(st);
-  burnRandomTree();createTreeButtons();toast(`🪓 Мод огтоллоо!\n+1 Сүх +1 Нум 🔥+18%\n-${loss}% Ой -6 Амь`);updateHUD();checkDeath();
+  st.position.copy(t2.position);st.position.y=0.22;scene.add(st);stumps.push(st);
+  burnRandomTree();createTreeButtons();toast(L.cutResult(loss));updateHUD();checkDeath();
 }
 function updateTreeButtons(){
   treeBtnEls.forEach((btn,i)=>{
@@ -932,6 +1095,9 @@ function updateTreeButtons(){
     const p=projectWorld(trees[i].position.x,2.8,trees[i].position.z);
     if(p.behind||p.x<-50||p.x>innerWidth+50||p.y<-50||p.y>innerHeight+50){btn.style.display='none';return;}
     btn.style.display='block';btn.style.left=p.x+'px';btn.style.top=p.y+'px';
+    btn.textContent=state.hasFirstAxe
+      ? t('🪓 Огтлох','🪓 Chop')
+      : t('🪓 Сүх хий','🪓 Make Axe');
     if(!state.hasFirstAxe&&i===0){btn.style.borderColor='#FFD700';btn.style.animation='treePulse 1s ease infinite alternate';}
     else if(!state.hasFirstAxe){btn.style.opacity='0.45';}
     else{btn.style.borderColor='rgba(255,215,0,0.6)';btn.style.animation='';btn.style.opacity='1';}
@@ -942,36 +1108,39 @@ const tp2=document.createElement('style');tp2.textContent='@keyframes treePulse{
 // ═══════ ACTIONS ═══════
 function cutTree(){
   if(!state.alive||state.won)return;
-  if(!state.hasFirstAxe){toast('🌲 Дэлхий дээрх модыг дарж анхны сүхээ хий!','#FFD700');return;}
-  if(state.axes<=0){toast('🪓 Сүх алга!','#ff9944');return;}
-  if(state.forest<=8){toast('⚠️ Ой бараг үгүй болжээ!','#ff6666');return;}
+  if(!state.hasFirstAxe){toast(L.cutNoAxe,'#FFD700');return;}
+  if(state.axes<=0){toast(L.cutNoAxeItem,'#ff9944');return;}
+  if(state.forest<=8){toast(L.cutLowForest,'#ff6666');return;}
   sfxClick();spawnTreeStump();burnRandomTree();
-  const m=MONTHS[state.monthIdx],loss=m.season.includes('Өвөл')?16:12;
+  const m=MONTHS()[state.monthIdx];
+  const isWinter=m.season.includes('Өвөл')||m.season.includes('Winter');
+  const loss=isWinter?16:12;
   state.forest=Math.max(0,state.forest-loss);state.oxygen=Math.max(0,state.oxygen-6);
   state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+18);state.hp=Math.max(0,state.hp-6);
-  addScore(5,'cut');toast(`🪓 Мод огтоллоо!\n+1 Сүх +1 Нум 🔥+18%\n-${loss}% Ой -6 Амь`);updateHUD();checkDeath();
+  addScore(5,'cut');toast(L.cutResult(loss));updateHUD();checkDeath();
 }
 function plantTree(){
   if(!state.alive||state.won)return;sfxClick();
-  const m=MONTHS[state.monthIdx];
-  if(m.weather==='snow'){toast('❄️ Өвөлд мод тарих боломжгүй!','#aaddff');return;}
-  if(state.food<3){toast('🌱 Мод тарихад 3 хоол хэрэгтэй!','#ff9944');return;}
+  const m=MONTHS()[state.monthIdx];
+  const isSnow=m.weather==='snow';
+  if(isSnow){toast(L.winterNoPlant,'#aaddff');return;}
+  if(state.food<3){toast(L.noFoodPlant,'#ff9944');return;}
   state.food-=3;state.forest=Math.min(100,state.forest+7);state.oxygen=Math.min(100,state.oxygen+4);
   state.fireRate=Math.max(0,state.fireRate-5);state.hp=Math.min(state.maxHp,state.hp+4);
   totalTreesPlanted++;addScore(8,'plant');spawnTree3D();checkStarvation();
-  toast('🌱 Мод тарилаа!\n+7% Ой +4% О₂ 🔥-5% +4 Амь','#4ecb71');updateHUD();
+  toast(L.plantResult,'#4ecb71');updateHUD();
 }
 function nextMonth(){
   if(!state.alive||state.won)return;sfxClick();
   if(state.monthIdx===11){triggerWin();return;}
-  state.monthIdx++;const m=MONTHS[state.monthIdx];
+  state.monthIdx++;const m=MONTHS()[state.monthIdx];
   let hpD=0,o2D=0,frD=0;
   if(m.weather==='hot'){frD+=14;o2D-=7;hpD-=15;}
   if(m.weather==='snow'){o2D-=8;hpD-=15;}
   if(m.weather==='rain'){frD-=14;}
   if(m.weather==='windy'){frD+=7;}
   if(m.weather==='fog'){hpD-=8;o2D-=5;}
-  if(m.weather==='clear'&&m.season.includes('Хавар')){o2D+=5;hpD+=4;}
+  if(m.weather==='clear'&&(m.season.includes('Хавар')||m.season.includes('Spring'))){o2D+=5;hpD+=4;}
   if(state.forest>65)o2D+=2;
   if(state.forest<30){o2D-=10;frD+=12;if(trees.length){burnRandomTree();burnRandomTree();}}
   if(state.fireRate>30){const burn=Math.floor(state.fireRate/13);state.forest=Math.max(0,state.forest-burn);if(trees.length)burnRandomTree();}
@@ -982,33 +1151,40 @@ function nextMonth(){
   monthStreak++;const streakBonus=monthStreak*5;addScore(12+streakBonus,'month');
   if(monthStreak>=3)floatPoints(streakBonus,'🔥','#44ccff');
   checkStarvation();resetGarbageIdleTimer();
-  const col=m.season.includes('Зун')?'#ffaa44':m.season.includes('Өвөл')?'#aaddff':m.season.includes('Хавар')?'#aaffaa':'#ffcc88';
-  toast(`${m.emoji} ${m.name}\n${m.desc}\nО₂${o2D>=0?'+':''}${o2D}  🔥${frD>=0?'+':''}${frD}%  ❤️${hpD>=0?'+':''}${hpD}`,col);
+  const isWarm=m.season.includes('Зун')||m.season.includes('Summer');
+  const isCold=m.season.includes('Өвөл')||m.season.includes('Winter');
+  const isSpring=m.season.includes('Хавар')||m.season.includes('Spring');
+  const col=isWarm?'#ffaa44':isCold?'#aaddff':isSpring?'#aaffaa':'#ffcc88';
+  toast(`${m.emoji} ${m.name}\n${m.desc}\nO₂${o2D>=0?'+':''}${o2D}  🔥${frD>=0?'+':''}${frD}%  ❤️${hpD>=0?'+':''}${hpD}`,col);
   updateHUD();buildWeatherOverlay();applySeasonToWorld();checkDeath();
 }
 function applySeasonToWorld(){
-  const m=MONTHS[state.monthIdx];
-  trees.forEach(t=>{const lc=m.season.includes('Намар')?[0xcc6611,0xff8822,0xdd4400][Math.floor(Math.random()*3)]:m.season.includes('Өвөл')?0x9999bb:m.season.includes('Хавар')?0x66cc77:0x2d8a3e;t.children.forEach((c,i)=>{if(i>0)c.material.color.setHex(lc);});});
-  if(MONTHS[state.monthIdx].weather==='snow')ground.material.color.setHex(0xddeeff);
+  const m=MONTHS()[state.monthIdx];
+  const isAutumn=m.season.includes('Намар')||m.season.includes('Autumn');
+  const isWinter=m.season.includes('Өвөл')||m.season.includes('Winter');
+  const isSpring=m.season.includes('Хавар')||m.season.includes('Spring');
+  trees.forEach(tr=>{const lc=isAutumn?[0xcc6611,0xff8822,0xdd4400][Math.floor(Math.random()*3)]:isWinter?0x9999bb:isSpring?0x66cc77:0x2d8a3e;tr.children.forEach((c,i)=>{if(i>0)c.material.color.setHex(lc);});});
+  if(m.weather==='snow')ground.material.color.setHex(0xddeeff);
 }
 
 // ═══════ DEATH / WIN ═══════
 function checkDeath(){
   if(!state.alive||state.won)return;
-  if(state.hp<=0)             triggerGameOver('💀 Та нас барлаа!\nАмь тэг болсон.','#ff4444');
-  else if(state.fireRate>=100)triggerGameOver('🔥 ГАЛД ШАТЛАА!\nГалын эрч 100% хүрлээ!','#ff3300');
-  else if(state.oxygen<=0)    triggerGameOver('😵 Хүчилтөрөгч дууслаа!','#4488ff');
-  else if(state.forest<=0)    triggerGameOver('🪵 Ой устлаа.','#8B4513');
+  if(state.hp<=0)             triggerGameOver(t('💀 Та нас барлаа!\nАмь тэг болсон.','💀 You have died!\nHealth reached zero.'),'#ff4444');
+  else if(state.fireRate>=100)triggerGameOver(t('🔥 ГАЛД ШАТЛАА!\nГалын эрч 100% хүрлээ!','🔥 BURNED DOWN!\nFire reached 100%!'),'#ff3300');
+  else if(state.oxygen<=0)    triggerGameOver(t('😵 Хүчилтөрөгч дууслаа!','😵 Out of oxygen!'),'#4488ff');
+  else if(state.forest<=0)    triggerGameOver(t('🪵 Ой устлаа.','🪵 Forest is gone.'),'#8B4513');
 }
 function triggerGameOver(reason,color){
   state.alive=false;clearInterval(starvationIv);clearInterval(garbageIdleIv);
   document.getElementById('btn-pause').classList.remove('visible');
   document.getElementById('pause-overlay').classList.remove('active');
   const r=getCurrentRank();
-  document.getElementById('gameover-title').style.color=color;
-  document.getElementById('gameover-title').style.textShadow=`0 0 40px ${color}`;
+  const goTitle=document.getElementById('gameover-title');
+  goTitle.textContent=t('ТОГЛООМ ДУУСЛАА','GAME OVER');
+  goTitle.style.color=color;goTitle.style.textShadow=`0 0 40px ${color}`;
   document.getElementById('gameover-reason').textContent=reason;
-  document.getElementById('gameover-score').innerHTML=`<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>⭐ ${state.score} оноо · ${MONTHS[state.monthIdx].name}<br><span style="font-size:16px;color:#aaa">🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}</span>`;
+  document.getElementById('gameover-score').innerHTML=`<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>⭐ ${state.score} ${t('оноо','pts')} · ${MONTHS()[state.monthIdx].name}<br><span style="font-size:16px;color:#aaa">🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}</span>`;
   document.getElementById('gameover').classList.add('active');sfxHurt();sfxHurt();
 }
 function triggerWin(){
@@ -1017,7 +1193,9 @@ function triggerWin(){
   document.getElementById('pause-overlay').classList.remove('active');
   const r=getCurrentRank(),survivalBonus=500,statBonus=totalGarbageSorted*3+totalAnimalsHunted*5+totalTreesPlanted*8;
   state.score+=survivalBonus+statBonus;
-  document.getElementById('win-score-val').innerHTML=`<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>⭐ ${state.score} оноо<br><span style="font-size:14px;color:#aaa">+${survivalBonus} бонус · +${statBonus} үйл ажиллагааны бонус<br>🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}</span>`;
+  document.getElementById('winscreen').querySelector('h1').innerHTML=`🏆 ${t('БАЯР ХҮРГЭЕ!','CONGRATULATIONS!')}`;
+  document.getElementById('winscreen').querySelector('p').innerHTML=t('Та 12 сар амьд үлдлээ — нэг жил!<br>Ой чиний ачаар амьд байна. 🌍','You survived 12 months — a full year!<br>The forest lives because of you. 🌍');
+  document.getElementById('win-score-val').innerHTML=`<span style="color:${r.color}">${r.emoji} ${r.name}</span><br>⭐ ${state.score} ${t('оноо','pts')}<br><span style="font-size:14px;color:#aaa">+${survivalBonus} ${t('бонус','bonus')} · +${statBonus} ${t('үйл ажиллагааны бонус','action bonus')}<br>🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}</span>`;
   document.getElementById('winscreen').classList.add('active');sfxWin();
   const c=document.getElementById('win-confetti');c.innerHTML='';
   const cols=['#FFD700','#ff4444','#44ff88','#4488ff','#ff88ff','#ffaa44','#44ffff'];
@@ -1038,22 +1216,38 @@ function restartGame(){
   burnParticles.forEach(p=>scene.remove(p.mesh));burnParticles=[];
   rebuildForest();rebuildGarbageSprites();buildWeatherOverlay();applySeasonToWorld();updateHUD();
   checkStarvation();startGarbageIdleTimer();
-  toast('🌍 12 сарыг амьд үлдвэл ялна!\n🌲 Модыг дарж сүх хий!\n♻️ Хог ангилаарай!','#FFD700');
+  toast(L.restartToast,'#FFD700');
 }
 
-// ═══════ GARBAGE ═══════
-const GARBAGE_DB=[
+// ═══════ GARBAGE (bilingual item names) ═══════
+const GARBAGE_DB_MN=[
   {emoji:'📰',name:'Сонин',bin:'paper'},{emoji:'📦',name:'Хайрцаг',bin:'paper'},{emoji:'📄',name:'Цаас',bin:'paper'},
   {emoji:'🥕',name:'Лууван',bin:'organic'},{emoji:'🍌',name:'Гадил',bin:'organic'},{emoji:'🌽',name:'Эрдэнэшиш',bin:'organic'},{emoji:'🍎',name:'Алим',bin:'organic'},
   {emoji:'🧴',name:'Шампунь',bin:'plastic'},{emoji:'🥤',name:'Аяга',bin:'plastic'},{emoji:'🧃',name:'Шүүс',bin:'plastic'},
   {emoji:'🔋',name:'Батарей',bin:'hazard'},{emoji:'💊',name:'Эм',bin:'hazard'},{emoji:'🖥️',name:'Дэлгэц',bin:'hazard'},{emoji:'🧪',name:'Химийн бодис',bin:'hazard'},
 ];
+const GARBAGE_DB_EN=[
+  {emoji:'📰',name:'Newspaper',bin:'paper'},{emoji:'📦',name:'Cardboard',bin:'paper'},{emoji:'📄',name:'Paper',bin:'paper'},
+  {emoji:'🥕',name:'Carrot',bin:'organic'},{emoji:'🍌',name:'Banana',bin:'organic'},{emoji:'🌽',name:'Corn',bin:'organic'},{emoji:'🍎',name:'Apple',bin:'organic'},
+  {emoji:'🧴',name:'Shampoo',bin:'plastic'},{emoji:'🥤',name:'Cup',bin:'plastic'},{emoji:'🧃',name:'Juice box',bin:'plastic'},
+  {emoji:'🔋',name:'Battery',bin:'hazard'},{emoji:'💊',name:'Medicine',bin:'hazard'},{emoji:'🖥️',name:'Monitor',bin:'hazard'},{emoji:'🧪',name:'Chemicals',bin:'hazard'},
+];
+function GARBAGE_DB(){ return currentLang==='mn' ? GARBAGE_DB_MN : GARBAGE_DB_EN; }
+
 let currentGarbage=[],garbCorrect=0,garbTotal=0,garbTimer=null,garbTime=0,touchDragItem=null;
 function openGarbage(){
   if(!state.alive||state.won)return;sfxClick();resetGarbageIdleTimer();
+  // update UI text
+  document.getElementById('garbage-game').querySelector('h2').textContent=t('♻️ Хог ангилах!','♻️ Sort the Waste!');
+  document.getElementById('garbage-game').querySelector('p').textContent=t('Зүйлийг дарж → зөв хогийн саванд хий! Алдаа = Амь буурна!','Tap an item → drop it in the correct bin! Wrong = lose health!');
+  document.getElementById('garbage-close').textContent=t('Хаах','Close');
+  // Update bin labels
+  const binSpans=document.querySelectorAll('.bin span[data-mn]');
+  binSpans.forEach(s=>{ s.textContent=currentLang==='mn'?s.getAttribute('data-mn'):s.getAttribute('data-en'); });
+
   garbCorrect=0;document.getElementById('garbage-result').textContent='';
   const count=Math.min(8,4+Math.floor(state.monthIdx/2));
-  currentGarbage=[...GARBAGE_DB].sort(()=>Math.random()-0.5).slice(0,count);
+  currentGarbage=[...GARBAGE_DB()].sort(()=>Math.random()-0.5).slice(0,count);
   garbTotal=currentGarbage.length;garbTime=8+count;
   const el=document.getElementById('garbage-items');el.innerHTML='';
   currentGarbage.forEach((g,i)=>{
@@ -1070,17 +1264,20 @@ function openGarbage(){
   document.getElementById('garbage-game').classList.add('active');
   clearInterval(garbTimer);
   garbTimer=setInterval(()=>{
-    if(gamePaused)return; // ← pause guard
+    if(gamePaused)return;
     garbTime--;updateGarbageProgress();
     if(garbTime<=0){
       clearInterval(garbTimer);
       const unsorted=document.querySelectorAll('#garbage-items .garbage-item:not(.sorted)').length;
-      if(unsorted>0){state.hp=Math.max(0,state.hp-unsorted*8);state.oxygen=Math.max(0,state.oxygen-unsorted*5);state.fireRate=Math.min(100,state.fireRate+unsorted*6);sfxHurt();toast(`⏰ Хугацаа! ${unsorted} хог буруу! ❤️-${unsorted*8}  О₂-${unsorted*5}`,'#ff4444');updateHUD();checkDeath();}
+      if(unsorted>0){state.hp=Math.max(0,state.hp-unsorted*8);state.oxygen=Math.max(0,state.oxygen-unsorted*5);state.fireRate=Math.min(100,state.fireRate+unsorted*6);sfxHurt();toast(L.garbTimeout(unsorted),'#ff4444');updateHUD();checkDeath();}
       setTimeout(closeGarbage,900);
     }
   },1000);
 }
-function updateGarbageProgress(){document.getElementById('garbage-progress').textContent=`Ангилсан: ${garbCorrect}/${garbTotal} ⏱️ ${garbTime}с`;}
+function updateGarbageProgress(){
+  document.getElementById('garbage-progress').textContent=
+    `${t('Ангилсан:','Sorted:')} ${garbCorrect}/${garbTotal} ⏱️ ${garbTime}${t('с','s')}`;
+}
 function binDragOver(e){e.preventDefault();e.currentTarget.classList.add('dragover');}
 function binDragLeave(e){e.currentTarget.classList.remove('dragover');}
 function dropBin(e,binType){e.preventDefault();e.currentTarget.classList.remove('dragover');const d=e.dataTransfer.getData('text/plain');if(!d)return;const[idx,cb]=d.split(':');processBinDrop(parseInt(idx),cb,binType);}
@@ -1093,18 +1290,18 @@ function processBinDrop(idx,correctBin,binType){
     garbCorrect++;addScore(20,'garbage');totalGarbageSorted++;addCombo();
     state.oxygen=Math.min(100,state.oxygen+2);state.food=Math.min(99,state.food+1);state.fireRate=Math.max(0,state.fireRate-3);state.hp=Math.min(state.maxHp,state.hp+2);
     itemEl.classList.add('sorted');res.style.color='#4ecb71';
-    res.textContent=`✅ ${currentGarbage[idx].emoji} зөв! +20×${getComboMult()} оноо`;
+    res.textContent=`✅ ${currentGarbage[idx].emoji} ${t('зөв!','correct!')} +20×${getComboMult()} ${t('оноо','pts')}`;
     sfxCorrect();checkStarvation();
-    if(garbCorrect===garbTotal){clearInterval(garbTimer);addScore(40,'garbage');res.textContent='🎉 Бүгдийг ангиллаа! +40 бонус!';sfxMilestone();setTimeout(closeGarbage,1100);}
+    if(garbCorrect===garbTotal){clearInterval(garbTimer);addScore(40,'garbage');res.textContent=L.garbAll;sfxMilestone();setTimeout(closeGarbage,1100);}
   }else{
     breakCombo();state.oxygen=Math.max(0,state.oxygen-6);state.score=Math.max(0,state.score-15);state.fireRate=Math.min(100,state.fireRate+8);state.hp=Math.max(0,state.hp-8);
     itemEl.style.borderColor='#ff4444';itemEl.style.background='rgba(255,40,40,0.2)';
-    res.style.color='#ff6666';res.textContent=`❌ Буруу! -15оноо О₂-6% 🔥+8% ❤️-8`;sfxHurt();
+    res.style.color='#ff6666';res.textContent=L.garbWrong;sfxHurt();
   }
   updateHUD();checkDeath();updateGarbageProgress();
 }
 function closeGarbage(){clearInterval(garbTimer);touchDragItem=null;document.getElementById('garbage-game').classList.remove('active');resetGarbageIdleTimer();startGarbageIdleTimer();}
-document.querySelectorAll('.bin').forEach(b=>{b.addEventListener('touchmove',e=>{e.preventDefault();document.querySelectorAll('.bin').forEach(x=>x.classList.remove('touch-over'));const t=e.touches[0];const el=document.elementFromPoint(t.clientX,t.clientY);if(el&&el.closest('.bin'))el.closest('.bin').classList.add('touch-over');},{passive:false});});
+document.querySelectorAll('.bin').forEach(b=>{b.addEventListener('touchmove',e=>{e.preventDefault();document.querySelectorAll('.bin').forEach(x=>x.classList.remove('touch-over'));const tt=e.touches[0];const el=document.elementFromPoint(tt.clientX,tt.clientY);if(el&&el.closest('.bin'))el.closest('.bin').classList.add('touch-over');},{passive:false});});
 
 // ═══════ HUNT ═══════
 let huntAnimals=[],huntIv=null,huntTimerIv=null,huntCaught=0,huntTime=0,huntShotsLeft=0,huntShotsFired=0;
@@ -1113,15 +1310,18 @@ const SHOTS_PER_BOW=5;
 function buildAmmoUI(n){const el=document.getElementById('hunt-ammo');el.innerHTML='';for(let i=0;i<n;i++){const d=document.createElement('span');d.className='ammo-dot';d.id='ammo-'+i;el.appendChild(d);}}
 function openHunt(){
   if(!state.alive||state.won)return;sfxClick();
-  if(state.bows<1){toast('🏹 Нум алга!','#ff9944');return;}
+  if(state.bows<1){toast(L.noHunt,'#ff9944');return;}
   state.bows=Math.max(0,state.bows-1);updateHUD();
   huntCaught=0;huntShotsLeft=SHOTS_PER_BOW;huntShotsFired=0;huntTime=18;huntAnimals=[];
-  document.getElementById('hunt-bow-info').textContent=`🏹 1 Нум хэрэглэв — ${SHOTS_PER_BOW} сум!`;
+  document.getElementById('hunt-bow-info').textContent=
+    t(`🏹 1 Нум хэрэглэв — ${SHOTS_PER_BOW} сум!`,`🏹 1 Bow used — ${SHOTS_PER_BOW} arrows!`);
+  document.getElementById('hunt-game').querySelector('h2').textContent=t('🎯 Ан хийх!','🎯 Go Hunting!');
+  document.getElementById('hunt-close').textContent=t('Дуусгах','Finish');
   buildAmmoUI(SHOTS_PER_BOW);
-  document.getElementById('hunt-score').textContent='Барьсан: 0';
-  document.getElementById('hunt-time').textContent='⏱️ 18с';
+  document.getElementById('hunt-score').textContent=t('Барьсан: 0','Caught: 0');
+  document.getElementById('hunt-time').textContent=t('⏱️ 18с','⏱️ 18s');
   document.getElementById('hunt-game').classList.add('active');
-  const cvs=document.getElementById('hunt-canvas'),ctx=cvs.getContext('2d'),W=520,H=300,m=MONTHS[state.monthIdx],isFog=m.weather==='fog';
+  const cvs=document.getElementById('hunt-canvas'),ctx=cvs.getContext('2d'),W=520,H=300,m=MONTHS()[state.monthIdx],isFog=m.weather==='fog';
   const spd=1.2+state.fireRate/100+(state.monthIdx/20);
   let ac=4+Math.floor(state.monthIdx/2);
   if(m.weather==='snow')ac=Math.max(2,ac-2);if(m.weather==='hot')ac+=3;
@@ -1129,20 +1329,24 @@ function openHunt(){
   clearInterval(huntIv);clearInterval(huntTimerIv);
   const sh=m.skyDay,sr=(sh>>16)&0xff,sg=(sh>>8)&0xff,sb=(sh)&0xff;
   huntIv=setInterval(()=>{
-    if(gamePaused)return; // ← pause guard
+    if(gamePaused)return;
     ctx.clearRect(0,0,W,H);const fr=state.fireRate;
     ctx.fillStyle=`rgb(${Math.min(255,Math.floor(sr*(1-fr/200)+fr*1.2))},${Math.max(0,Math.floor(sg*(1-fr/150)))},${Math.max(0,Math.floor(sb*(1-fr/100)))})`;ctx.fillRect(0,0,W,H);
     if(isFog){ctx.fillStyle='rgba(130,155,175,0.45)';ctx.fillRect(0,0,W,H);}
     const gh=m.ground,gr=(gh>>16)&0xff,gg=(gh>>8)&0xff,gb=(gh)&0xff;
     ctx.fillStyle=`rgb(${gr},${gg},${gb})`;ctx.fillRect(0,H-36,W,36);
-    for(let i=0;i<Math.max(0,Math.floor(state.forest/12));i++){ctx.font='17px serif';ctx.fillText(m.season.includes('Намар')?'🍂':'🌲',6+i*55,H-9);}
+    const isAutumn=m.season.includes('Намар')||m.season.includes('Autumn');
+    for(let i=0;i<Math.max(0,Math.floor(state.forest/12));i++){ctx.font='17px serif';ctx.fillText(isAutumn?'🍂':'🌲',6+i*55,H-9);}
     if(isFog){ctx.fillStyle='rgba(140,165,185,0.25)';ctx.fillRect(0,0,W,H);}
     huntAnimals.forEach(a=>{if(!a.alive)return;a.x+=a.vx;a.y+=a.vy;if(a.x<14||a.x>W-14)a.vx*=-1;if(a.y<18||a.y>H-48)a.vy*=-1;ctx.globalAlpha=isFog?0.5:(a.flash>0?0.27:1);if(a.flash>0)a.flash--;ctx.font='24px serif';ctx.fillText(a.emoji,a.x-12,a.y+9);ctx.globalAlpha=1;});
-    ctx.fillStyle='rgba(0,0,0,0.64)';ctx.fillRect(0,0,W,19);ctx.fillStyle='#fff';ctx.font='bold 10px Nunito';ctx.fillText(`🏹 ${huntShotsLeft} сум  🍖 ${huntCaught} барьсан  ⏱️ ${huntTime}с`,7,13);
+    ctx.fillStyle='rgba(0,0,0,0.64)';ctx.fillRect(0,0,W,19);ctx.fillStyle='#fff';ctx.font='bold 10px Nunito';
+    ctx.fillText(`🏹 ${huntShotsLeft} ${t('сум','arrows')}  🍖 ${huntCaught} ${t('барьсан','caught')}  ⏱️ ${huntTime}${t('с','s')}`,7,13);
   },30);
   huntTimerIv=setInterval(()=>{
-    if(gamePaused)return; // ← pause guard
-    huntTime--;document.getElementById('hunt-time').textContent='⏱️ '+huntTime+'с';if(huntTime<=0)endHunt();
+    if(gamePaused)return;
+    huntTime--;
+    document.getElementById('hunt-time').textContent=t(`⏱️ ${huntTime}с`,`⏱️ ${huntTime}s`);
+    if(huntTime<=0)endHunt();
   },1000);
   function doShot(mx,my){
     if(huntShotsLeft<=0)return;
@@ -1150,12 +1354,13 @@ function openHunt(){
     const d=document.getElementById('ammo-'+di);if(d)d.classList.add('used');
     playTone(200,'square',0.06,0.13);
     huntAnimals.forEach(a=>{if(!a.alive)return;if(Math.hypot(a.x-mx,a.y-my)<(isFog?12:22)){a.alive=false;a.flash=6;huntCaught++;totalAnimalsHunted++;state.food+=1;state.score+=25;addCombo();playTone(550,'sine',0.09,0.17);}});
-    document.getElementById('hunt-score').textContent='Барьсан: '+huntCaught;updateHUD();if(huntShotsLeft<=0)setTimeout(endHunt,350);
+    document.getElementById('hunt-score').textContent=t(`Барьсан: ${huntCaught}`,`Caught: ${huntCaught}`);
+    updateHUD();if(huntShotsLeft<=0)setTimeout(endHunt,350);
   }
   cvs.onclick=(e)=>{const r=cvs.getBoundingClientRect();doShot((e.clientX-r.left)*(520/r.width),(e.clientY-r.top)*(300/r.height));};
-  cvs.ontouchstart=(e)=>{e.preventDefault();const r=cvs.getBoundingClientRect(),t=e.touches[0];doShot((t.clientX-r.left)*(520/r.width),(t.clientY-r.top)*(300/r.height));};
+  cvs.ontouchstart=(e)=>{e.preventDefault();const r=cvs.getBoundingClientRect(),tt=e.touches[0];doShot((tt.clientX-r.left)*(520/r.width),(tt.clientY-r.top)*(300/r.height));};
 }
-function endHunt(){clearInterval(huntIv);clearInterval(huntTimerIv);state.hp=Math.min(state.maxHp,state.hp+huntCaught*3);checkStarvation();if(huntCaught>0){addScore(huntCaught*10,'hunt');sfxMilestone();}toast(`🎯 Ан дууслаа!\n${huntCaught} амьтан · +${huntCaught} хоол · +${huntCaught*3} Амь`,'#ff8844');setTimeout(closeHunt,600);}
+function endHunt(){clearInterval(huntIv);clearInterval(huntTimerIv);state.hp=Math.min(state.maxHp,state.hp+huntCaught*3);checkStarvation();if(huntCaught>0){addScore(huntCaught*10,'hunt');sfxMilestone();}toast(L.huntEnd(huntCaught),'#ff8844');setTimeout(closeHunt,600);}
 function closeHunt(){clearInterval(huntIv);clearInterval(huntTimerIv);document.getElementById('hunt-game').classList.remove('active');const cvs=document.getElementById('hunt-canvas');cvs.onclick=null;cvs.ontouchstart=null;updateHUD();}
 
 // ═══════ GARBAGE WORLD SPRITES ═══════
@@ -1188,11 +1393,11 @@ let tick=0;
 function animate(){
   requestAnimationFrame(animate);tick++;
   camera.position.x=Math.sin(camAngle)*camDist;camera.position.z=Math.cos(camAngle)*camDist;camera.position.y=camY;camera.lookAt(0,0,0);
-  const m=MONTHS[state.monthIdx],wind=m.weather==='windy'?0.022:0.007;
+  const m=MONTHS()[state.monthIdx],wind=m.weather==='windy'?0.022:0.007;
   clouds.forEach((c,i)=>{c.position.x+=wind*(i%2===0?1:-1);if(c.position.x>42)c.position.x=-42;if(c.position.x<-42)c.position.x=42;});
-  trees.forEach((t,i)=>t.rotation.z=Math.sin(tick*0.013+i)*(m.weather==='windy'?0.1:0.032));
+  trees.forEach((tt,i)=>tt.rotation.z=Math.sin(tick*0.013+i)*(m.weather==='windy'?0.1:0.032));
   burnParticles=burnParticles.filter(p=>{p.mesh.position.y+=p.vy;p.mesh.position.x+=(Math.random()-0.5)*0.05;p.mesh.material.transparent=true;p.mesh.material.opacity=Math.max(0,p.life/100);p.life--;if(p.life<=0){scene.remove(p.mesh);return false;}return true;});
-  if(state.alive&&!gamePaused&&state.fireRate>20&&tick%5===0&&trees.length>0){const t=trees[Math.floor(Math.random()*trees.length)];if(t){const p=new THREE.Mesh(new THREE.SphereGeometry(0.05+Math.random()*0.07,4,4),new THREE.MeshBasicMaterial({color:[0xff1100,0xff5500,0xff9900,0xffcc00,0xffee44][Math.floor(Math.random()*5)]}));p.position.set(t.position.x+(Math.random()-0.5)*1.8,1+Math.random()*3.5,t.position.z+(Math.random()-0.5)*1.8);scene.add(p);burnParticles.push({mesh:p,vy:0.05+Math.random()*0.05,life:26+Math.floor(Math.random()*22)});}}
+  if(state.alive&&!gamePaused&&state.fireRate>20&&tick%5===0&&trees.length>0){const tt=trees[Math.floor(Math.random()*trees.length)];if(tt){const p=new THREE.Mesh(new THREE.SphereGeometry(0.05+Math.random()*0.07,4,4),new THREE.MeshBasicMaterial({color:[0xff1100,0xff5500,0xff9900,0xffcc00,0xffee44][Math.floor(Math.random()*5)]}));p.position.set(tt.position.x+(Math.random()-0.5)*1.8,1+Math.random()*3.5,tt.position.z+(Math.random()-0.5)*1.8);scene.add(p);burnParticles.push({mesh:p,vy:0.05+Math.random()*0.05,life:26+Math.floor(Math.random()*22)});}}
   garbageSprites.forEach(s=>{const by=s.wy+Math.sin(tick*0.04+s.bob)*0.14;const pos=projectWorld(s.wx,by,s.wz);if(pos.behind||pos.x<-20||pos.x>innerWidth+20||pos.y<-20||pos.y>innerHeight+20)s.el.style.opacity='0';else{s.el.style.opacity='1';s.el.style.left=pos.x+'px';s.el.style.top=pos.y+'px';}});
   updateTreeButtons();renderer.render(scene,camera);
 }
@@ -1200,16 +1405,17 @@ animate();
 window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 
 // ═══════════════════════════════════════════════════════════
-//  LEADERBOARD — Firebase Realtime Database (compat SDK)
+//  LEADERBOARD
 // ═══════════════════════════════════════════════════════════
 let lbTab='all',lbSort='score',pendingEntry=null,lbCache=[];
 
 function openNameEntry(isWin){
   const r=getCurrentRank();
-  pendingEntry={score:state.score,month:state.monthIdx+1,monthName:MONTHS[state.monthIdx].name,won:isWin,rank:r.name,rankEmoji:r.emoji,rankColor:r.color,trees:totalTreesPlanted,animals:totalAnimalsHunted,garbage:totalGarbageSorted,date:new Date().toLocaleDateString('mn-MN')};
+  pendingEntry={score:state.score,month:state.monthIdx+1,monthName:MONTHS()[state.monthIdx].name,won:isWin,rank:r.name,rankEmoji:r.emoji,rankColor:r.color,trees:totalTreesPlanted,animals:totalAnimalsHunted,garbage:totalGarbageSorted,date:new Date().toLocaleDateString('mn-MN')};
   const inp=document.getElementById('player-name-input');inp.value='';
   document.getElementById('name-entry-msg').textContent='';
-  document.getElementById('name-entry-score').innerHTML=`<span style="color:${r.color};font-weight:900;">${r.emoji} ${r.name}</span><br>⭐ <strong style="color:#FFD700">${state.score} оноо</strong> · ${MONTHS[state.monthIdx].name}<br>🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}`;
+  document.getElementById('name-entry-score').innerHTML=`<span style="color:${r.color};font-weight:900;">${r.emoji} ${r.name}</span><br>⭐ <strong style="color:#FFD700">${state.score} ${t('оноо','pts')}</strong> · ${MONTHS()[state.monthIdx].name}<br>🌲 ${totalTreesPlanted} · 🍖 ${totalAnimalsHunted} · ♻️ ${totalGarbageSorted}`;
+  inp.placeholder=t('Нэрээ бич...','Enter your name...');
   document.getElementById('name-entry').style.display='flex';
   setTimeout(()=>inp.focus(),120);
 }
@@ -1220,12 +1426,12 @@ async function submitScore(){
   const name=document.getElementById('player-name-input').value.trim();
   if(!name||!pendingEntry)return;
   const btn=document.getElementById('name-submit-btn');
-  btn.disabled=true;btn.textContent='⏳ Хадгалж байна...';
+  btn.disabled=true;btn.querySelector('span').textContent=t('Хадгалж байна...','Saving...');
   pendingEntry.name=name;
   const ok=await window.fbSaveScore(pendingEntry);
   const msg=document.getElementById('name-entry-msg');
-  if(ok){msg.textContent='✅ Амжилттай хадгаллаа!';msg.style.color='#44ff88';sfxMilestone();setTimeout(()=>{closeNameEntry();openLeaderboard();},900);}
-  else{msg.textContent='❌ Алдаа гарлаа. Console шалгана уу.';msg.style.color='#ff6666';btn.disabled=false;btn.textContent='✅ Хадгалах';}
+  if(ok){msg.textContent=t('✅ Амжилттай хадгаллаа!','✅ Saved successfully!');msg.style.color='#44ff88';sfxMilestone();setTimeout(()=>{closeNameEntry();openLeaderboard();},900);}
+  else{msg.textContent=t('❌ Алдаа гарлаа.','❌ Error. Try again.');msg.style.color='#ff6666';btn.disabled=false;btn.querySelector('span').textContent=t('Хадгалах','Save');}
 }
 document.getElementById('player-name-input').addEventListener('keydown',e=>{if(e.key==='Enter')submitScore();});
 
@@ -1235,13 +1441,20 @@ async function openLeaderboard(){
   refreshLBTabButtons();refreshLBSortButtons();
   const loading=document.getElementById('lb-loading'),entries=document.getElementById('lb-entries'),empty=document.getElementById('lb-empty');
   loading.style.display='block';entries.innerHTML='';empty.style.display='none';
+  // update LB UI text
+  document.querySelector('#leaderboard-modal [data-mn="🌍 Бүгд"]').textContent=t('🌍 Бүгд','🌍 All');
+  document.querySelector('#leaderboard-modal [data-mn="🏆 Ялагчид"]').textContent=t('🏆 Ялагчид','🏆 Winners');
+  document.querySelector('#leaderboard-modal [data-mn="📅 Сараар"]').textContent=t('📅 Сараар','📅 By Month');
+  document.querySelector('#leaderboard-modal [data-mn="⭐ Оноо"]').textContent=t('⭐ Оноо','⭐ Score');
+  document.querySelector('#leaderboard-modal [data-mn="📅 Сар"]').textContent=t('📅 Сар','📅 Month');
+  document.querySelector('#leaderboard-modal [data-mn="🌲 Мод"]').textContent=t('🌲 Мод','🌲 Trees');
   lbCache=await window.fbLoadScores();
   loading.style.display='none';renderLeaderboard();
 }
 function closeLeaderboard(){document.getElementById('leaderboard-modal').style.display='none';}
 function setLBTab(tab){lbTab=tab;refreshLBTabButtons();renderLeaderboard();}
 function setLBSort(sort){lbSort=sort;refreshLBSortButtons();renderLeaderboard();}
-function refreshLBTabButtons(){['all','win','month'].forEach(t=>{const btn=document.getElementById('tab-'+t);if(!btn)return;const a=t===lbTab;btn.style.background=a?'rgba(255,215,0,0.2)':'rgba(255,255,255,0.05)';btn.style.borderColor=a?'#FFD700':'rgba(255,255,255,0.2)';btn.style.color=a?'#FFD700':'#aaa';});}
+function refreshLBTabButtons(){['all','win','month'].forEach(tab=>{const btn=document.getElementById('tab-'+tab);if(!btn)return;const a=tab===lbTab;btn.style.background=a?'rgba(255,215,0,0.2)':'rgba(255,255,255,0.05)';btn.style.borderColor=a?'#FFD700':'rgba(255,255,255,0.2)';btn.style.color=a?'#FFD700':'#aaa';});}
 function refreshLBSortButtons(){['score','month','trees'].forEach(s=>{const btn=document.getElementById('sort-'+s);if(!btn)return;const a=s===lbSort;btn.style.background=a?'rgba(255,215,0,0.18)':'rgba(255,255,255,0.05)';btn.style.borderColor=a?'#FFD700':'#444';btn.style.color=a?'#FFD700':'#888';});}
 function renderLeaderboard(){
   let data=[...lbCache];
@@ -1251,12 +1464,12 @@ function renderLeaderboard(){
   if(lbSort==='month')data.sort((a,b)=>((b.month||0)-(a.month||0))||((b.score||0)-(a.score||0)));
   if(lbSort==='trees')data.sort((a,b)=>((b.trees||0)-(a.trees||0))||((b.score||0)-(a.score||0)));
   const container=document.getElementById('lb-entries'),empty=document.getElementById('lb-empty');
-  if(data.length===0){container.innerHTML='';empty.style.display='block';return;}
+  if(data.length===0){container.innerHTML='';empty.innerHTML=`<div style="font-size:46px;margin-bottom:10px;">🌱</div>${t('Одоохондоо оноо алга.<br>Тоглоод оноогоо хадгал!','No scores yet.<br>Play and save your score!')}`;empty.style.display='block';return;}
   empty.style.display='none';
   const medals=['🥇','🥈','🥉'];
   container.innerHTML=data.map((e,i)=>{
     const medal=i<3?medals[i]:`<span style="color:#555;font-size:12px;">#${i+1}</span>`;
-    const wonBadge=e.won?`<span style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:900;margin-left:4px;">🏆 ЯЛСАН</span>`:'';
+    const wonBadge=e.won?`<span style="background:linear-gradient(135deg,#FFD700,#ff8800);color:#000;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:900;margin-left:4px;">🏆 ${t('ЯЛСАН','WON')}</span>`:'';
     const bg=i===0?'linear-gradient(135deg,rgba(255,215,0,0.14),rgba(255,140,0,0.07))':i===1?'linear-gradient(135deg,rgba(200,200,200,0.09),rgba(180,180,180,0.04))':i===2?'linear-gradient(135deg,rgba(180,120,60,0.11),rgba(160,100,40,0.05))':'rgba(255,255,255,0.025)';
     const bdr=i===0?'rgba(255,215,0,0.35)':i===1?'rgba(200,200,200,0.22)':i===2?'rgba(180,120,60,0.28)':'rgba(255,255,255,0.07)';
     return `<div style="background:${bg};border:1px solid ${bdr};border-radius:13px;padding:11px 13px;margin-bottom:7px;display:flex;align-items:center;gap:10px;">
@@ -1267,14 +1480,14 @@ function renderLeaderboard(){
           <span style="font-size:9px;font-weight:700;color:${e.rankColor||'#aaa'};">${e.rankEmoji||''} ${e.rank||''}</span>${wonBadge}
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:9px;color:#aaa;">📅 ${e.monthName||e.month+'-р сар'}</span>
+          <span style="font-size:9px;color:#aaa;">📅 ${e.monthName||e.month+t('-р сар',' month')}</span>
           <span style="font-size:9px;color:#777;">🌲${e.trees||0} 🍖${e.animals||0} ♻️${e.garbage||0}</span>
           <span style="font-size:9px;color:#555;">${e.date||''}</span>
         </div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
         <div style="font-family:'Bangers';font-size:20px;color:#FFD700;line-height:1;">${(e.score||0).toLocaleString()}</div>
-        <div style="font-size:8px;color:#666;">оноо</div>
+        <div style="font-size:8px;color:#666;">${t('оноо','pts')}</div>
       </div>
     </div>`;
   }).join('');
@@ -1282,9 +1495,7 @@ function renderLeaderboard(){
 function escHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 // ═══════ INIT ═══════
-// NOTE: timers intentionally NOT started here — they start only when "Тоглох" is pressed via startGame()
 updateHUD();buildWeatherOverlay();applySeasonToWorld();updateSky();
 </script>
 </body>
 </html>
-HTMLEOF
