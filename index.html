@@ -824,12 +824,41 @@ const fpKf=document.createElement('style');
 fpKf.textContent=`@keyframes floatUp{0%{opacity:1;transform:translate(-50%,-50%);}80%{opacity:1;}100%{opacity:0;transform:translate(-50%,-160%);}}`;
 document.head.appendChild(fpKf);
 
-function addScore(base,actionType=''){
-  const mult=getComboMult(),earned=Math.round(base*mult);
-  state.score+=earned;
-  const cols={garbage:'#44ff88',hunt:'#ff8844',plant:'#88ff44',cut:'#ffcc44',month:'#44ccff',axe:'#FFD700'};
-  if(earned>0)floatPoints(earned,mult>1?`×${mult}`:'',cols[actionType]||'#FFD700');
-  updateRankDisplay();checkMilestone();
+// ── Per-month action caps (anti-farming) ──
+let monthActionsCount = { garbage: 0, hunt: 0 };
+const MONTH_ACTION_LIMITS = { garbage: 4, hunt: 3 }; // max full-score actions per month
+
+function addScore(base, actionType=''){
+  const mult = getComboMult();
+
+  // Diminishing returns: garbage & hunt capped per month
+  let farmPenalty = 1.0;
+  if(actionType === 'garbage' || actionType === 'hunt'){
+    const limit = MONTH_ACTION_LIMITS[actionType] || 99;
+    const count = monthActionsCount[actionType] || 0;
+    if(count >= limit * 2){
+      // Way over limit — basically no score
+      farmPenalty = 0.05;
+    } else if(count >= limit){
+      // Over limit — heavy reduction, gets worse each time
+      farmPenalty = Math.max(0.05, 1 - ((count - limit + 1) * 0.25));
+    }
+    monthActionsCount[actionType] = (monthActionsCount[actionType] || 0) + 1;
+
+    // Show a warning when farming kicks in
+    if(count === limit){
+      toast(t(
+        `⚠️ Энэ сард хэт их ${actionType==='garbage'?'хог ангиллаа':'ан хийлээ'}!\nОноо буурч байна — дараа сар руу шилж!`,
+        `⚠️ Too much ${actionType==='garbage'?'sorting':'hunting'} this month!\nScore fading — advance to next month!`
+      ), '#ff9944');
+    }
+  }
+
+  const earned = Math.round(base * mult * farmPenalty);
+  state.score += earned;
+  const cols = {garbage:'#44ff88',hunt:'#ff8844',plant:'#88ff44',cut:'#ffcc44',month:'#44ccff',axe:'#FFD700'};
+  if(earned > 0) floatPoints(earned, mult > 1 ? `×${mult}` : '', cols[actionType] || '#FFD700');
+  updateRankDisplay(); checkMilestone();
 }
 function updateRankDisplay(){
   const r=getCurrentRank();
@@ -1028,7 +1057,7 @@ function tapAxeCanvas(ex,ey){
     ctx.fillText(t('АНХНЫ СҮХ БЭЛЭН!','FIRST AXE READY!'),160,230);
     setTimeout(()=>{
       document.getElementById('axe-game').classList.remove('active');
-      state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+12);
+      state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+7);
       if(axeTreeIdx>=0&&axeTreeIdx<trees.length){const t2=trees.splice(axeTreeIdx,1)[0];scene.remove(t2);const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));st.position.copy(t2.position);st.position.y=0.22;scene.add(st);stumps.push(st);}
       state.forest=Math.max(0,state.forest-10);state.oxygen=Math.max(0,state.oxygen-4);
       state.hasFirstAxe=true;addScore(20,'axe');updateHUD();sfxMilestone();
@@ -1084,7 +1113,7 @@ function doTreeCut(idx){
   const isWinter=m.season.includes('Өвөл')||m.season.includes('Winter');
   const loss=isWinter?16:12;
   state.forest=Math.max(0,state.forest-loss);state.oxygen=Math.max(0,state.oxygen-6);
-  state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+18);state.hp=Math.max(0,state.hp-6);
+  state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+10);state.hp=Math.max(0,state.hp-6);
   addScore(5,'cut');const t2=trees.splice(idx,1)[0];scene.remove(t2);
   const st=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.27,0.45,8),new THREE.MeshLambertMaterial({color:0x8B6914}));
   st.position.copy(t2.position);st.position.y=0.22;scene.add(st);stumps.push(st);
@@ -1117,7 +1146,7 @@ function cutTree(){
   const isWinter=m.season.includes('Өвөл')||m.season.includes('Winter');
   const loss=isWinter?16:12;
   state.forest=Math.max(0,state.forest-loss);state.oxygen=Math.max(0,state.oxygen-6);
-  state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+18);state.hp=Math.max(0,state.hp-6);
+  state.axes+=1;state.bows+=1;state.fireRate=Math.min(100,state.fireRate+10);state.hp=Math.max(0,state.hp-6);
   addScore(5,'cut');toast(L.cutResult(loss));updateHUD();checkDeath();
 }
 function plantTree(){
@@ -1131,33 +1160,99 @@ function plantTree(){
   totalTreesPlanted++;addScore(8,'plant');spawnTree3D();checkStarvation();
   toast(L.plantResult,'#4ecb71');updateHUD();
 }
+let nextMonthCooldown = false;
 function nextMonth(){
-  if(!state.alive||state.won)return;sfxClick();
+  if(!state.alive||state.won)return;
+  if(nextMonthCooldown)return; // prevent spam clicking
+  sfxClick();
   if(state.monthIdx===11){triggerWin();return;}
-  state.monthIdx++;const m=MONTHS()[state.monthIdx];
+
+  // ── Cooldown: 1.8s between month advances ──
+  nextMonthCooldown = true;
+  const btn = document.getElementById('btn-cut')?.parentElement?.querySelectorAll('.action-btn');
+  document.querySelectorAll('.action-btn.season-btn').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
+  setTimeout(()=>{
+    nextMonthCooldown=false;
+    document.querySelectorAll('.action-btn.season-btn').forEach(b=>{b.style.opacity='';b.style.pointerEvents='';});
+  }, 1800);
+
+  state.monthIdx++;
+  const m=MONTHS()[state.monthIdx];
+  const isCold=m.season.includes('Өвөл')||m.season.includes('Winter');
+
   let hpD=0,o2D=0,frD=0;
-  if(m.weather==='hot'){frD+=14;o2D-=7;hpD-=15;}
-  if(m.weather==='snow'){o2D-=8;hpD-=15;}
-  if(m.weather==='rain'){frD-=14;}
-  if(m.weather==='windy'){frD+=7;}
-  if(m.weather==='fog'){hpD-=8;o2D-=5;}
+
+  // ── Season effects ──
+  if(m.weather==='hot'){frD+=8;o2D-=6;hpD-=12;}
+  if(m.weather==='snow'){o2D-=7;hpD-=12;}
+  if(m.weather==='rain'){frD-=10;}
+  if(m.weather==='windy'){frD+=4;}
+  if(m.weather==='fog'){hpD-=6;o2D-=4;}
   if(m.weather==='clear'&&(m.season.includes('Хавар')||m.season.includes('Spring'))){o2D+=5;hpD+=4;}
   if(state.forest>65)o2D+=2;
-  if(state.forest<30){o2D-=10;frD+=12;if(trees.length){burnRandomTree();burnRandomTree();}}
-  if(state.fireRate>30){const burn=Math.floor(state.fireRate/13);state.forest=Math.max(0,state.forest-burn);if(trees.length)burnRandomTree();}
-  state.oxygen=Math.max(0,Math.min(100,state.oxygen+o2D));
-  state.fireRate=Math.max(0,Math.min(100,state.fireRate+frD));
-  state.hp=Math.max(0,Math.min(state.maxHp,state.hp+hpD));
-  state.food=Math.max(0,state.food-3);
-  monthStreak++;const streakBonus=monthStreak*5;addScore(12+streakBonus,'month');
-  if(monthStreak>=3)floatPoints(streakBonus,'🔥','#44ccff');
-  checkStarvation();resetGarbageIdleTimer();
-  const isWarm=m.season.includes('Зун')||m.season.includes('Summer');
-  const isCold=m.season.includes('Өвөл')||m.season.includes('Winter');
-  const isSpring=m.season.includes('Хавар')||m.season.includes('Spring');
-  const col=isWarm?'#ffaa44':isCold?'#aaddff':isSpring?'#aaffaa':'#ffcc88';
-  toast(`${m.emoji} ${m.name}\n${m.desc}\nO₂${o2D>=0?'+':''}${o2D}  🔥${frD>=0?'+':''}${frD}%  ❤️${hpD>=0?'+':''}${hpD}`,col);
-  updateHUD();buildWeatherOverlay();applySeasonToWorld();checkDeath();
+  if(state.forest<30){o2D-=8;frD+=8;if(trees.length){burnRandomTree();burnRandomTree();}}
+  if(state.fireRate>35){const burn=Math.floor(state.fireRate/16);state.forest=Math.max(0,state.forest-burn);if(trees.length)burnRandomTree();}
+
+  // ── Food consumption: winter costs more ──
+  const foodCost = isCold ? 5 : 3;
+  const foodHad = state.food;
+  state.food = Math.max(0, state.food - foodCost);
+  const foodShort = Math.max(0, foodCost - foodHad); // how many food short
+
+  // ── Hunger penalty: ~13 HP per missing food unit ──
+  if(foodShort > 0){
+    const hungerDmg = Math.min(40, foodShort * 13);
+    hpD -= hungerDmg;
+    sfxHurt();
+    toast(t(
+      `😰 Хоол хүрэлцэхгүй! (${foodShort} дутсан)\n❤️ -${hungerDmg} Амь`,
+      `😰 Not enough food! (${foodShort} short)\n❤️ -${hungerDmg} HP`
+    ), '#ff4444');
+  }
+
+  // ── No axes = no protection, forest degrades faster ──
+  if(state.axes === 0 && state.forest < 60){
+    frD += 8;
+    o2D -= 4;
+  }
+
+  // ── Very low oxygen = health drain ──
+  if(state.oxygen < 25){
+    hpD -= 10;
+  }
+
+  // ── Low forest = extra fire and health loss ──
+  if(state.forest < 15){
+    hpD -= 12;
+    frD += 10;
+  }
+
+  state.oxygen   = Math.max(0, Math.min(100, state.oxygen + o2D));
+  state.fireRate = Math.max(0, Math.min(100, state.fireRate + frD));
+  state.hp       = Math.max(0, Math.min(state.maxHp, state.hp + hpD));
+
+  monthStreak++;
+  const streakBonus = monthStreak * 5;
+  addScore(12 + streakBonus, 'month');
+  if(monthStreak >= 3) floatPoints(streakBonus, '🔥', '#44ccff');
+
+  checkStarvation();
+  resetGarbageIdleTimer();
+  monthActionsCount = { garbage: 0, hunt: 0 }; // reset farming counters each month
+
+  const isWarm  = m.season.includes('Зун') || m.season.includes('Summer');
+  const isSpring= m.season.includes('Хавар')|| m.season.includes('Spring');
+  const col = isWarm?'#ffaa44':isCold?'#aaddff':isSpring?'#aaffaa':'#ffcc88';
+
+  // Show toast only if no hunger toast already shown
+  if(foodShort === 0){
+    toast(`${m.emoji} ${m.name}\n${m.desc}\nO₂${o2D>=0?'+':''}${o2D}  🔥${frD>=0?'+':''}${frD}%  ❤️${hpD>=0?'+':''}${hpD}`, col);
+  }
+
+  updateHUD();
+  buildWeatherOverlay();
+  applySeasonToWorld();
+  checkDeath();
 }
 function applySeasonToWorld(){
   const m=MONTHS()[state.monthIdx];
@@ -1213,6 +1308,7 @@ function goToMainMenu(){
   gamePaused=false;
   state={hp:100,maxHp:100,forest:100,oxygen:75,score:0,monthIdx:0,axes:0,bows:0,fireRate:0,food:0,alive:true,won:false,hasFirstAxe:false};
   nextMilestoneIdx=0;starvProg=0;garbageIdleTimer=0;combo=0;monthStreak=0;
+  monthActionsCount={garbage:0,hunt:0};
   totalGarbageSorted=0;totalAnimalsHunted=0;totalTreesPlanted=0;clearTimeout(comboTimer);
   // Close any open minigames
   document.getElementById('axe-game').classList.remove('active');
@@ -1232,9 +1328,10 @@ function goToMainMenu(){
 }
 function restartGame(){
   clearInterval(starvationIv);clearInterval(garbageIdleIv);
-  gamePaused=false;
+  gamePaused=false;nextMonthCooldown=false;
   state={hp:100,maxHp:100,forest:100,oxygen:75,score:0,monthIdx:0,axes:0,bows:0,fireRate:0,food:0,alive:true,won:false,hasFirstAxe:false};
   nextMilestoneIdx=0;starvProg=0;garbageIdleTimer=0;combo=0;monthStreak=0;
+  monthActionsCount={garbage:0,hunt:0};nextMonthCooldown=false;
   totalGarbageSorted=0;totalAnimalsHunted=0;totalTreesPlanted=0;clearTimeout(comboTimer);
   document.getElementById('gameover').classList.remove('active');document.getElementById('winscreen').classList.remove('active');
   document.getElementById('win-confetti').innerHTML='';document.getElementById('starving-bar').style.transform='scaleX(0)';
