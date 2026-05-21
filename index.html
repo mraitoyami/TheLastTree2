@@ -635,7 +635,7 @@ body.crisis-shake *{animation:screenShake 0.5s ease!important;}
 
 <!-- FIREBASE -->
 <script>
-  const FB_URL='https://thelasttree2-default-rtdb.asia-southeast1.firebasedatabase.app';
+  const FB_URL='https://thelasttree2-2be25-default-rtdb.asia-southeast1.firebasedatabase.app/';
   const FB_PATH='/ecosurvivor_scores';
   window.fbSaveScore=async function(entry){try{const res=await fetch(FB_URL+FB_PATH+'.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...entry,ts:Date.now()})});if(!res.ok)throw new Error('HTTP '+res.status);return true;}catch(e){console.error('❌ Save error:',e);return false;}};
   window.fbLoadScores=async function(){try{const res=await fetch(FB_URL+FB_PATH+'.json');if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();if(!data||typeof data!=='object')return[];const arr=Object.entries(data).map(([id,val])=>({id,...val}));arr.sort((a,b)=>(b.score||0)-(a.score||0));return arr;}catch(e){console.error('❌ Load error:',e);return[];}};
